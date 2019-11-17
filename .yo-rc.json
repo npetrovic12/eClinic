@@ -1,0 +1,42 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.eclinic",
+      "nativeLanguage": "en"
+    },
+    "jhipsterVersion": "6.5.0",
+    "applicationType": "monolith",
+    "baseName": "eClinic",
+    "packageName": "com.eclinic",
+    "packageFolder": "com/eclinic",
+    "serverPort": "8080",
+    "authenticationType": "jwt",
+    "cacheProvider": "ehcache",
+    "enableHibernateCache": false,
+    "websocket": false,
+    "databaseType": "mongodb",
+    "devDatabaseType": "mongodb",
+    "prodDatabaseType": "mongodb",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "YjBmNGUyNGVkODY1NDM3NTNmYjNlNGQ5ZjBjMDljMzBjMDliNjgzOWQ3N2MyZWFmNWE1NGUyM2JhM2FhNzQwNWE0ZjZiNmIyMjdiMzFlY2VjNTAwM2NkMWFiNGZmNGZjZGQzYzE3ZWQ4ZDQ1N2FjYWM4ZTYyYmJhZWM5ZDI5ZDU=",
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "angularX",
+    "clientTheme": "flatly",
+    "clientThemeVariant": "primary",
+    "testFrameworks": ["protractor"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "en",
+    "languages": ["en", "sr"],
+    "blueprints": []
+  }
+}
