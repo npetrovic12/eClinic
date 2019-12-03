@@ -1,17 +1,15 @@
 import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 import { JhiEventManager } from 'ng-jhipster';
-
 import { LoginService } from 'app/core/login/login.service';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 
 @Component({
-  selector: 'jhi-login-modal',
+  selector: 'login-form',
   templateUrl: './login.component.html'
 })
-export class JhiLoginModalComponent implements AfterViewInit {
+export class LoginFormComponent implements AfterViewInit {
   authenticationError: boolean;
 
   loginForm = this.fb.group({
@@ -27,7 +25,6 @@ export class JhiLoginModalComponent implements AfterViewInit {
     private elementRef: ElementRef,
     private renderer: Renderer,
     private router: Router,
-    public activeModal: NgbActiveModal,
     private fb: FormBuilder
   ) {}
 
@@ -41,7 +38,6 @@ export class JhiLoginModalComponent implements AfterViewInit {
       username: '',
       password: ''
     });
-    this.activeModal.dismiss('cancel');
   }
 
   login() {
@@ -54,7 +50,6 @@ export class JhiLoginModalComponent implements AfterViewInit {
       .subscribe(
         () => {
           this.authenticationError = false;
-          this.activeModal.dismiss('login success');
           if (
             this.router.url === '/account/register' ||
             this.router.url.startsWith('/account/activate') ||
@@ -81,12 +76,10 @@ export class JhiLoginModalComponent implements AfterViewInit {
   }
 
   register() {
-    this.activeModal.dismiss('to state register');
     this.router.navigate(['/account/register']);
   }
 
   requestResetPassword() {
-    this.activeModal.dismiss('to state requestReset');
     this.router.navigate(['/account/reset', 'request']);
   }
 }
