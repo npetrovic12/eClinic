@@ -26,6 +26,8 @@
     "bootstrap": "4.3.1",
     "bootswatch": "4.3.1",
     "core-js": "3.2.1",
+    "devextreme": "19.2.4",
+    "devextreme-angular": "19.2.4",
     "moment": "2.24.0",
     "ng-jhipster": "0.11.3",
     "ngx-cookie": "4.0.2",

@@ -3,12 +3,13 @@
     fxLayoutGap="10px"
     fxLayoutAlign="space-between stretch"
     *ngIf="!isAuthenticated()">
-    <div fxFlex="85%" 
-        fxFlex.sm="60%"
-        fxHide.lt-sm>
-        <h1 class="display-4" jhiTranslate="home.title">Welcome to e-Clinic</h1>
-    </div>
-    <div fxFlex="25%" fxFlex.sm="40%">
-        <login-form></login-form> 
+        <div fxFlex="85%" fxFlex.sm="60%" fxHide.lt-sm>
+            <h1 class="display-4" jhiTranslate="home.title">Welcome to e-Clinic</h1>
+        </div>
+        <div fxFlex="25%" fxFlex.sm="40%">
+            <login-form></login-form> 
+        </div>
     </div>
 </div>
+<a [routerLink]="[ '/scheduler' ]">Open Scheduler</a>
+
