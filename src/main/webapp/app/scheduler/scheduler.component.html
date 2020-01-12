@@ -1,13 +1,23 @@
-<div fxLayout="column">
+<div fxLayout="column" 
+    fxLayoutAlign="start stretch"
+    fxLayoutGap="20px">
+    <div>
+            <jhi-generic-autocomplete 
+                [placeholder]="'Search for a doctor'"
+                [apiUrl]="'/api/users/filter'"
+                [fieldsToDisplay]="['firstName', 'lastName']"
+                (selectedItem)="onUserSelected($event)">
+            </jhi-generic-autocomplete>
+    </div>
     <div>
         <dx-scheduler
-              [views]="['month']"
+              [views]="['day', 'workWeek', 'month', 'agenda']"
               currentView="month"
               [firstDayOfWeek]="1"
               [startDayHour]="8"
               [endDayHour]="18"
               [showAllDayPanel]="false"
-              [height]="1000">
+              [height]="'inherit'">
         </dx-scheduler>
     </div>
 </div>

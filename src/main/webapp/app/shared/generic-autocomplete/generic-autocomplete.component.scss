@@ -1,0 +1,20 @@
+:host {
+  > div {
+    width: 300px;
+  }
+
+  ::ng-deep .dropdown-menu {
+    width: inherit;
+  }
+
+  #clear-button {
+    border-radius: 50%;
+    background-color: transparent;
+    margin: auto;
+
+    ::hover {
+      background-color: gray;
+      opacity: 0.5;
+    }
+  }
+}

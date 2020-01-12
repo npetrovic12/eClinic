@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import javax.validation.constraints.Email;
@@ -33,6 +34,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
     @Indexed
+    @TextIndexed
     private String login;
 
     @JsonIgnore
@@ -42,15 +44,18 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Size(max = 50)
     @Field("first_name")
+    @TextIndexed
     private String firstName;
 
     @Size(max = 50)
     @Field("last_name")
+    @TextIndexed
     private String lastName;
 
     @Email
     @Size(min = 5, max = 254)
     @Indexed
+    @TextIndexed
     private String email;
 
     private boolean activated = false;

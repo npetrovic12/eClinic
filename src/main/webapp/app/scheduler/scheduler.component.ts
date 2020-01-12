@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SchedulerService } from './scheduler.service';
 
 @Component({
   selector: 'jhi-scheduler',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchedulerComponent implements OnInit {
   dataSource: any;
-  constructor() {}
+  constructor(private schedulerService: SchedulerService) {}
 
   ngOnInit() {
     this.dataSource = [];
+  }
+
+  onUserSelected(user: any) {
+    this.schedulerService.setSelectedUser(user);
   }
 }
