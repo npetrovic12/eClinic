@@ -33,6 +33,10 @@ export class GenericAutocompleteComponent implements OnInit {
     this.model = null;
   }
 
+  onFocusOut() {
+    if (this.searching) this.searching = false;
+  }
+
   search = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(
       debounceTime(200),

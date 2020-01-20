@@ -7,14 +7,35 @@
     width: inherit;
   }
 
-  #clear-button {
+  .input-group-custom {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+  }
+
+  .input-group-custom > .form-control {
+    position: relative;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+  }
+
+  .input-append {
+    margin: auto;
+    margin-left: 2px;
+  }
+
+  .clear-button {
     border-radius: 50%;
     background-color: transparent;
-    margin: auto;
+    outline: none;
+    border-width: 0px;
+  }
 
-    ::hover {
-      background-color: gray;
-      opacity: 0.5;
-    }
+  .clear-button:hover {
+    background-color: #d8d8d8;
   }
 }
