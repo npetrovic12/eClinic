@@ -1,0 +1,30 @@
+<div fxLayout="column" 
+    fxLayoutAlign="start stretch"
+    fxLayoutGap="20px">
+    <div>
+            <jhi-generic-autocomplete 
+                [placeholder]="'Search for a doctor'"
+                [apiUrl]="'/api/users/filter'"
+                [fieldsToDisplay]="['firstName', 'lastName']"
+                (selectedItem)="onUserSelected($event)">
+            </jhi-generic-autocomplete>
+    </div>
+    <div class="scheduler-wrapper">
+        <full-calendar
+        #calendar
+        defaultView="dayGridMonth"
+        [header]="{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        }"
+        [plugins]="calendarPlugins"
+        [weekends]="calendarWeekends"
+        [events]="calendarEvents"
+        height="parent"
+        [businessHours]="true"
+        [slotDuration]="calendarSlotDuration"
+        (dateClick)="handleDateClick($event)"
+      ></full-calendar>
+    </div>
+</div>

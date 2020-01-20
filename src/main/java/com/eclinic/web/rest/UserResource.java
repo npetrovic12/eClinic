@@ -2,11 +2,13 @@ package com.eclinic.web.rest;
 
 import com.eclinic.config.Constants;
 import com.eclinic.domain.User;
+import com.eclinic.domain.dto.UserCriteria;
 import com.eclinic.repository.UserRepository;
 import com.eclinic.security.AuthoritiesConstants;
 import com.eclinic.service.MailService;
 import com.eclinic.service.UserService;
 import com.eclinic.service.dto.UserDTO;
+import com.eclinic.util.misc.Misc;
 import com.eclinic.web.rest.errors.BadRequestAlertException;
 import com.eclinic.web.rest.errors.EmailAlreadyUsedException;
 import com.eclinic.web.rest.errors.LoginAlreadyUsedException;
@@ -14,18 +16,25 @@ import com.eclinic.web.rest.errors.LoginAlreadyUsedException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -71,6 +80,9 @@ public class UserResource {
 
     private final MailService mailService;
 
+    @Autowired
+    MongoTemplate mongoTemplate;
+
     public UserResource(UserService userService, UserRepository userRepository, MailService mailService) {
 
         this.userService = userService;
@@ -109,6 +121,44 @@ public class UserResource {
                 .headers(HeaderUtil.createAlert(applicationName,  "userManagement.created", newUser.getLogin()))
                 .body(newUser);
         }
+    }
+
+    @PostMapping("/users/filter")
+    public ResponseEntity<List<User>> getUsersByCriteria(@ApiParam Pageable pageable, @RequestBody UserCriteria criteria) {
+        Query q = new Query();
+        if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {
+            String searchText = Misc.enableAndSearchText(criteria.getSearchText());
+            q.addCriteria(TextCriteria.forDefaultLanguage().caseSensitive(false).matching(searchText));
+        }
+
+        if(pageable != null) {
+            q.with(pageable);
+        }
+
+        List<User> result = mongoTemplate.find(q, User.class);
+        Page<User> page = PageableExecutionUtils.getPage(result, pageable, () -> mongoTemplate.count(q, User.class));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromPath("api/users/filter"), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @PostMapping("/users/search")
+    public ResponseEntity<List<User>> getUsersBySearchText(@ApiParam Pageable pageable, @RequestBody UserCriteria criteria) {
+        if(criteria.getSearchText() != null) {
+            criteria.setSearchText(Misc.disabledRegexSearchText(criteria.getSearchText()));
+        }
+
+        Query q = new Query();
+        if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {  
+        }
+
+        if(pageable != null) {
+            q.with(pageable);
+        }
+
+        List<User> result = mongoTemplate.find(q, User.class);
+        Page<User> page = PageableExecutionUtils.getPage(result, pageable, () -> mongoTemplate.count(q, User.class));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromPath("api/users/search"), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
