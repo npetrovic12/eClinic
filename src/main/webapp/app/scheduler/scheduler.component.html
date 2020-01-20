@@ -9,15 +9,22 @@
                 (selectedItem)="onUserSelected($event)">
             </jhi-generic-autocomplete>
     </div>
-    <div>
-        <dx-scheduler
-              [views]="['day', 'workWeek', 'month', 'agenda']"
-              currentView="month"
-              [firstDayOfWeek]="1"
-              [startDayHour]="8"
-              [endDayHour]="18"
-              [showAllDayPanel]="false"
-              [height]="'inherit'">
-        </dx-scheduler>
+    <div class="scheduler-wrapper">
+        <full-calendar
+        #calendar
+        defaultView="dayGridMonth"
+        [header]="{
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        }"
+        [plugins]="calendarPlugins"
+        [weekends]="calendarWeekends"
+        [events]="calendarEvents"
+        height="parent"
+        [businessHours]="true"
+        [slotDuration]="calendarSlotDuration"
+        (dateClick)="handleDateClick($event)"
+      ></full-calendar>
     </div>
 </div>
