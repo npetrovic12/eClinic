@@ -5,9 +5,11 @@ import { EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppointmentDetailsModalComponent } from './appointment-details-modal/appointment-details-modal.component';
 
 @Component({
-  selector: 'jhi-scheduler',
+  selector: 'scheduler',
   templateUrl: './scheduler.component.html',
   styleUrls: ['./scheduler.component.scss']
 })
@@ -18,7 +20,7 @@ export class SchedulerComponent implements OnInit {
   calendarWeekends = true;
   @Input() calendarSlotDuration = '00:15:00';
   calendarEvents: EventInput[] = [{ title: 'Event Now', start: new Date() }];
-  constructor(private schedulerService: SchedulerService) {}
+  constructor(private schedulerService: SchedulerService, private modalService: NgbModal) {}
 
   ngOnInit() {}
 
@@ -35,14 +37,13 @@ export class SchedulerComponent implements OnInit {
     calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
   }
 
-  handleDateClick(arg) {
-    if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
-      this.calendarEvents = this.calendarEvents.concat({
-        // add new event data. must create new array
-        title: 'New Event',
-        start: arg.date,
-        allDay: arg.allDay
-      });
-    }
+  handleDateClick(args: any) {
+    const modalRef = this.modalService.open(AppointmentDetailsModalComponent);
+    modalRef.componentInstance.title = 'Appointment';
+    console.log(args);
+  }
+
+  onUserSelected(data: any) {
+    console.log(data);
   }
 }
