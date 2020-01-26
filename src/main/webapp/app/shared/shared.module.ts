@@ -6,6 +6,7 @@ import { JhiAlertErrorComponent } from './alert/alert-error.component';
 import { LoginFormComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { GenericAutocompleteComponent } from './generic-autocomplete/generic-autocomplete.component';
+import { GenericModalComponent } from './generic-modal/generic-modal.component';
 
 @NgModule({
   imports: [EClinicSharedLibsModule],
@@ -15,7 +16,8 @@ import { GenericAutocompleteComponent } from './generic-autocomplete/generic-aut
     JhiAlertErrorComponent,
     LoginFormComponent,
     HasAnyAuthorityDirective,
-    GenericAutocompleteComponent
+    GenericAutocompleteComponent,
+    GenericModalComponent
   ],
   entryComponents: [LoginFormComponent],
   exports: [
@@ -25,7 +27,8 @@ import { GenericAutocompleteComponent } from './generic-autocomplete/generic-aut
     JhiAlertErrorComponent,
     LoginFormComponent,
     HasAnyAuthorityDirective,
-    GenericAutocompleteComponent
+    GenericAutocompleteComponent,
+    GenericModalComponent
   ]
 })
 export class EClinicSharedModule {}
