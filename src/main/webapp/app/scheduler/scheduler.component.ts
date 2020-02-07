@@ -18,7 +18,7 @@ export class SchedulerComponent implements OnInit {
   calendarVisible = true;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
-  @Input() calendarSlotDuration = '00:15:00';
+  @Input() calendarSlotDuration = '00:30:00';
   calendarEvents: EventInput[] = [{ title: 'Event Now', start: new Date() }];
   constructor(private schedulerService: SchedulerService, private modalService: NgbModal) {}
 

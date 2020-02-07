@@ -2,12 +2,12 @@
     fxLayoutAlign="start stretch"
     fxLayoutGap="20px">
     <div>
-            <jhi-generic-autocomplete 
+            <generic-autocomplete 
                 [placeholder]="'Search for a doctor'"
                 [apiUrl]="'/api/users/filter'"
                 [fieldsToDisplay]="['firstName', 'lastName']"
                 (selectedItem)="onUserSelected($event)">
-            </jhi-generic-autocomplete>
+            </generic-autocomplete>
     </div>
     <div class="scheduler-wrapper">
         <full-calendar

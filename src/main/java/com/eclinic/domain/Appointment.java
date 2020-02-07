@@ -15,8 +15,8 @@ public class Appointment implements Serializable {
     @Id
     private String id;
 
-    @Field("text")
-    private String text;
+    @Field("subject")
+    private String subject;
 
     @Field("description")
     private String description;
@@ -41,12 +41,12 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public String getText() {
-        return this.text;
+    public String getSubject() {
+        return this.subject;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public String getDescription() {

@@ -1,0 +1,15 @@
+:host {
+  .date-time-container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .date-input-wrapper {
+    margin-right: 10px;
+    flex: 1 1 50%;
+  }
+
+  .time-select-wrapper {
+    flex: 1 1 50%;
+  }
+}

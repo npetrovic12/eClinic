@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged, filter, switchMap, catchError, map,
 import { GenericAutocompleteService } from './generic-autocomplete.service';
 
 @Component({
-  selector: 'jhi-generic-autocomplete',
+  selector: 'generic-autocomplete',
   templateUrl: './generic-autocomplete.component.html',
   styleUrls: ['./generic-autocomplete.component.scss']
 })

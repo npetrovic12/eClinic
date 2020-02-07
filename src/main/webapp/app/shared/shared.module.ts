@@ -7,7 +7,8 @@ import { LoginFormComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { GenericAutocompleteComponent } from './generic-autocomplete/generic-autocomplete.component';
 import { GenericModalComponent } from './generic-modal/generic-modal.component';
-
+import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
+import { TimePipe } from './date-time-input/time.pipe';
 @NgModule({
   imports: [EClinicSharedLibsModule],
   declarations: [
@@ -17,7 +18,9 @@ import { GenericModalComponent } from './generic-modal/generic-modal.component';
     LoginFormComponent,
     HasAnyAuthorityDirective,
     GenericAutocompleteComponent,
-    GenericModalComponent
+    GenericModalComponent,
+    DateTimeInputComponent,
+    TimePipe
   ],
   entryComponents: [LoginFormComponent],
   exports: [
@@ -28,7 +31,9 @@ import { GenericModalComponent } from './generic-modal/generic-modal.component';
     LoginFormComponent,
     HasAnyAuthorityDirective,
     GenericAutocompleteComponent,
-    GenericModalComponent
+    GenericModalComponent,
+    DateTimeInputComponent,
+    TimePipe
   ]
 })
 export class EClinicSharedModule {}

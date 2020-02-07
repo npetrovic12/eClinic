@@ -1,0 +1,31 @@
+<div class="date-time-container">
+  <div class="input-group mr-2 date-input-wrapper"
+  (click)="d.toggle()">
+    <input
+    [ngClass]="ngControl?.valid ? 'ng-valid' : 'ng-invalid'"
+    class="form-control"
+    ngbDatepicker 
+    #d="ngbDatepicker"
+    [placeholder]="placeholder"
+    [ngModel]="dateString | date:inputDatetimeFormat"
+    [disabled]='disabled'
+    [readonly]='true'/>
+
+    <div class="input-group-append">
+        <button class="btn btn-outline-secondary"
+        [disabled]='disabled'
+        type="button">
+            <fa-icon [icon]="'calendar'"></fa-icon>
+        </button>
+    </div>
+  </div>
+  <div class="time-select-wrapper">
+    <select 
+    class="form-control"
+    (change)="onTimeChange($event)"
+    disabled='true'
+    placeholder="timePlaceHolder">
+        <option *ngFor="let timeSlot of timeSlots">{{timeSlot | timePipe}}</option>
+    </select>
+  </div>
+</div>
