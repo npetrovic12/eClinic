@@ -18,6 +18,7 @@ export class GenericAutocompleteComponent implements OnInit {
   @Input() apiUrl: string;
   @Input() placeholder: string;
   @Input() fieldsToDisplay: string[];
+  @Input() disabled = false;
   @Output() selectedItem = new EventEmitter<any>();
 
   constructor(private genericAutocompleteService: GenericAutocompleteService) {}

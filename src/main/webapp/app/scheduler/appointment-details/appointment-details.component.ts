@@ -1,44 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ValidatorFn } from '@angular/forms';
-import { AppointmentModel } from '../appointment.model';
-import { AppointmentService } from './appointment.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Appointment } from '../appointment.model';
+import { SchedulerService } from '../scheduler.service';
+import { Observable } from 'rxjs';
+import { AppointmentStore } from '../appointmentStore.service';
 
-const DateRangeValidatior: ValidatorFn = (fg: FormGroup) => {
-  const fromDate = new Date(fg.get('startDate').value);
-  const toDate = new Date(fg.get('endDate').value);
-
-  return fromDate !== null && toDate !== null && fromDate <= toDate ? null : { range: true };
-};
 @Component({
   selector: 'appointment-details',
   templateUrl: './appointment-details.component.html',
   styleUrls: ['./appointment-details.component.scss']
 })
 export class AppointmentDetailsComponent implements OnInit {
-  private appointment: AppointmentModel;
-  appointmentForm: FormGroup;
+  $appointment: Observable<Appointment>;
+  $editMode: Observable<boolean>;
+  appointment: Appointment;
+  editMode: boolean;
 
-  constructor(private formBuilder: FormBuilder, private appointmentService: AppointmentService) {
-    this.appointment = new AppointmentModel();
-    this.appointmentForm = this.createAppointmentForm();
+  appointmentForm: FormGroup;
+  appointmentSelected = false;
+
+  constructor(private formBuilder: FormBuilder, private appointmentStore: AppointmentStore) {}
+
+  ngOnInit() {
+    this.appointmentStore.selectedAppointment.subscribe(res => {
+      console.log(res);
+      this.appointment = res;
+      if (!this.appointment) return;
+      this.appointmentForm = this.createAppointmentForm();
+    });
+    this.$editMode = this.appointmentStore.editMode;
   }
 
-  ngOnInit() {}
-
   createAppointmentForm() {
-    return this.formBuilder.group(
-      {
-        subject: [this.appointment.subject ? this.appointment.subject : '', Validators.required],
-        startDate: [this.appointment.startDate ? this.appointment.startDate : null, Validators.required],
-        endDate: [this.appointment.endDate ? this.appointment.startDate : null, Validators.required],
-        description: [this.appointment.description ? this.appointment.description : '']
-      },
-      { validators: DateRangeValidatior }
-    );
+    return this.formBuilder.group({
+      subject: [this.appointment.subject ? this.appointment.subject : '', Validators.required],
+      appointmentStart: [this.appointment.appointmentStart ? this.appointment.appointmentStart : '', Validators.required],
+      appointmentEnd: [this.appointment.appointmentEnd ? this.appointment.appointmentEnd : '', Validators.required],
+      description: [this.appointment.description ? this.appointment.description : '']
+    });
   }
 
   saveAppointment() {
     this.appointment = Object.assign({}, this.appointmentForm.getRawValue());
-    this.appointmentService.create(this.appointment).subscribe(res => {});
   }
 }

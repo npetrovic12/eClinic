@@ -2,6 +2,8 @@ package com.eclinic.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,17 +23,15 @@ public class Appointment implements Serializable {
     @Field("description")
     private String description;
 
-    @Field("allDay")
-    private Boolean allDay;
+    @Field("appointmentDate")
+    private Instant appointmentDate;
 
-    @Field("startDate")
-    private Instant startDate;
+    @Field("appointmentTime")
+    private long appointmentTime;
 
-    @Field("endDate")
-    private Instant endDate;
-
-    @Field("recurrenceRule")
-    private String recurrenceRule;
+    // public List<Instant> getAvailableTimes(List<Appointment> appointments) {
+    //     return appointments.stream().map(appointment -> appointment.getAppointmentDateollect(Collectors.toList());
+    // }
 
     public String getId() {
         return this.id;
@@ -57,40 +57,20 @@ public class Appointment implements Serializable {
         this.description = description;
     }
 
-    public Boolean isAllDay() {
-        return this.allDay;
+    public Instant getAppointmentDate() {
+        return this.appointmentDate;
     }
 
-    public Boolean getAllDay() {
-        return this.allDay;
+    public void setAppointmentDate(Instant appointmentDate) {
+        this.appointmentDate = appointmentDate;
     }
 
-    public void setAllDay(Boolean allDay) {
-        this.allDay = allDay;
+    public void setAppointmentTime(long appointmentTime) {
+        this.appointmentTime = appointmentTime;
     }
 
-    public Instant getStartDate() {
-        return this.startDate;
-    }
-
-    public void setStartDate(Instant startDate) {
-        this.startDate = startDate;
-    }
-
-    public Instant getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(Instant endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getRecurrenceRule() {
-        return this.recurrenceRule;
-    }
-
-    public void setRecurrenceRule(String recurrenceRule) {
-        this.recurrenceRule = recurrenceRule;
+    public long getAppointmentTime() {
+        return this.appointmentTime;
     }
 }
 

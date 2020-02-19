@@ -7,6 +7,8 @@ import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppointmentDetailsModalComponent } from './appointment-details-modal/appointment-details-modal.component';
+import { Appointment } from './appointment.model';
+import { AppointmentStore } from './appointmentStore.service';
 
 @Component({
   selector: 'scheduler',
@@ -19,8 +21,11 @@ export class SchedulerComponent implements OnInit {
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
   calendarWeekends = true;
   @Input() calendarSlotDuration = '00:30:00';
-  calendarEvents: EventInput[] = [{ title: 'Event Now', start: new Date() }];
-  constructor(private schedulerService: SchedulerService, private modalService: NgbModal) {}
+  calendarEvents: EventInput[] = [
+    { title: 'Hehehe', start: '2020-02-17T15:00:00', end: '2020-02-17T16:00:00', description: 'Test' },
+    { title: 'Title', start: '2020-02-17T13:00:00', end: '2020-02-17T15:00:00' }
+  ];
+  constructor(private schedulerService: SchedulerService, private appointmentStore: AppointmentStore, private modalService: NgbModal) {}
 
   ngOnInit() {}
 
@@ -32,15 +37,28 @@ export class SchedulerComponent implements OnInit {
     this.calendarWeekends = !this.calendarWeekends;
   }
 
-  gotoPast() {
-    const calendarApi = this.calendarComponent.getApi();
-    calendarApi.gotoDate('2000-01-01'); // call a method on the Calendar object
+  handleEventClick(args: any) {
+    console.log(args);
+    if (args.event) {
+      this.appointmentStore.select(this.readAppointment(args.event));
+    } else {
+      this.appointmentStore.select(this.initAppointment(args));
+    }
   }
 
-  handleDateClick(args: any) {
-    const modalRef = this.modalService.open(AppointmentDetailsModalComponent);
-    modalRef.componentInstance.title = 'Appointment';
-    console.log(args);
+  readAppointment(appointmentData: any) {
+    const startDate = new Date(appointmentData.start);
+    const endDate = new Date(appointmentData.end);
+    return new Appointment(appointmentData.id, appointmentData.title, appointmentData.extendedProps.description, startDate, endDate);
+  }
+
+  initAppointment(appointmentData: any) {
+    const startDate = new Date(appointmentData.start);
+    const endDate = new Date(appointmentData.end);
+    const newAppointment = new Appointment();
+    newAppointment.appointmentStart = startDate;
+    newAppointment.appointmentEnd = endDate;
+    return newAppointment;
   }
 
   onUserSelected(data: any) {
