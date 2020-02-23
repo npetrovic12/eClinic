@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -17,21 +18,19 @@ public class Appointment implements Serializable {
     @Id
     private String id;
 
-    @Field("subject")
-    private String subject;
+    @Field("title")
+    @TextIndexed
+    private String title;
 
     @Field("description")
+    @TextIndexed
     private String description;
 
-    @Field("appointmentDate")
-    private Instant appointmentDate;
+    @Field("appointmentStart")
+    private Instant start;
 
-    @Field("appointmentTime")
-    private long appointmentTime;
-
-    // public List<Instant> getAvailableTimes(List<Appointment> appointments) {
-    //     return appointments.stream().map(appointment -> appointment.getAppointmentDateollect(Collectors.toList());
-    // }
+    @Field("appointmentEnd")
+    private Instant end;
 
     public String getId() {
         return this.id;
@@ -41,12 +40,12 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public String getSubject() {
-        return this.subject;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -57,20 +56,20 @@ public class Appointment implements Serializable {
         this.description = description;
     }
 
-    public Instant getAppointmentDate() {
-        return this.appointmentDate;
+    public Instant getStart() {
+        return start;
     }
 
-    public void setAppointmentDate(Instant appointmentDate) {
-        this.appointmentDate = appointmentDate;
+    public void setStart(Instant start) {
+        this.start = start;
     }
 
-    public void setAppointmentTime(long appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public Instant getEnd() {
+        return end;
     }
 
-    public long getAppointmentTime() {
-        return this.appointmentTime;
+    public void setEnd(Instant end) {
+        this.end = end;
     }
 }
 

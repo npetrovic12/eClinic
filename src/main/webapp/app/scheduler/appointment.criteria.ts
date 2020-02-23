@@ -1,3 +1,3 @@
 export class AppointmentCriteria {
-  constructor(public searchText?: string, public appointmentDate?: Date) {}
+  constructor(public searchText?: string, public startDate?: Date, public endDate?: Date) {}
 }

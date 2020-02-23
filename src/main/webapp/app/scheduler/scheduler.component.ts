@@ -1,14 +1,11 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { SchedulerService } from './scheduler.service';
 import { FullCalendarComponent } from '@fullcalendar/angular';
-import { EventInput } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppointmentDetailsModalComponent } from './appointment-details-modal/appointment-details-modal.component';
 import { Appointment } from './appointment.model';
 import { AppointmentStore } from './appointmentStore.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'scheduler',
@@ -17,17 +14,25 @@ import { AppointmentStore } from './appointmentStore.service';
 })
 export class SchedulerComponent implements OnInit {
   @ViewChild('calendar', { static: true }) calendarComponent: FullCalendarComponent; // the #calendar in the template
-  calendarVisible = true;
-  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
-  calendarWeekends = true;
   @Input() calendarSlotDuration = '00:30:00';
-  calendarEvents: EventInput[] = [
-    { title: 'Hehehe', start: '2020-02-17T15:00:00', end: '2020-02-17T16:00:00', description: 'Test' },
-    { title: 'Title', start: '2020-02-17T13:00:00', end: '2020-02-17T15:00:00' }
-  ];
-  constructor(private schedulerService: SchedulerService, private appointmentStore: AppointmentStore, private modalService: NgbModal) {}
+  calendarVisible = true;
+  calendarWeekends = false;
+  calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
+  calendarHeader = {
+    left: 'prev,next today',
+    center: 'title',
+    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+  };
+  events: Observable<Appointment[]>;
+  calendarEvents: Appointment[];
+  constructor(private appointmentStore: AppointmentStore) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.events = this.appointmentStore.appointmentList;
+    this.events.subscribe(ev => {
+      this.calendarEvents = ev;
+    });
+  }
 
   toggleVisible() {
     this.calendarVisible = !this.calendarVisible;
@@ -38,7 +43,6 @@ export class SchedulerComponent implements OnInit {
   }
 
   handleEventClick(args: any) {
-    console.log(args);
     if (args.event) {
       this.appointmentStore.select(this.readAppointment(args.event));
     } else {
@@ -56,9 +60,15 @@ export class SchedulerComponent implements OnInit {
     const startDate = new Date(appointmentData.start);
     const endDate = new Date(appointmentData.end);
     const newAppointment = new Appointment();
-    newAppointment.appointmentStart = startDate;
-    newAppointment.appointmentEnd = endDate;
+    newAppointment.start = startDate;
+    newAppointment.end = endDate;
     return newAppointment;
+  }
+
+  onViewChange($event) {
+    const startDate = new Date($event.currentStart);
+    const endDate = new Date($event.currentEnd);
+    this.appointmentStore.query(startDate, endDate);
   }
 
   onUserSelected(data: any) {

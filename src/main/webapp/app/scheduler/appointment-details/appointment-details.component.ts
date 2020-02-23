@@ -1,7 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Appointment } from '../appointment.model';
-import { SchedulerService } from '../scheduler.service';
 import { Observable } from 'rxjs';
 import { AppointmentStore } from '../appointmentStore.service';
 
@@ -23,7 +22,6 @@ export class AppointmentDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.appointmentStore.selectedAppointment.subscribe(res => {
-      console.log(res);
       this.appointment = res;
       if (!this.appointment) return;
       this.appointmentForm = this.createAppointmentForm();
@@ -33,14 +31,24 @@ export class AppointmentDetailsComponent implements OnInit {
 
   createAppointmentForm() {
     return this.formBuilder.group({
-      subject: [this.appointment.subject ? this.appointment.subject : '', Validators.required],
-      appointmentStart: [this.appointment.appointmentStart ? this.appointment.appointmentStart : '', Validators.required],
-      appointmentEnd: [this.appointment.appointmentEnd ? this.appointment.appointmentEnd : '', Validators.required],
+      title: [this.appointment.title ? this.appointment.title : '', Validators.required],
+      start: [this.appointment.start ? this.appointment.start : '', Validators.required],
+      end: [this.appointment.end ? this.appointment.end : '', Validators.required],
       description: [this.appointment.description ? this.appointment.description : '']
     });
   }
 
   saveAppointment() {
-    this.appointment = Object.assign({}, this.appointmentForm.getRawValue());
+    this.appointment = Object.assign(this.appointment, this.appointmentForm.getRawValue());
+    if (this.appointment.id) {
+      this.appointmentStore.update(this.appointment);
+    } else {
+      console.log('test');
+      this.appointmentStore.create(this.appointment);
+    }
+  }
+
+  deleteAppointment() {
+    this.appointmentStore.delete(this.appointment.id);
   }
 }

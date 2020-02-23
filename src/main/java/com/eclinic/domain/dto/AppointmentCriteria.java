@@ -8,31 +8,30 @@ public class AppointmentCriteria {
 
     @Size(max = 200)
     private String searchText;
-    
-    private Instant fromAppointmentDate;
-    private Instant toAppointmentDate;
+    private Instant startDate;
+    private Instant endDate;
 
     public String getSearchText() {
-        return this.searchText;
-    }
-
-    public Instant getFromAppointmentDate() {
-        return this.fromAppointmentDate;
-    }
-
-    public Instant getToAppointmentDate() {
-        return this.toAppointmentDate;
+        return searchText;
     }
 
     public void setSearchText(String searchText) {
         this.searchText = searchText;
     }
 
-    public void setFromAppointmentDate(Instant fromAppointmentDate) {
-        this.fromAppointmentDate = fromAppointmentDate;
+    public Instant getStartDate() {
+        return startDate;
     }
 
-    public void setToAppointmentDate(Instant toAppointmentDate) {
-        this.toAppointmentDate = toAppointmentDate;
+    public void setStartDate(Instant startDate) {
+        this.startDate = startDate;
+    }
+
+    public Instant getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Instant endDate) {
+        this.endDate = endDate;
     }
 }

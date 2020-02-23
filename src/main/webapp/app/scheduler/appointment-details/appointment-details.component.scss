@@ -16,6 +16,15 @@
     border-left: 1px solid #ccc;
   }
 
+  .details-header {
+    padding: 5px;
+    margin-bottom: 5px;
+  }
+
+  #delete-button {
+    float: right;
+  }
+
   .hint-text {
     display: flex;
     flex-direction: column;
