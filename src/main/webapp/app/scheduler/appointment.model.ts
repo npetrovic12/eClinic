@@ -1,10 +1,3 @@
-export class AppointmentModel {
-  public constructor(
-    public text?: string,
-    public allDay?: boolean,
-    public description?: string,
-    public startDate?: Date,
-    public endDate?: Date,
-    public recurrenceRule?: string
-  ) {}
+export class Appointment {
+  public constructor(public id?: string, public title?: string, public description?: string, public start?: Date, public end?: Date) {}
 }

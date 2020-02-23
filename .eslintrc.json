@@ -19,6 +19,14 @@
         "ignoreRestSiblings": false
       }
     ],
+    "@typescript-eslint/no-use-before-define": [
+      "warn",
+      {
+        "functions": false,
+        "classes": false,
+        "variables": false
+      }
+    ],
     "no-console": "off"
   }
 }

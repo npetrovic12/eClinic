@@ -2,8 +2,11 @@ package com.eclinic.domain;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -15,23 +18,19 @@ public class Appointment implements Serializable {
     @Id
     private String id;
 
-    @Field("text")
-    private String text;
+    @Field("title")
+    @TextIndexed
+    private String title;
 
     @Field("description")
+    @TextIndexed
     private String description;
 
-    @Field("allDay")
-    private Boolean allDay;
+    @Field("appointmentStart")
+    private Instant start;
 
-    @Field("startDate")
-    private Instant startDate;
-
-    @Field("endDate")
-    private Instant endDate;
-
-    @Field("recurrenceRule")
-    private String recurrenceRule;
+    @Field("appointmentEnd")
+    private Instant end;
 
     public String getId() {
         return this.id;
@@ -41,12 +40,12 @@ public class Appointment implements Serializable {
         this.id = id;
     }
 
-    public String getText() {
-        return this.text;
+    public String getTitle() {
+        return this.title;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -57,40 +56,20 @@ public class Appointment implements Serializable {
         this.description = description;
     }
 
-    public Boolean isAllDay() {
-        return this.allDay;
+    public Instant getStart() {
+        return start;
     }
 
-    public Boolean getAllDay() {
-        return this.allDay;
+    public void setStart(Instant start) {
+        this.start = start;
     }
 
-    public void setAllDay(Boolean allDay) {
-        this.allDay = allDay;
+    public Instant getEnd() {
+        return end;
     }
 
-    public Instant getStartDate() {
-        return this.startDate;
-    }
-
-    public void setStartDate(Instant startDate) {
-        this.startDate = startDate;
-    }
-
-    public Instant getEndDate() {
-        return this.endDate;
-    }
-
-    public void setEndDate(Instant endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getRecurrenceRule() {
-        return this.recurrenceRule;
-    }
-
-    public void setRecurrenceRule(String recurrenceRule) {
-        this.recurrenceRule = recurrenceRule;
+    public void setEnd(Instant end) {
+        this.end = end;
     }
 }
 

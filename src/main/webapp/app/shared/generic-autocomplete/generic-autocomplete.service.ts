@@ -11,7 +11,7 @@ export class GenericAutocompleteService {
   constructor(private http: HttpClient) {}
 
   getData(apiUrl: string, criteria: any) {
-    let reqParams = createRequestOption(this.queryParams);
+    const reqParams = createRequestOption(this.queryParams);
     return this.http.post(this.resourceUrl + apiUrl, criteria, {
       observe: 'response',
       params: reqParams

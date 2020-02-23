@@ -1,2 +1,45 @@
-<h1>Bootstrap 4 Modal :: Powered by Angular</h1>
-<p>Native, quality widgets for your Angular applications.</p>
+
+<div class="details-container">
+    <div *ngIf="!appointment" class="hint-text">
+        <span>
+            Select an appointment
+        </span>
+    </div>
+    <div fxLayout="column" *ngIf="appointment">
+        <div fxFlex class="details-header">
+            <fa-icon id="delete-button" type="button" [icon]="'trash'" (click)="deleteAppointment()"></fa-icon>
+        </div>
+        <div fxFlex>
+            <form name="appointmentForm" [formGroup]="appointmentForm">
+                <div fxLayout="row" fxLayoutGap="5px">
+                    <div class="form-group">
+                        <label for="start">From</label>
+                        <input id="start" class="form-control" formControlName="start" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="end">To</label>
+                        <input id="end" class="form-control" formControlName="end" readonly>
+                    </div>
+                </div> 
+                <div class="form-group">
+                  <input type="text"
+                        class="form-control"
+                        placeholder="Title"
+                        formControlName="title">
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control"
+                        rows="3"
+                        formControlName="description"
+                        placeholder="Description">
+                    </textarea>
+                </div>
+                <button type="submit" 
+                    class="btn btn-primary"
+                    [disabled]="appointmentForm.invalid"
+                    (click)="saveAppointment()">Save</button>
+            </form>
+        </div>
+        
+    </div>
+</div>

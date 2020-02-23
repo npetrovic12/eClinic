@@ -5,7 +5,7 @@ import { debounceTime, distinctUntilChanged, filter, switchMap, catchError, map,
 import { GenericAutocompleteService } from './generic-autocomplete.service';
 
 @Component({
-  selector: 'jhi-generic-autocomplete',
+  selector: 'generic-autocomplete',
   templateUrl: './generic-autocomplete.component.html',
   styleUrls: ['./generic-autocomplete.component.scss']
 })
@@ -18,6 +18,7 @@ export class GenericAutocompleteComponent implements OnInit {
   @Input() apiUrl: string;
   @Input() placeholder: string;
   @Input() fieldsToDisplay: string[];
+  @Input() disabled = false;
   @Output() selectedItem = new EventEmitter<any>();
 
   constructor(private genericAutocompleteService: GenericAutocompleteService) {}

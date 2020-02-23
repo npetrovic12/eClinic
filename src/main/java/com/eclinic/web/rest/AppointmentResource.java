@@ -2,22 +2,39 @@ package com.eclinic.web.rest;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.micrometer.core.annotation.Timed;
+import io.swagger.annotations.ApiParam;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import com.eclinic.domain.Appointment;
+import com.eclinic.domain.dto.AppointmentCriteria;
 import com.eclinic.web.rest.errors.BadRequestAlertException;
+import com.eclinic.util.misc.Misc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.repository.support.PageableExecutionUtils;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -35,7 +52,7 @@ public class AppointmentResource {
     @PostMapping(value="/appointments")
     @Timed
     public ResponseEntity<Appointment> createAppointment(@RequestBody Appointment appointment) throws URISyntaxException {
-        log.debug("REST request to save appointment : {}", appointment);
+        log.debug("REST request to save an appointment : {}", appointment);
         if (appointment.getId() != null) {
             throw new BadRequestAlertException("A new appointment cannot already have an ID", ENTITY_NAME, "idexists");
         }
@@ -46,5 +63,47 @@ public class AppointmentResource {
         .headers(HeaderUtil.createEntityCreationAlert("eClinicApp", false, ENTITY_NAME, appointment.getId().toString()))
         .body(appointment);
     }
-    
+
+    @PutMapping(value="/appointments")
+    @Timed
+    public ResponseEntity<Appointment> updateAppointment(@RequestBody Appointment appointment) throws URISyntaxException {
+        log.debug("REST request to update an appointment : {}", appointment);
+        if (appointment.getId() == null) {
+            return createAppointment(appointment);
+        }
+
+        mongoTemplate.save(appointment);
+        
+        return ResponseEntity.ok()
+        .headers(HeaderUtil.createEntityUpdateAlert("eClinicApp", false, ENTITY_NAME, appointment.getId().toString()))
+        .body(appointment);
+    }
+
+    @DeleteMapping("/appointments/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteAppointment(@PathVariable String id) {
+        log.debug("REST request to delete EndPoint : {}", id);
+        Query q = new Query();
+        q.addCriteria(Criteria.where("id").is(id));
+        mongoTemplate.remove(q, Appointment.class);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("eClinicApp", false, ENTITY_NAME, id))
+        .build();
+    }
+
+    @PostMapping("/appointments/filter")
+    public ResponseEntity<List<Appointment>> getAppointmentsByCriteria(@RequestBody AppointmentCriteria criteria) {
+        Query q = new Query();
+        if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {
+            String searchText = Misc.enableAndSearchText(criteria.getSearchText());
+            q.addCriteria(TextCriteria.forDefaultLanguage().caseSensitive(false).matching(searchText));
+        }
+
+        if(criteria != null && criteria.getStartDate() != null && criteria.getEndDate() != null) {
+            q.addCriteria(new Criteria().andOperator(Criteria.where("appointmentStart")
+            .gte(criteria.getStartDate()).lte(criteria.getEndDate())));
+        }
+
+        List<Appointment> result = mongoTemplate.find(q, Appointment.class);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }
