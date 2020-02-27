@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Appointment } from '../appointment.model';
 import { Observable } from 'rxjs';
 import { AppointmentStore } from '../appointmentStore.service';
-
+import { type } from 'os';
+/* eslint prefer-const: 0 */
 @Component({
   selector: 'appointment-details',
   templateUrl: './appointment-details.component.html',
@@ -43,7 +44,6 @@ export class AppointmentDetailsComponent implements OnInit {
     if (this.appointment.id) {
       this.appointmentStore.update(this.appointment);
     } else {
-      console.log('test');
       this.appointmentStore.create(this.appointment);
     }
   }

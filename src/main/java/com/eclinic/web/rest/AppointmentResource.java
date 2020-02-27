@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiParam;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import com.eclinic.domain.Appointment;
@@ -91,6 +93,7 @@ public class AppointmentResource {
     }
 
     @PostMapping("/appointments/filter")
+    @Timed
     public ResponseEntity<List<Appointment>> getAppointmentsByCriteria(@RequestBody AppointmentCriteria criteria) {
         Query q = new Query();
         if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {
@@ -99,11 +102,40 @@ public class AppointmentResource {
         }
 
         if(criteria != null && criteria.getStartDate() != null && criteria.getEndDate() != null) {
-            q.addCriteria(new Criteria().andOperator(Criteria.where("appointmentStart")
-            .gte(criteria.getStartDate()).lte(criteria.getEndDate())));
+            LocalDateTime localDataTimeStart;
+            if(criteria.getStartDate() != null){
+                localDataTimeStart = LocalDateTime.ofInstant(criteria.getStartDate(), ZoneId.systemDefault());
+            } else {
+                localDataTimeStart = LocalDateTime.now().minusYears(100);
+            }
+
+            LocalDateTime localDateTimeEnd;
+            if(criteria.getEndDate() != null) {
+                localDateTimeEnd = LocalDateTime.ofInstant(criteria.getEndDate(), ZoneId.systemDefault());
+            } else {
+                localDateTimeEnd = LocalDateTime.now().plusYears(100);
+            }
+
+            q.addCriteria(new Criteria().andOperator(
+                Criteria.where("appointmentStart").lt(localDateTimeEnd.atZone(ZoneId.systemDefault()).toInstant()),
+                Criteria.where("appointmentEnd").gt(localDataTimeStart.atZone(ZoneId.systemDefault()).toInstant())
+            ));
         }
 
         List<Appointment> result = mongoTemplate.find(q, Appointment.class);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/appointments/available")
+    @Timed
+    public ResponseEntity<Boolean> checkAvailability(@RequestBody AppointmentCriteria criteria) {
+        boolean available = false;
+        System.out.print(getAppointmentsByCriteria(criteria).getBody());
+        if(getAppointmentsByCriteria(criteria).getBody().isEmpty()) {
+            available = true;
+        } else {
+            available = false;
+        }
+        return new ResponseEntity<>(available, HttpStatus.OK);
     }
 }

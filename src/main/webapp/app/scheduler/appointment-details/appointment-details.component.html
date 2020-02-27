@@ -10,22 +10,20 @@
             <fa-icon id="delete-button" type="button" [icon]="'trash'" (click)="deleteAppointment()"></fa-icon>
         </div>
         <div fxFlex>
-            <form name="appointmentForm" [formGroup]="appointmentForm">
-                <div fxLayout="row" fxLayoutGap="5px">
-                    <div class="form-group">
-                        <label for="start">From</label>
-                        <input id="start" class="form-control" formControlName="start" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="end">To</label>
-                        <input id="end" class="form-control" formControlName="end" readonly>
-                    </div>
-                </div> 
+            <form name="appointmentForm" [formGroup]="appointmentForm"> 
                 <div class="form-group">
                   <input type="text"
                         class="form-control"
                         placeholder="Title"
                         formControlName="title">
+                </div>
+                <div fxLayout="row" fxLayoutGap="5px">
+                    <div class="form-group">
+                        <input id="start" class="form-control" formControlName="start">
+                    </div>
+                    <div class="form-group">
+                        <input id="end" class="form-control" formControlName="end">
+                    </div>
                 </div>
                 <div class="form-group">
                     <textarea class="form-control"
