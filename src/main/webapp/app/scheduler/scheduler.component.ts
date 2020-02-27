@@ -56,13 +56,17 @@ export class SchedulerComponent implements OnInit {
     return new Appointment(appointmentData.id, appointmentData.title, appointmentData.extendedProps.description, startDate, endDate);
   }
 
-  initAppointment(appointmentData: any) {
-    const startDate = new Date(appointmentData.start);
-    const endDate = new Date(appointmentData.end);
+  initAppointment(appointmentData?: any) {
+    const startDate = appointmentData ? new Date(appointmentData.start) : new Date();
+    const endDate = appointmentData ? new Date(appointmentData.end) : new Date();
     const newAppointment = new Appointment();
     newAppointment.start = startDate;
     newAppointment.end = endDate;
     return newAppointment;
+  }
+
+  onNewAppointment() {
+    this.appointmentStore.select(this.initAppointment());
   }
 
   onViewChange($event) {

@@ -7,7 +7,8 @@ import { map, catchError } from 'rxjs/operators';
 import { IRestResponse, RestResponse, IRestError } from 'app/core/models/rest.model';
 import { RestUtils } from 'app/core/utils/rest-utils';
 import { AppointmentCriteria } from './appointment.criteria'; // --> OFF
-/* eslint prefer-const: 0 */ @Injectable({
+/* eslint prefer-const: 0 */
+@Injectable({
   providedIn: 'root'
 })
 export class AppointmentStore {
@@ -66,7 +67,7 @@ export class AppointmentStore {
   create(appointment: Appointment) {
     const copy = this.convert(appointment);
     this.http
-      .post(this.resourceUrl, copy)
+      .post<Appointment>(this.resourceUrl, copy)
       .pipe(
         map(res => {
           let response: IRestResponse = new RestResponse();
@@ -94,7 +95,7 @@ export class AppointmentStore {
     console.log(copy);
 
     this.http
-      .put(this.resourceUrl, copy)
+      .put<Appointment>(this.resourceUrl, copy)
       .pipe(
         map(res => {
           let response: IRestResponse = new RestResponse();
