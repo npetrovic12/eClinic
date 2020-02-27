@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Appointment } from '../appointment.model';
 import { Observable } from 'rxjs';
 import { AppointmentStore } from '../appointmentStore.service';
-import { type } from 'os';
 /* eslint prefer-const: 0 */
 @Component({
   selector: 'appointment-details',
