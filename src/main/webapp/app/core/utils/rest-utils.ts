@@ -2,7 +2,7 @@ import { IRestError, RestError } from '../models/rest.model';
 
 export class RestUtils {
   public static formRestErrorObject(error): IRestError {
-    let restError: IRestError = new RestError();
+    const restError: IRestError = new RestError();
     restError.status = error.status;
     restError.statusText = error.statusText;
     restError.message = error.message;
