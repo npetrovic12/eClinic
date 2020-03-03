@@ -40,7 +40,7 @@ spring:
       enabled: false
   data:
     mongodb:
-      uri: mongodb://localhost:27017
+      uri: mongodb+srv://admin:admin@eclinic-miqq5.mongodb.net/test?retryWrites=true&w=majority
       database: eClinic
   mail:
     host: localhost
