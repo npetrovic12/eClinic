@@ -6,6 +6,8 @@ import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { Appointment } from './appointment.model';
 import { AppointmentStore } from './appointmentStore.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/internal/operators/map';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'scheduler',
@@ -25,13 +27,15 @@ export class SchedulerComponent implements OnInit {
   };
   events: Observable<Appointment[]>;
   calendarEvents: Appointment[];
-  constructor(private appointmentStore: AppointmentStore) {}
+  constructor(private store: AppointmentStore) {}
 
   ngOnInit() {
-    this.events = this.appointmentStore.appointmentList;
-    this.events.subscribe(ev => {
-      this.calendarEvents = ev;
-    });
+    this.store.state$
+      .pipe(
+        map(state => state.appointmentList),
+        distinctUntilChanged()
+      )
+      .subscribe(res => (this.calendarEvents = res));
   }
 
   toggleVisible() {
@@ -44,9 +48,9 @@ export class SchedulerComponent implements OnInit {
 
   handleEventClick(args: any) {
     if (args.event) {
-      this.appointmentStore.select(this.readAppointment(args.event));
+      this.store.select(this.readAppointment(args.event));
     } else {
-      this.appointmentStore.select(this.initAppointment(args));
+      this.store.select(this.initAppointment(args));
     }
   }
 
@@ -66,13 +70,13 @@ export class SchedulerComponent implements OnInit {
   }
 
   onNewAppointment() {
-    this.appointmentStore.select(this.initAppointment());
+    this.store.select(this.initAppointment());
   }
 
   onViewChange($event) {
     const startDate = new Date($event.currentStart);
     const endDate = new Date($event.currentEnd);
-    this.appointmentStore.query(startDate, endDate);
+    this.store.fetchAppointments(startDate, endDate);
   }
 
   onUserSelected(data: any) {

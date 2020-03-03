@@ -9,8 +9,11 @@ import { GenericAutocompleteComponent } from './generic-autocomplete/generic-aut
 import { GenericModalComponent } from './generic-modal/generic-modal.component';
 import { ChipFormatPipe } from './chip-select/chip-format.pipe';
 import { ChipSelectComponent } from './chip-select/chip-select.component';
+import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
-  imports: [EClinicSharedLibsModule],
+  imports: [EClinicSharedLibsModule, NgbModule, FlexLayoutModule],
   declarations: [
     FindLanguageFromKeyPipe,
     JhiAlertComponent,
@@ -20,7 +23,8 @@ import { ChipSelectComponent } from './chip-select/chip-select.component';
     GenericAutocompleteComponent,
     GenericModalComponent,
     ChipFormatPipe,
-    ChipSelectComponent
+    ChipSelectComponent,
+    DateTimeInputComponent
   ],
   entryComponents: [LoginFormComponent],
   exports: [
@@ -33,7 +37,8 @@ import { ChipSelectComponent } from './chip-select/chip-select.component';
     GenericAutocompleteComponent,
     GenericModalComponent,
     ChipFormatPipe,
-    ChipSelectComponent
+    ChipSelectComponent,
+    DateTimeInputComponent
   ]
 })
 export class EClinicSharedModule {}
