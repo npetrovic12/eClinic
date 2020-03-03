@@ -6,9 +6,6 @@
         </span>
     </div>
     <div fxLayout="column" *ngIf="appointment">
-        <div fxFlex class="details-header">
-            <fa-icon id="delete-button" type="button" [icon]="'trash'" (click)="deleteAppointment()"></fa-icon>
-        </div>
         <div fxFlex>
             <form name="appointmentForm" [formGroup]="appointmentForm"> 
                 <div class="form-group">
@@ -17,12 +14,13 @@
                         placeholder="Title"
                         formControlName="title">
                 </div>
-                <div fxLayout="row" fxLayoutGap="5px">
+                <div fxLayout="column" fxLayoutGap="5px">
+                    <date-time-input></date-time-input>
+                    <!-- <div class="form-group">
+                        <input type="datetime-local" id="start" class="form-control" formControlName="start">
+                    </div> -->
                     <div class="form-group">
-                        <input id="start" class="form-control" formControlName="start">
-                    </div>
-                    <div class="form-group">
-                        <input id="end" class="form-control" formControlName="end">
+                        <input type="datetime-local" id="end" class="form-control" formControlName="end">
                     </div>
                 </div>
                 <div class="form-group">
@@ -36,6 +34,9 @@
                     class="btn btn-primary"
                     [disabled]="appointmentForm.invalid"
                     (click)="saveAppointment()">Save</button>
+                <button *ngIf="editMode" type="button"
+                    class="btn btn-danger"
+                    (click)="deleteAppointment()">Delete</button>
             </form>
         </div>
         

@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Appointment } from '../appointment.model';
 import { Observable } from 'rxjs';
 import { AppointmentStore } from '../appointmentStore.service';
+import { map } from 'rxjs/internal/operators/map';
+import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
 /* eslint prefer-const: 0 */
 @Component({
   selector: 'appointment-details',
@@ -18,15 +20,26 @@ export class AppointmentDetailsComponent implements OnInit {
   appointmentForm: FormGroup;
   appointmentSelected = false;
 
-  constructor(private formBuilder: FormBuilder, private appointmentStore: AppointmentStore) {}
+  constructor(private formBuilder: FormBuilder, private store: AppointmentStore) {}
 
   ngOnInit() {
-    this.appointmentStore.selectedAppointment.subscribe(res => {
-      this.appointment = res;
-      if (!this.appointment) return;
-      this.appointmentForm = this.createAppointmentForm();
-    });
-    this.$editMode = this.appointmentStore.editMode;
+    this.store.state$
+      .pipe(
+        map(state => state.selectedAppointment),
+        distinctUntilChanged()
+      )
+      .subscribe(res => {
+        this.appointment = res;
+        if (!this.appointment) return;
+        this.appointmentForm = this.createAppointmentForm();
+      });
+
+    this.store.state$
+      .pipe(
+        map(state => state.editMode),
+        distinctUntilChanged()
+      )
+      .subscribe(res => (this.editMode = res));
   }
 
   createAppointmentForm() {
@@ -41,13 +54,13 @@ export class AppointmentDetailsComponent implements OnInit {
   saveAppointment() {
     this.appointment = Object.assign(this.appointment, this.appointmentForm.getRawValue());
     if (this.appointment.id) {
-      this.appointmentStore.update(this.appointment);
+      this.store.updateAppointment(this.appointment);
     } else {
-      this.appointmentStore.create(this.appointment);
+      this.store.addAppointment(this.appointment);
     }
   }
 
   deleteAppointment() {
-    this.appointmentStore.delete(this.appointment.id);
+    this.store.deleteAppointment(this.appointment.id);
   }
 }

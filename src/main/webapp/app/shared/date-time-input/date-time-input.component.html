@@ -1,0 +1,15 @@
+<div fxLayout="row" fx fxLayoutGap="5px">
+    <input fxFlex class="form-control" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+    <div fxFlex class="input-group">
+        <input class="form-control time-input">
+        <div class="input-group-append arrow-container">
+            <fa-icon class="arrow-icon" type="button" icon="caret-down"></fa-icon>
+        </div>
+    </div>
+</div>
+
+<ng-template #times>
+    <div>
+
+    </div>
+</ng-template>
