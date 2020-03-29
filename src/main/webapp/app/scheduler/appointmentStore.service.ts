@@ -15,7 +15,14 @@ export class AppointmentStore extends Store<SchedulerState> {
     this.setState({
       ...this.state,
       selectedAppointment: appointment,
-      editMode: appointment.id ? true : false
+      editMode: !!appointment.id
+    });
+  }
+
+  selectDoctor(doctor: any) {
+    this.setState({
+      ...this.state,
+      selectedDoctor: doctor
     });
   }
 
@@ -27,8 +34,8 @@ export class AppointmentStore extends Store<SchedulerState> {
     });
   }
 
-  fetchAppointments(startDate?: Date, endDate?: Date, searchText?: string) {
-    this.appointmentService.filter(startDate, endDate, searchText).subscribe(response => {
+  fetchAppointments(startDate?: Date, endDate?: Date, doctor?: string, searchText?: string) {
+    this.appointmentService.filter(startDate, endDate, doctor, searchText).subscribe(response => {
       this.setState({
         ...this.state,
         appointmentList: response.data
@@ -48,16 +55,16 @@ export class AppointmentStore extends Store<SchedulerState> {
     });
   }
 
-  updateAppointment(appointment: Appointment) {
-    const copy = this.convert(appointment);
+  updateAppointment(updatedAppointment: Appointment) {
+    const copy = this.convert(updatedAppointment);
     this.appointmentService.update(copy).subscribe(result => {
       this.setState({
         ...this.state,
         selectedAppointment: result.data,
         editMode: true,
-        appointmentList: this.state.appointmentList.map((app, index) => {
-          if (app.id === appointment.id) return appointment;
-          return app;
+        appointmentList: this.state.appointmentList.map(appointment => {
+          if (appointment.id === updatedAppointment.id) return updatedAppointment;
+          return appointment;
         })
       });
     });
@@ -82,6 +89,7 @@ export class AppointmentStore extends Store<SchedulerState> {
 
 export class SchedulerState {
   selectedAppointment: Appointment = null;
+  selectedDoctor: any = null;
   editMode = false;
   appointmentList: Appointment[] = [];
 }

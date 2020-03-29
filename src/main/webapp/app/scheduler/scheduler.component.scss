@@ -9,4 +9,8 @@
   #newAppointment {
     margin-left: auto;
   }
+
+  ::ng-deep .fc-highlight {
+    background-color: #005ba1;
+  }
 }
