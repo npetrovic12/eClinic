@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -25,6 +26,10 @@ public class Appointment implements Serializable {
     @Field("description")
     @TextIndexed
     private String description;
+
+    @Field("doctor")
+    @DBRef
+    private User doctor;
 
     @Field("appointmentStart")
     private Instant start;
@@ -70,6 +75,14 @@ public class Appointment implements Serializable {
 
     public void setEnd(Instant end) {
         this.end = end;
+    }
+
+    public User getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(User doctor) {
+        this.doctor = doctor;
     }
 }
 

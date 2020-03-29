@@ -1,4 +1,4 @@
-<div fxLayout="column">
+<div fxLayout="column" fxLayoutGap="10px">
     <div fxFlex>
         <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
             <div class="form-group">
@@ -29,13 +29,13 @@
                     <span jhiTranslate="login.form.rememberme">Remember me</span>
                 </label>
             </div>
+            <p></p>
             <button type="submit" class="btn btn-primary" jhiTranslate="login.form.button">Log in</button>
-        </form>
-        <p></p>
-        <div fxFlex>
-            <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
-            </div>
+        </form>        
+    </div>
+    <div fxFlex>
+        <div class="alert alert-danger" *ngIf="authenticationError" jhiTranslate="login.messages.error.authentication">
+            <strong>Failed to sign in!</strong> Please check your credentials and try again.
         </div>
         <div class="alert alert-warning">
             <a class="alert-link" (click)="requestResetPassword()" jhiTranslate="login.password.forgot">Did you forget your password?</a>
@@ -45,3 +45,4 @@
             <a class="alert-link" (click)="register()" jhiTranslate="global.messages.info.register.link">Register a new account</a>
         </div>
     </div>
+</div>

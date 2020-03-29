@@ -20,6 +20,7 @@ import com.eclinic.domain.dto.AppointmentCriteria;
 import com.eclinic.web.rest.errors.BadRequestAlertException;
 import com.eclinic.util.misc.Misc;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,6 +100,16 @@ public class AppointmentResource {
         if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {
             String searchText = Misc.enableAndSearchText(criteria.getSearchText());
             q.addCriteria(TextCriteria.forDefaultLanguage().caseSensitive(false).matching(searchText));
+        }
+
+        String doctorId = criteria.getDoctorId();
+        System.out.println(doctorId);
+        if(criteria != null && doctorId != null && !"".equals(doctorId.trim())) {
+            try {
+                q.addCriteria(Criteria.where("doctor.$id").is(new ObjectId(doctorId)));   
+            } catch (Exception e) {
+                q.addCriteria(Criteria.where("doctor.$id").is(doctorId));
+            }
         }
 
         if(criteria != null && criteria.getStartDate() != null && criteria.getEndDate() != null) {

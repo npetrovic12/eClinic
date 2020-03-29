@@ -10,6 +10,7 @@ public class AppointmentCriteria {
     private String searchText;
     private Instant startDate;
     private Instant endDate;
+    private String doctorId;
 
     public String getSearchText() {
         return searchText;
@@ -33,5 +34,13 @@ public class AppointmentCriteria {
 
     public void setEndDate(Instant endDate) {
         this.endDate = endDate;
+    }
+
+    public String getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(String doctorId) {
+        this.doctorId = doctorId;
     }
 }

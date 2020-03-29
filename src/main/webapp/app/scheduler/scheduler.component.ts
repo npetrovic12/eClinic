@@ -1,20 +1,21 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { Appointment } from './appointment.model';
 import { AppointmentStore } from './appointmentStore.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { distinctUntilChanged } from 'rxjs/operators';
+import { User } from 'app/core/user/user.model';
 
 @Component({
   selector: 'scheduler',
   templateUrl: './scheduler.component.html',
   styleUrls: ['./scheduler.component.scss']
 })
-export class SchedulerComponent implements OnInit {
+export class SchedulerComponent implements OnInit, OnDestroy {
   @ViewChild('calendar', { static: true }) calendarComponent: FullCalendarComponent; // the #calendar in the template
   @Input() calendarSlotDuration = '00:30:00';
   calendarVisible = true;
@@ -27,15 +28,29 @@ export class SchedulerComponent implements OnInit {
   };
   events: Observable<Appointment[]>;
   calendarEvents: Appointment[];
+  calendarEvents$: Subscription;
+  selectedDoctor: User;
+  selectedDoctor$: Subscription;
   constructor(private store: AppointmentStore) {}
 
+  ngOnDestroy(): void {
+    this.calendarEvents$.unsubscribe();
+  }
+
   ngOnInit() {
-    this.store.state$
+    this.calendarEvents$ = this.store.state$
       .pipe(
         map(state => state.appointmentList),
         distinctUntilChanged()
       )
       .subscribe(res => (this.calendarEvents = res));
+
+    this.selectedDoctor$ = this.store.state$
+      .pipe(
+        map(state => state.selectedDoctor),
+        distinctUntilChanged()
+      )
+      .subscribe(res => (this.selectedDoctor = res));
   }
 
   toggleVisible() {
@@ -57,7 +72,14 @@ export class SchedulerComponent implements OnInit {
   readAppointment(appointmentData: any) {
     const startDate = new Date(appointmentData.start);
     const endDate = new Date(appointmentData.end);
-    return new Appointment(appointmentData.id, appointmentData.title, appointmentData.extendedProps.description, startDate, endDate);
+    return new Appointment(
+      appointmentData.id,
+      appointmentData.title,
+      appointmentData.extendedProps.description,
+      appointmentData.extendedProps.doctor,
+      startDate,
+      endDate
+    );
   }
 
   initAppointment(appointmentData?: any) {
@@ -66,6 +88,7 @@ export class SchedulerComponent implements OnInit {
     const newAppointment = new Appointment();
     newAppointment.start = startDate;
     newAppointment.end = endDate;
+    newAppointment.doctor = this.selectedDoctor;
     return newAppointment;
   }
 
@@ -76,10 +99,10 @@ export class SchedulerComponent implements OnInit {
   onViewChange($event) {
     const startDate = new Date($event.currentStart);
     const endDate = new Date($event.currentEnd);
-    this.store.fetchAppointments(startDate, endDate);
+    this.store.fetchAppointments(startDate, endDate, this.selectedDoctor.id);
   }
 
   onUserSelected(data: any) {
-    console.log(data);
+    this.store.selectDoctor(data);
   }
 }

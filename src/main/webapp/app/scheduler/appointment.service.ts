@@ -15,8 +15,8 @@ export class AppointmentService {
   private resourceUrl = SERVER_API_URL + 'api/appointments';
   constructor(private http: HttpClient) {}
 
-  filter(startDate?: Date, endDate?: Date, searchText?: string) {
-    const criteria = new AppointmentCriteria(searchText, startDate, endDate);
+  filter(startDate?: Date, endDate?: Date, doctor?: string, searchText?: string) {
+    const criteria = new AppointmentCriteria(searchText, startDate, endDate, doctor);
     return this.http.post(this.resourceUrl + '/filter', criteria, { observe: 'response' }).pipe(
       map(res => {
         const result: any = res.body;

@@ -18,21 +18,21 @@
     color: #7b8a8b;
   }
 
-  .input-group > input:focus {
-    box-shadow: none;
-  }
+  // .input-group > input:focus {
+  //   box-shadow: none;
+  // }
 
-  .input-group:focus-within {
-    border-radius: 0.25rem;
-    box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    .arrow-container {
-      background-color: #fff;
-      border-color: #597ea2 !important;
-      outline: 0;
-    }
-    .arrow-icon {
-      color: #212529;
-    }
-  }
+  // .input-group:focus-within {
+  //   border-radius: 0.25rem;
+  //   box-shadow: 0 0 0 0.2rem rgba(44, 62, 80, 0.25);
+  //   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  //   .arrow-container {
+  //     background-color: #fff;
+  //     border-color: #597ea2 !important;
+  //     outline: 0;
+  //   }
+  //   .arrow-icon {
+  //     color: #212529;
+  //   }
+  // }
 }
