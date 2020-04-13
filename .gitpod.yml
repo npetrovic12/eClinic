@@ -1,0 +1,5 @@
+tasks:
+  - init: yarn install && yarn run build && ./mvnw install -DskipTests=false
+    command: yarn run start
+image:
+  file: .gitpod.Dockerfile
