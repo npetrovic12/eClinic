@@ -1,45 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Appointment } from '../appointment.model';
-import { Observable } from 'rxjs';
-import { AppointmentStore } from '../appointmentStore.service';
+import { Store, select } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
+import * as fromRoot from '../../store/app.reducer';
+import * as SchedulerActions from '../store/scheduler.actions';
+import { Appointment } from '../appointment.model';
 /* eslint prefer-const: 0 */
 @Component({
   selector: 'appointment-details',
   templateUrl: './appointment-details.component.html',
   styleUrls: ['./appointment-details.component.scss']
 })
-export class AppointmentDetailsComponent implements OnInit {
-  $appointment: Observable<Appointment>;
-  $editMode: Observable<boolean>;
+export class AppointmentDetailsComponent implements OnInit, OnDestroy {
+  appointment$: Observable<Appointment>;
+  editMode$: Observable<boolean>;
+
+  onAppointmentChange: Subscription;
+
   appointment: Appointment;
-  editMode: boolean;
-
   appointmentForm: FormGroup;
-  appointmentSelected = false;
 
-  constructor(private formBuilder: FormBuilder, private store: AppointmentStore) {}
+  constructor(private formBuilder: FormBuilder, private store: Store<fromRoot.State>) {
+    this.appointment$ = this.store.select(fromRoot.getSelectedAppointment);
+    this.editMode$ = this.store.select(fromRoot.getEditMode);
+  }
+
+  ngOnDestroy(): void {
+    this.onAppointmentChange.unsubscribe();
+  }
 
   ngOnInit() {
-    this.store.state$
-      .pipe(
-        map(state => state.selectedAppointment),
-        distinctUntilChanged()
-      )
-      .subscribe(res => {
-        this.appointment = res;
-        if (!this.appointment) return;
-        this.appointmentForm = this.createAppointmentForm();
-      });
-
-    this.store.state$
-      .pipe(
-        map(state => state.editMode),
-        distinctUntilChanged()
-      )
-      .subscribe(res => (this.editMode = res));
+    this.onAppointmentChange = this.appointment$.subscribe(selectedAppointment => {
+      this.appointment = selectedAppointment ? { ...selectedAppointment } : null;
+      if (!this.appointment) return;
+      this.appointmentForm = this.createAppointmentForm();
+    });
   }
 
   createAppointmentForm() {
@@ -52,15 +49,15 @@ export class AppointmentDetailsComponent implements OnInit {
   }
 
   saveAppointment() {
-    this.appointment = Object.assign(this.appointment, this.appointmentForm.getRawValue());
+    Object.assign(this.appointment, this.appointmentForm.getRawValue());
     if (this.appointment.id) {
-      this.store.updateAppointment(this.appointment);
+      this.store.dispatch(SchedulerActions.tryUpdateAppointment({ appointment: this.appointment }));
     } else {
-      this.store.addAppointment(this.appointment);
+      this.store.dispatch(SchedulerActions.tryAddAppointment({ appointment: this.appointment }));
     }
   }
 
   deleteAppointment() {
-    this.store.deleteAppointment(this.appointment.id);
+    this.store.dispatch(SchedulerActions.tryDeleteAppointment({ appointmentId: this.appointment.id }));
   }
 }

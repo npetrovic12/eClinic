@@ -4,11 +4,11 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { Appointment } from './appointment.model';
-import { AppointmentStore } from './appointmentStore.service';
 import { Observable, Subscription } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
-import { distinctUntilChanged } from 'rxjs/operators';
 import { User } from 'app/core/user/user.model';
+import * as SchedulerActions from './store/scheduler.actions';
+import * as fromRoot from '../store/app.reducer';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'scheduler',
@@ -28,29 +28,16 @@ export class SchedulerComponent implements OnInit, OnDestroy {
   };
   events: Observable<Appointment[]>;
   calendarEvents: Appointment[];
-  calendarEvents$: Subscription;
+  appointments$: Observable<Appointment[]>;
   selectedDoctor: User;
   selectedDoctor$: Subscription;
-  constructor(private store: AppointmentStore) {}
+  constructor(private store: Store<fromRoot.State>) {}
 
-  ngOnDestroy(): void {
-    this.calendarEvents$.unsubscribe();
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit() {
-    this.calendarEvents$ = this.store.state$
-      .pipe(
-        map(state => state.appointmentList),
-        distinctUntilChanged()
-      )
-      .subscribe(res => (this.calendarEvents = res));
-
-    this.selectedDoctor$ = this.store.state$
-      .pipe(
-        map(state => state.selectedDoctor),
-        distinctUntilChanged()
-      )
-      .subscribe(res => (this.selectedDoctor = res));
+    this.appointments$ = this.store.select(fromRoot.getAppointmentList);
+    this.store.select(fromRoot.getSelectedDoctor).subscribe(doctor => (this.selectedDoctor = doctor));
   }
 
   toggleVisible() {
@@ -62,11 +49,27 @@ export class SchedulerComponent implements OnInit, OnDestroy {
   }
 
   handleEventClick(args: any) {
-    if (args.event) {
-      this.store.select(this.readAppointment(args.event));
-    } else {
-      this.store.select(this.initAppointment(args));
-    }
+    this.store.dispatch(
+      SchedulerActions.setSelectedAppointment({ appointment: args.event ? this.readAppointment(args.event) : this.initAppointment(args) })
+    );
+  }
+
+  onNewAppointment() {
+    this.store.dispatch(SchedulerActions.setSelectedAppointment({ appointment: this.initAppointment() }));
+  }
+
+  onViewChange($event) {
+    const startDate = new Date($event.currentStart);
+    const endDate = new Date($event.currentEnd);
+    this.store.dispatch(SchedulerActions.tryGetAppointments({ startDate, endDate }));
+  }
+
+  onUserSelected(data: any) {
+    this.store.dispatch(SchedulerActions.setSelectDoctor({ user: data }));
+  }
+
+  onUserCleared() {
+    this.store.dispatch(SchedulerActions.clearSelectedDoctor());
   }
 
   readAppointment(appointmentData: any) {
@@ -85,24 +88,6 @@ export class SchedulerComponent implements OnInit, OnDestroy {
   initAppointment(appointmentData?: any) {
     const startDate = appointmentData ? new Date(appointmentData.start) : new Date();
     const endDate = appointmentData ? new Date(appointmentData.end) : new Date();
-    const newAppointment = new Appointment();
-    newAppointment.start = startDate;
-    newAppointment.end = endDate;
-    newAppointment.doctor = this.selectedDoctor;
-    return newAppointment;
-  }
-
-  onNewAppointment() {
-    this.store.select(this.initAppointment());
-  }
-
-  onViewChange($event) {
-    const startDate = new Date($event.currentStart);
-    const endDate = new Date($event.currentEnd);
-    this.store.fetchAppointments(startDate, endDate, this.selectedDoctor.id);
-  }
-
-  onUserSelected(data: any) {
-    this.store.selectDoctor(data);
+    return new Appointment(null, null, null, this.selectedDoctor, startDate, endDate);
   }
 }

@@ -14,6 +14,7 @@ import { PageRibbonComponent } from './layouts/profiles/page-ribbon.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { SchedulerModule } from './scheduler/scheduler.module';
+import { EClinicAppStoreModule } from './store/app.store.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { SchedulerModule } from './scheduler/scheduler.module';
     EClinicCoreModule,
     EClinicHomeModule,
     SchedulerModule,
+    EClinicAppStoreModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     EClinicEntityModule,
     EClinicAppRoutingModule

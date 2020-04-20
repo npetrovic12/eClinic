@@ -19,18 +19,19 @@ export class GenericAutocompleteComponent implements OnInit {
   @Input() placeholder: string;
   @Input() fieldsToDisplay: string[];
   @Input() disabled = false;
-  @Output() selectedItem = new EventEmitter<any>();
+  @Output() itemSelected = new EventEmitter<any>();
+  @Output() itemCleared = new EventEmitter<any>();
 
   constructor(private genericAutocompleteService: GenericAutocompleteService) {}
 
   ngOnInit() {}
 
   showSelected(item: any) {
-    this.selectedItem.emit(item);
+    this.itemSelected.emit(item);
   }
 
   clearSelected() {
-    this.selectedItem.emit(null);
+    this.itemCleared.emit();
     this.model = null;
   }
 
