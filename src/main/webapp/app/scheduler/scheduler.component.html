@@ -8,9 +8,10 @@
             [apiUrl]="'/api/users/filter'"
             [fieldsToDisplay]="['firstName', 'lastName']"
             [disabled]="false"
-            (selectedItem)="onUserSelected($event)">
+            (itemSelected)="onUserSelected($event)"
+            (itemCleared)="onUserCleared()">
         </generic-autocomplete>
-        <button id="newAppointment" class="btn btn-primary" (click)="onNewAppointment()">
+        <button id="newAppointment" [disabled]="!this.selectedDoctor" class="btn btn-primary" (click)="onNewAppointment()">
           <fa-icon [icon]="'plus'"></fa-icon> <span>New Appointment</span>
         </button>
       </div>
@@ -23,7 +24,7 @@
             [header]="calendarHeader"
             [plugins]="calendarPlugins"
             [weekends]="calendarWeekends"
-            [events]="calendarEvents"
+            [events]="appointments$ | async"
             height="parent"
             [selectMirror]="false"
             [businessHours]="true"
