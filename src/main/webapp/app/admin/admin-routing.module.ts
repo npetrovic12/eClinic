@@ -27,10 +27,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./health/health.module').then(m => m.HealthModule)
       },
       {
-        path: 'logs',
-        loadChildren: () => import('./logs/logs.module').then(m => m.LogsModule)
-      },
-      {
         path: 'metrics',
         loadChildren: () => import('./metrics/metrics.module').then(m => m.MetricsModule)
       }
