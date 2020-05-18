@@ -11,10 +11,6 @@ import { RouterModule } from '@angular/router';
         loadChildren: () => import('./user-management/user-management.module').then(m => m.UserManagementModule)
       },
       {
-        path: 'audits',
-        loadChildren: () => import('./audits/audits.module').then(m => m.AuditsModule)
-      },
-      {
         path: 'docs',
         loadChildren: () => import('./docs/docs.module').then(m => m.DocsModule)
       }
