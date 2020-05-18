@@ -21,10 +21,6 @@ import { RouterModule } from '@angular/router';
       {
         path: 'docs',
         loadChildren: () => import('./docs/docs.module').then(m => m.DocsModule)
-      },
-      {
-        path: 'health',
-        loadChildren: () => import('./health/health.module').then(m => m.HealthModule)
       }
       /* jhipster-needle-add-admin-route - JHipster will add admin routes here */
     ])
