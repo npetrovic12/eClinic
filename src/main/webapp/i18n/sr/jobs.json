@@ -1,0 +1,10 @@
+{
+  "jobs": {
+    "list": {
+      "empty": "Nema pozicija za prikaz"
+    },
+    "details": {
+      "empty": "Selektuj poziciju"
+    }
+  }
+}

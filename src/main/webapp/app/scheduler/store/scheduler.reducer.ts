@@ -31,7 +31,7 @@ export const initialState: State = {
 const schedulerReducer = createReducer(
   initialState,
   on(SchedulerActions.setSelectDoctor, (state, action) => ({ ...state, selectedDoctor: action.user })),
-  on(SchedulerActions.clearSelectedDoctor, (state, action) => ({
+  on(SchedulerActions.clearSelectedDoctor, state => ({
     ...state,
     selectedDoctor: null,
     selectedAppointment: null,
@@ -39,25 +39,25 @@ const schedulerReducer = createReducer(
     appointmentCount: 0,
     appointmentList: []
   })),
-  on(SchedulerActions.tryGetAppointments, (state, action) => ({ ...state, loadingAppointments: true })),
+  on(SchedulerActions.tryGetAppointments, state => ({ ...state, loadingAppointments: true })),
   on(SchedulerActions.getAppointmentListSuccess, (state, action) => ({
     ...state,
     loadingAppointments: false,
     appointmentList: [...action.appointments],
     appointmentCount: action.count
   })),
-  on(SchedulerActions.getAppointmentListError, (state, action) => ({ ...state, loadingAppointments: false })),
+  on(SchedulerActions.getAppointmentListError, state => ({ ...state, loadingAppointments: false })),
   on(SchedulerActions.setSelectedAppointment, (state, action) => ({
     ...state,
     selectedAppointment: action.appointment,
     editMode: !!action.appointment.id
   })),
-  on(SchedulerActions.clearSelectedAppointment, (state, action) => ({
+  on(SchedulerActions.clearSelectedAppointment, state => ({
     ...state,
     selectedAppointment: null,
     editMode: false
   })),
-  on(SchedulerActions.tryAddAppointment, (state, action) => ({ ...state, savingAppointment: true })),
+  on(SchedulerActions.tryAddAppointment, state => ({ ...state, savingAppointment: true })),
   on(SchedulerActions.addAppointmentSuccess, (state, action) => ({
     ...state,
     savingAppointment: false,
@@ -66,8 +66,8 @@ const schedulerReducer = createReducer(
     appointmentCount: state.appointmentCount + 1,
     appointmentList: [...state.appointmentList, action.appointment]
   })),
-  on(SchedulerActions.addAppointmentError, (state, action) => ({ ...state, savingAppointment: false })),
-  on(SchedulerActions.tryUpdateAppointment, (state, action) => ({ ...state, savingAppointment: true })),
+  on(SchedulerActions.addAppointmentError, state => ({ ...state, savingAppointment: false })),
+  on(SchedulerActions.tryUpdateAppointment, state => ({ ...state, savingAppointment: true })),
   on(SchedulerActions.updateAppointmentSuccess, (state, action) => ({
     ...state,
     savingAppointment: false,
@@ -78,8 +78,8 @@ const schedulerReducer = createReducer(
       return appointment;
     })
   })),
-  on(SchedulerActions.updateAppointmentError, (state, action) => ({ ...state, savingAppointment: false })),
-  on(SchedulerActions.tryDeleteAppointment, (state, action) => ({ ...state, savingAppointment: true })),
+  on(SchedulerActions.updateAppointmentError, state => ({ ...state, savingAppointment: false })),
+  on(SchedulerActions.tryDeleteAppointment, state => ({ ...state, savingAppointment: true })),
   on(SchedulerActions.deleteAppointmentSuccess, (state, action) => ({
     ...state,
     selectedAppointment: null,
@@ -88,7 +88,7 @@ const schedulerReducer = createReducer(
     appointmentList: state.appointmentList.filter(appointment => action.appointmentId !== appointment.id)
     // appointmentCount: state.appointmentCount - 1,
   })),
-  on(SchedulerActions.deleteAppointmentError, (state, action) => ({ ...state, savingAppointment: false }))
+  on(SchedulerActions.deleteAppointmentError, state => ({ ...state, savingAppointment: false }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

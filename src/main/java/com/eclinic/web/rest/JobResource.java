@@ -16,10 +16,13 @@ import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
+import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +35,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import io.github.jhipster.web.util.HeaderUtil;
+import io.github.jhipster.web.util.PaginationUtil;
 import io.micrometer.core.annotation.Timed;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api")
@@ -103,7 +109,7 @@ public class JobResource {
 
     @PostMapping("/jobs/filter")
     @Timed
-    public ResponseEntity<List<Job>> getJobsByCriteria(@RequestBody JobCriteria criteria) {
+    public ResponseEntity<List<Job>> getJobsByCriteria(@ApiParam Pageable pageable, @RequestBody JobCriteria criteria) {
         log.debug("REST request to filter jobs");
         Query q = new Query();
         if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {
@@ -123,7 +129,13 @@ public class JobResource {
             q.addCriteria(Criteria.where("bookable").is(criteria.getBookable()));
         }
 
+        if(pageable != null) {
+            q.with(pageable);
+        }
+
         List<Job> result = mongoTemplate.find(q, Job.class);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        Page<Job> page = PageableExecutionUtils.getPage(result, pageable, () -> mongoTemplate.count(q, Job.class));
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(UriComponentsBuilder.fromPath("api/jobs/filter"), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

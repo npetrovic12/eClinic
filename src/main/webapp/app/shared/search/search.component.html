@@ -1,0 +1,12 @@
+<div fxLayout="row" fxLayoutGap="10px">
+    <input fxFlex="2 1 200px"
+        id="searchInput"
+        [formControl]="searchInput"
+        type="text"
+        class="form-control"
+        [placeholder]="placeholder"
+        (keydown.enter)="onSearch()">  
+    <button fxFlex="1 1" id="searchButton" class="btn btn-primary" (click)="onSearch()">
+        <fa-icon [icon]="'search'"></fa-icon> <span>Search</span>
+    </button>
+</div>

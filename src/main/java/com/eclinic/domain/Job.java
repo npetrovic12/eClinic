@@ -24,6 +24,7 @@ public class Job implements Serializable {
     @TextIndexed
     private String title;
 
+    @ApiModelProperty(required = false)
     @Field("description")
     @TextIndexed
     private String description;

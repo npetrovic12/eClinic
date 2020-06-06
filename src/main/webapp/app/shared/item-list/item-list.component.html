@@ -1,0 +1,25 @@
+<div fxLayout="column" class="list-wrapper">
+    <div fxFlex="1 1 650px" class="list">
+        <ng-container *ngIf="!this.loading && this.listItems?.length > 0">
+            <ng-container *ngFor="let item of this.listItems;">
+                <ng-container [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+            </ng-container>
+        </ng-container>
+        <div *ngIf="!this.loading && this.listItems?.length === 0" class="hint-text">
+            <span>There is no jobs to display</span>
+        </div>
+        <div *ngIf="this.loading">
+            <span>Spinner</span>
+        </div>
+    </div>
+    <div fxFlex="0 1 48px" class="list-footer">
+        <ngb-pagination class="d-flex justify-content-end"
+            [collectionSize]="listSize"
+            [(page)]="page"
+            [pageSize]="pageSize"
+            [maxSize]="maxPaginationSize"
+            [rotate]="true"
+            (pageChange)="onPageChange($event)">
+        </ngb-pagination>
+    </div>
+</div>

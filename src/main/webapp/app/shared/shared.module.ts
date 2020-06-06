@@ -12,33 +12,46 @@ import { ChipSelectComponent } from './chip-select/chip-select.component';
 import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ItemListComponent } from './item-list/item-list.component';
+import { SearchComponent } from './search/search.component';
 @NgModule({
   imports: [EClinicSharedLibsModule, NgbModule, FlexLayoutModule],
   declarations: [
-    FindLanguageFromKeyPipe,
+    // components
     JhiAlertComponent,
     JhiAlertErrorComponent,
     LoginFormComponent,
-    HasAnyAuthorityDirective,
     GenericAutocompleteComponent,
     GenericModalComponent,
-    ChipFormatPipe,
     ChipSelectComponent,
-    DateTimeInputComponent
+    DateTimeInputComponent,
+    ItemListComponent,
+    SearchComponent,
+    // directives
+    HasAnyAuthorityDirective,
+    // pipes
+    FindLanguageFromKeyPipe,
+    ChipFormatPipe
   ],
   entryComponents: [LoginFormComponent],
   exports: [
+    // modules
     EClinicSharedLibsModule,
-    FindLanguageFromKeyPipe,
+    // components
     JhiAlertComponent,
     JhiAlertErrorComponent,
     LoginFormComponent,
-    HasAnyAuthorityDirective,
     GenericAutocompleteComponent,
     GenericModalComponent,
-    ChipFormatPipe,
     ChipSelectComponent,
-    DateTimeInputComponent
+    DateTimeInputComponent,
+    ItemListComponent,
+    SearchComponent,
+    // directives
+    HasAnyAuthorityDirective,
+    // pipes
+    FindLanguageFromKeyPipe,
+    ChipFormatPipe
   ]
 })
 export class EClinicSharedModule {}

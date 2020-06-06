@@ -1,4 +1,4 @@
-import { Action, createAction, props } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { Appointment } from '../appointment.model';
 import { User } from 'app/core/user/user.model';
 
