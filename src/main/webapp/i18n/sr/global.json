@@ -22,11 +22,7 @@
         "main": "Administracija",
         "userManagement": "Korisnički manadžment",
         "tracker": "Praćenje korisnika",
-        "metrics": "Metrika",
-        "health": "Ispravnost sistema",
-        "configuration": "Konfiguracija",
-        "logs": "Logovi",
-        "audits": "Revizije",
+        "jobs": "Poslovi",
         "apidocs": "API",
         "database": "Baza podataka",
         "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"

@@ -1,4 +1,4 @@
-import { NgbTimeStruct, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
 export class TimeModel implements NgbTimeStruct {
   constructor(public hour: number, public minute: number, public second: number) {}

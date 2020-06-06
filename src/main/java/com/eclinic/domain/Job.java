@@ -1,46 +1,38 @@
 package com.eclinic.domain;
 
 import java.io.Serializable;
-import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.TextIndexed;
-import org.springframework.data.mongodb.core.mapping.DBRef;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 import io.swagger.annotations.ApiModelProperty;
 
-@Document(collection = "appointments")
-public class Appointment implements Serializable {
+@org.springframework.data.mongodb.core.mapping.Document(collection = "job")
+public class Job implements Serializable {
 
+    /**
+     *
+     */
     private static final long serialVersionUID = 1L;
 
     @Id
     private String id;
 
-    @Field("title")
     @ApiModelProperty(required = true)
+    @Field("title")
     @TextIndexed
     private String title;
 
+    @ApiModelProperty(required = false)
     @Field("description")
     @TextIndexed
     private String description;
 
     @ApiModelProperty(required = true)
-    @Field("doctor")
-    @DBRef
-    private User doctor;
-
-    @ApiModelProperty(required = true)
-    @Field("appointmentStart")
-    private Instant start;
-
-    @ApiModelProperty(required = true)
-    @Field("appointmentEnd")
-    private Instant end;
-
+    @Field("bookable")
+    private boolean bookable;
+    
     public String getId() {
         return this.id;
     }
@@ -57,7 +49,7 @@ public class Appointment implements Serializable {
         this.title = title;
     }
 
-    public String getDescription() {
+    public String getDescription(){
         return this.description;
     }
 
@@ -65,29 +57,11 @@ public class Appointment implements Serializable {
         this.description = description;
     }
 
-    public Instant getStart() {
-        return start;
+    public Boolean getBookable() {
+        return this.bookable;
     }
 
-    public void setStart(Instant start) {
-        this.start = start;
-    }
-
-    public Instant getEnd() {
-        return end;
-    }
-
-    public void setEnd(Instant end) {
-        this.end = end;
-    }
-
-    public User getDoctor() {
-        return doctor;
-    }
-
-    public void setDoctor(User doctor) {
-        this.doctor = doctor;
+    public void setBookable(Boolean bookable) {
+        this.bookable = bookable;
     }
 }
-
-    

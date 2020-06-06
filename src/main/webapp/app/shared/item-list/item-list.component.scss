@@ -1,0 +1,39 @@
+:host {
+  .list-wrapper {
+    border: 1px solid #ccc;
+    height: 700px;
+
+    .list {
+      padding: 5px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+    }
+  }
+
+  .list-footer {
+    background-color: #ebecf0;
+    border-top: 1px solid #ccc;
+  }
+
+  ::ng-deep ngb-pagination li.page-item {
+    box-shadow: none;
+  }
+
+  ::ng-deep ngb-pagination li.page-item .page-link {
+    background-color: transparent !important;
+    color: black;
+  }
+
+  ::ng-deep ngb-pagination li.page-item .page-link:focus {
+    outline: unset;
+    box-shadow: unset;
+  }
+
+  ::ng-deep ngb-pagination li.page-item .page-link:hover {
+    text-decoration: underline;
+  }
+
+  ::ng-deep ngb-pagination li.page-item.disabled .page-link {
+    color: gray;
+  }
+}

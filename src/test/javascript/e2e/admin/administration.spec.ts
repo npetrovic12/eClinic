@@ -34,13 +34,6 @@ describe('administration', () => {
     expect(value1).to.eq(expect1);
   });
 
-  it('should load health', async () => {
-    await navBarPage.clickOnAdmin('health');
-    const expect1 = 'health.title';
-    const value1 = await element(by.id('health-page-heading')).getAttribute('jhiTranslate');
-    expect(value1).to.eq(expect1);
-  });
-
   it('should load configuration', async () => {
     await navBarPage.clickOnAdmin('configuration');
     await browser.sleep(500);

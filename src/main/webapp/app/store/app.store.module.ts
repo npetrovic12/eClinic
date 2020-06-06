@@ -4,6 +4,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appReducer } from './app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { SchedulerEffects } from 'app/scheduler/store/scheduler.effects';
+import { JobsEffects } from 'app/admin/jobs/store/jobs.effects';
 
 @NgModule({
   imports: [
@@ -13,7 +14,7 @@ import { SchedulerEffects } from 'app/scheduler/store/scheduler.effects';
         strictActionImmutability: false
       }
     }),
-    EffectsModule.forRoot([SchedulerEffects]),
+    EffectsModule.forRoot([SchedulerEffects, JobsEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 15
     })

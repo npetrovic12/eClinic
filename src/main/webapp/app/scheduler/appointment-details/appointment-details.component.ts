@@ -24,7 +24,7 @@ export class AppointmentDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder, private store: Store<fromRoot.State>) {
     this.appointment$ = this.store.select(fromRoot.getSelectedAppointment);
-    this.editMode$ = this.store.select(fromRoot.getEditMode);
+    this.editMode$ = this.store.select(fromRoot.getAppointmentEditMode);
   }
 
   ngOnDestroy(): void {

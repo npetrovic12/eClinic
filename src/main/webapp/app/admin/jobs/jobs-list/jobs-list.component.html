@@ -1,0 +1,14 @@
+<div fxLayout="column">
+    <item-list fxFlex
+        [translationKey]="'jobs'"
+        [maxPaginationSize]="2"
+        [listItems]="jobs$ | async"
+        [loading]="loadingJobsList$ | async"
+        [page]="page$ | async"
+        [listSize]="jobsCount$ | async"
+        (selectedPage)="fetchJobs($event)">
+            <ng-template #listItem let-item="$implicit">
+                <jobs-list-item (click)="onItemSelected(item)" [job]="item" [ngClass]="{'selected-list-item': item.id === (selectedJob$ | async)?.id}"></jobs-list-item>
+            </ng-template>
+    </item-list>
+</div>

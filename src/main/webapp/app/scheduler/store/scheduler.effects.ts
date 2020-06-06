@@ -67,7 +67,7 @@ export class SchedulerEffects {
       ofType(SchedulerActions.tryDeleteAppointment),
       switchMap(action =>
         this.appointmentService.delete(action.appointmentId).pipe(
-          map(res => {
+          map(() => {
             return SchedulerActions.deleteAppointmentSuccess({ appointmentId: action.appointmentId });
           }),
           catchError(res => {

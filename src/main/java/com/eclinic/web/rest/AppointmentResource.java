@@ -95,7 +95,7 @@ public class AppointmentResource {
 
     @PostMapping("/appointments/filter")
     @Timed
-    public ResponseEntity<List<Appointment>> getAppointmentsByCriteria(@RequestBody AppointmentCriteria criteria) {
+    public ResponseEntity<List<Appointment>> getAppointmentsByCriteria(@ApiParam Pageable pageable, @RequestBody AppointmentCriteria criteria) {
         Query q = new Query();
         if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {
             String searchText = Misc.enableAndSearchText(criteria.getSearchText());
@@ -137,16 +137,16 @@ public class AppointmentResource {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/appointments/available")
-    @Timed
-    public ResponseEntity<Boolean> checkAvailability(@RequestBody AppointmentCriteria criteria) {
-        boolean available = false;
-        System.out.print(getAppointmentsByCriteria(criteria).getBody());
-        if(getAppointmentsByCriteria(criteria).getBody().isEmpty()) {
-            available = true;
-        } else {
-            available = false;
-        }
-        return new ResponseEntity<>(available, HttpStatus.OK);
-    }
+    // @PostMapping("/appointments/available")
+    // @Timed
+    // public ResponseEntity<Boolean> checkAvailability(@RequestBody AppointmentCriteria criteria) {
+    //     boolean available = false;
+    //     System.out.print(getAppointmentsByCriteria(criteria).getBody());
+    //     if(getAppointmentsByCriteria(criteria).getBody().isEmpty()) {
+    //         available = true;
+    //     } else {
+    //         available = false;
+    //     }
+    //     return new ResponseEntity<>(available, HttpStatus.OK);
+    // }
 }

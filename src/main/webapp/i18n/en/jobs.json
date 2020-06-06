@@ -1,0 +1,10 @@
+{
+  "jobs": {
+    "list": {
+      "empty": "There is no jobs to display"
+    },
+    "details": {
+      "empty": "Select a job"
+    }
+  }
+}
