@@ -7,13 +7,12 @@ import { LoginFormComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { GenericAutocompleteComponent } from './generic-autocomplete/generic-autocomplete.component';
 import { GenericModalComponent } from './generic-modal/generic-modal.component';
-import { ChipFormatPipe } from './chip-select/chip-format.pipe';
-import { ChipSelectComponent } from './chip-select/chip-select.component';
 import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ItemListComponent } from './item-list/item-list.component';
 import { SearchComponent } from './search/search.component';
+import { ChipSelectComponent } from './chip-select/chip-select.component';
 @NgModule({
   imports: [EClinicSharedLibsModule, NgbModule, FlexLayoutModule],
   declarations: [
@@ -23,15 +22,14 @@ import { SearchComponent } from './search/search.component';
     LoginFormComponent,
     GenericAutocompleteComponent,
     GenericModalComponent,
-    ChipSelectComponent,
     DateTimeInputComponent,
     ItemListComponent,
     SearchComponent,
+    ChipSelectComponent,
     // directives
     HasAnyAuthorityDirective,
     // pipes
-    FindLanguageFromKeyPipe,
-    ChipFormatPipe
+    FindLanguageFromKeyPipe
   ],
   entryComponents: [LoginFormComponent],
   exports: [
@@ -43,15 +41,14 @@ import { SearchComponent } from './search/search.component';
     LoginFormComponent,
     GenericAutocompleteComponent,
     GenericModalComponent,
-    ChipSelectComponent,
     DateTimeInputComponent,
     ItemListComponent,
     SearchComponent,
+    ChipSelectComponent,
     // directives
     HasAnyAuthorityDirective,
     // pipes
-    FindLanguageFromKeyPipe,
-    ChipFormatPipe
+    FindLanguageFromKeyPipe
   ]
 })
 export class EClinicSharedModule {}

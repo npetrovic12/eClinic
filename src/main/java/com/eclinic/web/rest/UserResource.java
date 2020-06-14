@@ -148,8 +148,6 @@ public class UserResource {
         }
 
         Query q = new Query();
-        if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {  
-        }
 
         if(pageable != null) {
             q.with(pageable);

@@ -1,7 +1,6 @@
 import { Job } from '../job.model';
 import { createReducer, on, Action } from '@ngrx/store';
 import * as JobsActios from './jobs.actions';
-import { faLeaf } from '@fortawesome/free-solid-svg-icons';
 
 export const jobsFeatureKey = 'jobs';
 
@@ -66,7 +65,7 @@ const jobsReducer = createReducer(
     editMode: true,
     count: state.count + 1,
     selectedJob: action.job,
-    jobsList: [action.job, ...state.list]
+    jobsList: [{ ...action.job }, ...state.list]
   })),
   on(JobsActios.addJobError, (state, action) => ({
     ...state,
@@ -77,14 +76,18 @@ const jobsReducer = createReducer(
   on(JobsActios.updateJobSuccess, (state, action) => ({
     ...state,
     savingChanges: false,
-    selectedJob: action.job,
+    selectedJob: { ...action.job },
     editMode: true,
     jobsList: state.list.map(job => {
-      if (job.id === action.job.id) return action.job;
+      if (job.id === action.job.id) return { ...action.job };
       return job;
     })
   })),
-  on(JobsActios.updateJobError, (state, action) => ({ ...state, savingChanges: false, restError: action.error })),
+  on(JobsActios.updateJobError, (state, action) => ({
+    ...state,
+    savingChanges: false,
+    restError: action.error
+  })),
   on(JobsActios.setSelectedJob, (state, action) => ({ ...state, selectedJob: action.job, editMode: !!action.job.id })),
   on(JobsActios.setSelectedPage, (state, action) => ({ ...state, page: action.pageIndex })),
   on(JobsActios.setSearchText, (state, action) => ({ ...state, searchText: action.searchText }))

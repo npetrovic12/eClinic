@@ -1,6 +1,6 @@
 <div class="details-container">
     <div *ngIf="!selectedJob" class="hint-text">
-        <span>Job is not selected</span>
+        <span>Select a job</span>
     </div>
     <div fxLayout="column" *ngIf="selectedJob">
         <form name="jobForm" [formGroup]="this.jobForm">

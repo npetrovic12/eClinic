@@ -13,13 +13,13 @@ import { Job } from '../job.model';
 export class JobsListComponent implements OnInit, OnDestroy {
   jobs$: Observable<Job[]>;
   loadingJobsList$: Observable<boolean>;
-  jobsCount$: Observable<number>;
+  count$: Observable<number>;
   selectedJob$: Observable<Job>;
   page$: Observable<number>;
 
   constructor(private store: Store<fromRoot.State>) {
     this.loadingJobsList$ = this.store.select(fromRoot.getLoadingJobs);
-    this.jobsCount$ = this.store.select(fromRoot.getJobsCount);
+    this.count$ = this.store.select(fromRoot.getJobsCount);
     this.selectedJob$ = this.store.select(fromRoot.getSelectedJob);
     this.jobs$ = this.store.select(fromRoot.getJobsList);
     this.page$ = this.store.select(fromRoot.getJobsListPage);

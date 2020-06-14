@@ -1,0 +1,59 @@
+<div class="details-container">
+    <div *ngIf="!selectedUser" class="hint-text">
+        <span>Select a user</span>
+    </div>
+    <div fxLayout="column" *ngIf="selectedUser">
+        <form name="userForm" [formGroup]="this.userForm">
+                <div class="form-group">
+                <input type="text"
+                      class="form-control"
+                      placeholder="First Name"
+                      formControlName="firstName">
+                </div>
+                <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      placeholder="Last Name"
+                      formControlName="lastName">
+                </div>
+                <div class="form-group">
+                    <input type="text"
+                      class="form-control"
+                      placeholder="Login"
+                      formControlName="login">
+                </div>
+                <div class="form-group">
+                    <input type="email"
+                      class="form-control"
+                      placeholder="Email"
+                      formControlName="email">
+                </div>
+                <div class="form-group" *ngIf="languages && languages.length > 0">
+                    <label jhiTranslate="userManagement.langKey">Lang Key</label>
+                    <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
+                        <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label jhiTranslate="userManagement.profiles">Profiles</label>
+                    <select class="form-control" multiple name="authority" formControlName="authorities">
+                        <option *ngFor="let authority of authoritites" [value]="authority">{{authority}}</option>
+                    </select>
+                </div>
+                <div class="form-check">
+                    <input type="checkbox"
+                        class="form-check-input"
+                        id="activated"
+                        formControlName="activated">
+                    <label class="form-check-label" for="activated">Activated</label>
+                </div>
+                <button type="submit" 
+                    class="btn btn-primary"
+                    [disabled]="this.userForm.invalid"
+                    (click)="onSaveUser()">Save</button>
+                <button *ngIf="editMode$ | async" type="button"
+                    class="btn btn-danger"
+                    (click)="onDeleteUser()">Delete</button>
+        </form>
+    </div>
+</div>
