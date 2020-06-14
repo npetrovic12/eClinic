@@ -5,16 +5,17 @@ import { appReducer } from './app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { SchedulerEffects } from 'app/scheduler/store/scheduler.effects';
 import { JobsEffects } from 'app/admin/jobs/store/jobs.effects';
+import { UserEffects } from 'app/admin/user-management/store/user.effects';
 
 @NgModule({
   imports: [
     StoreModule.forRoot(appReducer, {
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: false
+        strictActionImmutability: true
       }
     }),
-    EffectsModule.forRoot([SchedulerEffects, JobsEffects]),
+    EffectsModule.forRoot([SchedulerEffects, JobsEffects, UserEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 15
     })

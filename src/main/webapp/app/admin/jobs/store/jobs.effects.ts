@@ -6,6 +6,7 @@ import * as fromRoot from '../../../store/app.reducer';
 import * as JobsActions from '../store/jobs.actions';
 import { switchMap, map, catchError, withLatestFrom } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 
 @Injectable()
 export class JobsEffects {
@@ -15,22 +16,10 @@ export class JobsEffects {
       ofType(JobsActions.tryGetJobs),
       withLatestFrom(this.store$.select(fromRoot.getJobsListPage), this.store$.select(fromRoot.getJobsSearchText)),
       switchMap(([action, page, searchText]) => {
-        return this.jobsService
-          .filter(
-            {
-              page,
-              size: 20,
-              sort: ['id', 'desc']
-            },
-            null,
-            null,
-            null,
-            searchText
-          )
-          .pipe(
-            map(res => JobsActions.getJobsSuccess({ jobs: res.data, count: res.totalItems })),
-            catchError(res => of(JobsActions.getJobsError({ error: res.error })))
-          );
+        return this.jobsService.filter({ page, size: ITEMS_PER_PAGE, sort: ['id', 'desc'] }, null, null, null, searchText).pipe(
+          map(res => JobsActions.getJobsSuccess({ jobs: res.data, count: res.totalItems })),
+          catchError(res => of(JobsActions.getJobsError({ error: res })))
+        );
       })
     );
   });
@@ -42,7 +31,7 @@ export class JobsEffects {
       switchMap(action => {
         return this.jobsService.create(action.job).pipe(
           map(res => JobsActions.addJobSuccess({ job: res.data })),
-          catchError(res => of(JobsActions.addJobError({ error: res.error })))
+          catchError(res => of(JobsActions.addJobError({ error: res })))
         );
       })
     );
@@ -55,7 +44,7 @@ export class JobsEffects {
       switchMap(action => {
         return this.jobsService.update(action.job).pipe(
           map(res => JobsActions.updateJobSuccess({ job: res.data })),
-          catchError(res => of(JobsActions.updateJobError({ error: res.error })))
+          catchError(res => of(JobsActions.updateJobError({ error: res })))
         );
       })
     );
@@ -68,7 +57,7 @@ export class JobsEffects {
       switchMap(action => {
         return this.jobsService.delete(action.id).pipe(
           map(() => JobsActions.deleteJobSuccess({ id: action.id })),
-          catchError(res => of(JobsActions.deleteJobError({ error: res.error })))
+          catchError(res => of(JobsActions.deleteJobError({ error: res })))
         );
       })
     );

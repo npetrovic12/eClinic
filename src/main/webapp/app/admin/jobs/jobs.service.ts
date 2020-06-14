@@ -18,9 +18,7 @@ export class JobsService {
   constructor(private http: HttpClient) {}
 
   filter(params?: any, title?: string, description?: string, bookable?: boolean, searchText?: string) {
-    console.log('service');
     const criteria = new JobsCriteria(title, description, bookable, searchText);
-    console.log(params);
     const reqParams = createRequestOption(params);
     return this.http.post(this.resourceUrl + '/filter', criteria, { observe: 'response', params: reqParams }).pipe(
       map(res => {

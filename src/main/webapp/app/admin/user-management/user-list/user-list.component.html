@@ -1,0 +1,14 @@
+<div fxLayout="column">
+    <item-list fxFlex
+        [translationKey]="'users'"
+        [maxPaginationSize]="2"
+        [listItems]="users$ | async"
+        [loading]="loadingUserList$ | async"
+        [page]="page$ | async"
+        [listSize]="count$ | async"
+        (selectedPage)="fetchUsers($event)">
+            <ng-template #listItem let-item="$implicit">
+                <user-list-item (click)="onUserSelected(item)" [user]="item" [ngClass]="{'selected-list-item': item.id === (selectedUser$ | async)?.id}"></user-list-item>
+            </ng-template>
+    </item-list>
+</div>

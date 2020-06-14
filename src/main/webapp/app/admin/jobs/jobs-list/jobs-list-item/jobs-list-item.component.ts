@@ -12,6 +12,4 @@ export class JobsListItemComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
-
-  onJobClicked() {}
 }

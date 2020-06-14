@@ -1,21 +1,26 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ChipFormatPipe } from './chip-format.pipe';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
 
 @Component({
-  selector: 'chip-select',
+  selector: 'jhi-chip-select',
   templateUrl: './chip-select.component.html',
   styleUrls: ['./chip-select.component.scss'],
-  providers: [ChipFormatPipe]
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChipSelectComponent implements OnInit {
-  @Input() options: [];
-  @Output() timeSelected = new EventEmitter();
-  selectedTime = { hour: 10, minute: 17 };
+export class ChipSelectComponent implements OnInit, ControlValueAccessor {
+  constructor() {}
+  writeValue(obj: any): void {
+    throw new Error('Method not implemented.');
+  }
+  registerOnChange(fn: any): void {
+    throw new Error('Method not implemented.');
+  }
+  registerOnTouched(fn: any): void {
+    throw new Error('Method not implemented.');
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit() {}
-
-  onChipSelected(selectedTime: any) {
-    this.selectedTime = selectedTime;
-    this.timeSelected.emit(this.selectedTime);
-  }
 }

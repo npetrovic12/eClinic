@@ -1,14 +1,17 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromScheduler from 'app/scheduler/store/scheduler.reducer';
 import * as fromJobs from 'app/admin/jobs/store/jobs.reducer';
+import * as fromUsers from 'app/admin/user-management/store/user.reducer';
 export interface State {
   scheduler: fromScheduler.State;
   jobs: fromJobs.State;
+  users: fromUsers.State;
 }
 
 export const appReducer: ActionReducerMap<State> = {
   scheduler: fromScheduler.reducer,
-  jobs: fromJobs.reducer
+  jobs: fromJobs.reducer,
+  users: fromUsers.reducer
 };
 
 // Scheduler
@@ -83,4 +86,47 @@ export const getJobsListPage = createSelector(
 export const getJobsSearchText = createSelector(
   getJobsState,
   fromJobs.getSearchText
+);
+
+// Users
+export const getUsersState = createFeatureSelector<fromUsers.State>(fromUsers.userFeatureKey);
+export const getSelectedUser = createSelector(
+  getUsersState,
+  fromUsers.getSelectedUser
+);
+export const getUserList = createSelector(
+  getUsersState,
+  fromUsers.getUsersList
+);
+export const getUserEditMode = createSelector(
+  getUsersState,
+  fromUsers.getEditMode
+);
+export const getUserCount = createSelector(
+  getUsersState,
+  fromUsers.getUsersCount
+);
+export const getUsersListPage = createSelector(
+  getUsersState,
+  fromUsers.getPageIndex
+);
+export const getUsersSearchText = createSelector(
+  getUsersState,
+  fromUsers.getSearchText
+);
+export const getLoadingUsers = createSelector(
+  getUsersState,
+  fromUsers.getLoadingUsers
+);
+export const getLoadingUser = createSelector(
+  getUsersState,
+  fromUsers.getLoadingUser
+);
+export const getSavingUserChanges = createSelector(
+  getUsersState,
+  fromUsers.getSavingChanges
+);
+export const getUsersRestError = createSelector(
+  getUsersState,
+  fromUsers.getLoadingUsers
 );
