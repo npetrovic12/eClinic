@@ -20,7 +20,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
   onAuthoritites: Subscription;
 
-  authoritites: string[];
+  authorities: string[];
   onUserSelected: Subscription;
   selectedUser: User;
   languages: string[];
@@ -44,7 +44,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.onAuthoritites = this.userService.authorities().subscribe(res => {
-      this.authoritites = res;
+      this.authorities = res;
     });
   }
 
@@ -59,8 +59,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       lastName: [this.selectedUser.lastName ? this.selectedUser.lastName : '', Validators.required],
       email: [this.selectedUser.email ? this.selectedUser.email : '', Validators.required],
       activated: [this.selectedUser.activated ? this.selectedUser.activated : false, Validators.required],
-      langKey: [this.selectedUser.langKey ? this.selectedUser.langKey : 'en', Validators.required],
-      authorities: [this.selectedUser.authorities ? this.selectedUser.authorities : false, Validators.required]
+      langKey: [this.selectedUser.langKey ? this.selectedUser.langKey : null, Validators.required],
+      authorities: [this.selectedUser.authorities ? this.selectedUser.authorities : null, Validators.required]
     });
   }
 

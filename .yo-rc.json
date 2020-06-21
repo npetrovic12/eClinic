@@ -27,7 +27,7 @@
     "useSass": true,
     "clientPackageManager": "npm",
     "clientFramework": "angularX",
-    "clientTheme": "flatly",
+    "clientTheme": "default",
     "clientThemeVariant": "primary",
     "testFrameworks": ["protractor"],
     "jhiPrefix": "jhi",

@@ -4,7 +4,7 @@ import { Observable, throwError } from 'rxjs';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
-import { IUser, User } from './user.model';
+import { IUser } from './user.model';
 import { catchError } from 'rxjs/operators';
 import { IRestError } from '../models/rest.model';
 import { RestUtils } from '../utils/rest-utils';

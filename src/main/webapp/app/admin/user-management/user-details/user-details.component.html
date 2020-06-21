@@ -28,17 +28,21 @@
                       placeholder="Email"
                       formControlName="email">
                 </div>
-                <div class="form-group" *ngIf="languages && languages.length > 0">
-                    <label jhiTranslate="userManagement.langKey">Lang Key</label>
-                    <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
-                        <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
-                    </select>
-                </div>
                 <div class="form-group">
-                    <label jhiTranslate="userManagement.profiles">Profiles</label>
-                    <select class="form-control" multiple name="authority" formControlName="authorities">
-                        <option *ngFor="let authority of authoritites" [value]="authority">{{authority}}</option>
-                    </select>
+                    <ng-select
+                        [items]="languages"
+                        [closeOnSelect]="true"
+                        formControlName="langKey">
+                    </ng-select>
+                </div>
+                <div>
+                    <ng-select
+                        [items]="authorities"
+                        [multiple]="true"
+                        placeholder="Select roles"
+                        clearAllText="Clear"
+                        formControlName="authorities">
+                    </ng-select>
                 </div>
                 <div class="form-check">
                     <input type="checkbox"

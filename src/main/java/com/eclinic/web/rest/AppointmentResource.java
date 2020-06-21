@@ -17,6 +17,7 @@ import java.util.List;
 
 import com.eclinic.domain.Appointment;
 import com.eclinic.domain.dto.AppointmentCriteria;
+import com.eclinic.security.AuthoritiesConstants;
 import com.eclinic.web.rest.errors.BadRequestAlertException;
 import com.eclinic.util.misc.Misc;
 
@@ -34,6 +35,8 @@ import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

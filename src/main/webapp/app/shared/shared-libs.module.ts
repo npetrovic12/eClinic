@@ -6,7 +6,8 @@ import { NgJhipsterModule } from 'ng-jhipster';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   exports: [
     FormsModule,
@@ -16,7 +17,9 @@ import { TranslateModule } from '@ngx-translate/core';
     InfiniteScrollModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    TranslateModule
+    TranslateModule,
+    FlexLayoutModule,
+    NgSelectModule
   ]
 })
 export class EClinicSharedLibsModule {}

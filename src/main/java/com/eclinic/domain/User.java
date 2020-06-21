@@ -80,8 +80,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Field("reset_date")
     private Instant resetDate = null;
-
-    @JsonIgnore
+    
+    @Field("authorities")
     private Set<Authority> authorities = new HashSet<>();
 
     public String getId() {

@@ -8,13 +8,10 @@ import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { GenericAutocompleteComponent } from './generic-autocomplete/generic-autocomplete.component';
 import { GenericModalComponent } from './generic-modal/generic-modal.component';
 import { DateTimeInputComponent } from './date-time-input/date-time-input.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ItemListComponent } from './item-list/item-list.component';
 import { SearchComponent } from './search/search.component';
-import { ChipSelectComponent } from './chip-select/chip-select.component';
 @NgModule({
-  imports: [EClinicSharedLibsModule, NgbModule, FlexLayoutModule],
+  imports: [EClinicSharedLibsModule],
   declarations: [
     // components
     JhiAlertComponent,
@@ -25,7 +22,6 @@ import { ChipSelectComponent } from './chip-select/chip-select.component';
     DateTimeInputComponent,
     ItemListComponent,
     SearchComponent,
-    ChipSelectComponent,
     // directives
     HasAnyAuthorityDirective,
     // pipes
@@ -44,7 +40,6 @@ import { ChipSelectComponent } from './chip-select/chip-select.component';
     DateTimeInputComponent,
     ItemListComponent,
     SearchComponent,
-    ChipSelectComponent,
     // directives
     HasAnyAuthorityDirective,
     // pipes
