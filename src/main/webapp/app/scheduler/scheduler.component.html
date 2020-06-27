@@ -7,7 +7,6 @@
             [placeholder]="'Search for a doctor'"
             [apiUrl]="'/api/users/filter'"
             [fieldsToDisplay]="['firstName', 'lastName']"
-            [disabled]="false"
             (itemSelected)="onDoctorSelected($event)"
             (itemCleared)="onDoctorCleared()">
         </generic-autocomplete>

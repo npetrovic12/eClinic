@@ -6,9 +6,11 @@
     [placeholder]="placeholder"
     [typeahead]="searchInput$"
     [minTermLength]="0"
+    [disabled]="disabled"
     (clear)="onClear()"
     (change)="onChange($event)"
-    (focus)="onFocus($event)">
+    (focus)="onFocus($event)"
+    [(ngModel)]="model">
       <ng-template ng-label-tmp let-item="item">
         <span >{{ item.firstName + " " + item.lastName }}</span>
       </ng-template>
