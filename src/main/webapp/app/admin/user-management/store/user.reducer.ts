@@ -108,6 +108,11 @@ const usersReducer = createReducer(
   on(UsersActions.setSearchText, (state, action) => ({
     ...state,
     searchText: action.searchText
+  })),
+  on(UsersActions.clearSelectedUser, state => ({
+    ...state,
+    selectedUser: null,
+    editMode: false
   }))
 );
 

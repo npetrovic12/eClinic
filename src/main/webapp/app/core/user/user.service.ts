@@ -5,7 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IUser } from './user.model';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { IRestError } from '../models/rest.model';
 import { RestUtils } from '../utils/rest-utils';
 import { UserCriteria } from 'app/admin/user-management/user.criteria';
@@ -18,6 +18,10 @@ export class UserService {
 
   create(user: IUser): Observable<IUser> {
     return this.http.post<IUser>(this.resourceUrl, user).pipe(
+      map(res => {
+        res.authorities = res.authorities.map(role => role.name); // og fix
+        return res;
+      }),
       catchError(err => {
         console.log('HTTP Error', err);
         const error: IRestError = RestUtils.formRestErrorObject(err);
@@ -40,6 +44,10 @@ export class UserService {
     const reqParams = createRequestOption(params);
     const criteria = new UserCriteria(searchText);
     return this.http.post<IUser[]>(this.resourceUrl + '/filter', criteria, { observe: 'response', params: reqParams }).pipe(
+      map(res => {
+        res.body.forEach(user => (user.authorities = user.authorities.map(role => role.name))); // og fix
+        return res;
+      }),
       catchError(err => {
         console.log('HTTP Error', err);
         const error: IRestError = RestUtils.formRestErrorObject(err);

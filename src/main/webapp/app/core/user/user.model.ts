@@ -23,7 +23,7 @@ export class User implements IUser {
     public email?: string,
     public activated?: boolean,
     public langKey?: string,
-    public authorities?: any[],
+    public authorities?: string[],
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,

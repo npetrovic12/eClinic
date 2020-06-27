@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const writeFilePlugin = require('write-file-webpack-plugin');
 const webpackMerge = require('webpack-merge');
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
@@ -109,6 +110,24 @@ module.exports = (options) => webpackMerge(commonConfig({ env: ENV }), {
               }),
         new FriendlyErrorsWebpackPlugin(),
         new ForkTsCheckerWebpackPlugin(),
+        new BrowserSyncPlugin({
+            https: options.tls,
+            host: 'localhost',
+            port: 9000,
+            proxy: {
+                target: `http${options.tls ? 's' : ''}://localhost:9060`,
+                proxyOptions: {
+                    changeOrigin: false  //pass the Host header to the backend unchanged  https://github.com/Browsersync/browser-sync/issues/430
+                }
+            },
+            socket: {
+                clients: {
+                    heartbeatTimeout: 60000
+                }
+            }
+        }, {
+            reload: false
+        }),
         new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)/,
             path.resolve(__dirname, './src/main/webapp/')

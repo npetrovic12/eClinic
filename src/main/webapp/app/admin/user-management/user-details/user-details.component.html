@@ -32,10 +32,11 @@
                     <ng-select
                         [items]="languages"
                         [closeOnSelect]="true"
+                        placeholder="Select language"
                         formControlName="langKey">
                     </ng-select>
                 </div>
-                <div>
+                <div class="form-group">
                     <ng-select
                         [items]="authorities"
                         [multiple]="true"
@@ -44,7 +45,7 @@
                         formControlName="authorities">
                     </ng-select>
                 </div>
-                <div class="form-check">
+                <div class="form-group form-check">
                     <input type="checkbox"
                         class="form-check-input"
                         id="activated"

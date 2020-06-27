@@ -1,26 +1,18 @@
-  <div class="input-group-custom">
-    <input
-      id="typeahead-focus"
-      type="text"
-      class="form-control"
-      [(ngModel)]="model"
-      [focusFirst]="false"
-      [ngbTypeahead]="search"
-      [resultFormatter]="resolvePath"
-      [inputFormatter]="resolvePath"
-      [disabled]="disabled"
-      (focus)="focus$.next($event.target.value)"
-      (focusout)="onFocusOut()"
-      (click)="click$.next($event.target.value)"
-      (selectItem)="showSelected($event.item)"
-      #instance="ngbTypeahead"
-      placeholder="{{placeholder}}"
-    />
-    <button *ngIf="!searching && model" class="clear-button input-append" 
-        (click)="clearSelected()">
-    <fa-icon [icon]="'times'"></fa-icon>
-    </button>
-    <div *ngIf="searching" class="spinner-border spinner-border-sm input-append" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
+  <ng-select 
+    [items]="items$ | async"
+    [loading]="searching"
+    [loadingText]="loadingText"
+    [notFoundText]="notFoundText"
+    [placeholder]="placeholder"
+    [typeahead]="searchInput$"
+    [minTermLength]="0"
+    (clear)="onClear()"
+    (change)="onChange($event)"
+    (focus)="onFocus($event)">
+      <ng-template ng-label-tmp let-item="item">
+        <span >{{ item.firstName + " " + item.lastName }}</span>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+        {{item.firstName + " " + item.lastName}}
+      </ng-template>
+  </ng-select>

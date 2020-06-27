@@ -50,6 +50,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.onUserSelected.unsubscribe();
+    this.store.dispatch(UserActions.clearSelectedUser());
   }
 
   createUserForm() {

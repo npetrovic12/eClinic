@@ -24,6 +24,9 @@ export const updateUserError = createAction('[Users] Update user error', props<{
 // Set selected user
 export const setSelectedUser = createAction('[Users] Set selected user', props<{ user: User }>());
 
+// Clear selected user
+export const clearSelectedUser = createAction('[Users] Clear selected user');
+
 // Set selected page
 export const setSelectedPage = createAction('[Users] Set selected page', props<{ pageIndex: number }>());
 
