@@ -16,8 +16,16 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./scheduler.component.scss']
 })
 export class SchedulerComponent implements OnInit, OnDestroy {
+  selectedDoctor$: Subscription;
+  appointments$: Observable<Appointment[]>;
+
+  selectedDoctor: User;
+  events: Observable<Appointment[]>;
+  calendarEvents: Appointment[];
+
   @ViewChild('calendar', { static: true }) calendarComponent: FullCalendarComponent; // the #calendar in the template
   @Input() calendarSlotDuration = '00:30:00';
+
   calendarVisible = true;
   calendarWeekends = false;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
@@ -26,11 +34,10 @@ export class SchedulerComponent implements OnInit, OnDestroy {
     center: 'title',
     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
   };
-  events: Observable<Appointment[]>;
-  calendarEvents: Appointment[];
-  appointments$: Observable<Appointment[]>;
-  selectedDoctor: User;
-  selectedDoctor$: Subscription;
+  userCriteria = {
+    role: 'ROLE_DOCTOR'
+  };
+
   constructor(private store: Store<fromRoot.State>) {}
 
   ngOnDestroy(): void {}
@@ -59,6 +66,7 @@ export class SchedulerComponent implements OnInit, OnDestroy {
   }
 
   onViewChange($event) {
+    console.log($event);
     const startDate = new Date($event.currentStart);
     const endDate = new Date($event.currentEnd);
     this.store.dispatch(SchedulerActions.setStartDate({ startDate }));

@@ -14,6 +14,7 @@ export class GenericAutocompleteComponent implements OnInit {
   items$ = new Observable();
   searchInput$ = new Subject<string>();
   @Input() apiUrl: string;
+  @Input() critera: any;
   @Input() placeholder = 'Search for item';
   @Input() notFoundText = 'No items found';
   @Input() loadingText = 'Loading items';
@@ -30,7 +31,7 @@ export class GenericAutocompleteComponent implements OnInit {
       debounceTime(300),
       tap(() => (this.searching = true)),
       switchMap(term =>
-        this.genericAutocompleteService.getData(this.apiUrl, { searchText: term }).pipe(
+        this.genericAutocompleteService.getData(this.apiUrl, { ...this.critera, searchText: term }).pipe(
           map(response => response.body),
           catchError(() => of([]))
         )

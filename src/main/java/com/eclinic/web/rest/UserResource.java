@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.repository.support.PageableExecutionUtils;
@@ -129,6 +130,10 @@ public class UserResource {
         if(criteria != null && criteria.getSearchText() != null && !"".equals(criteria.getSearchText().trim())) {
             String searchText = Misc.enableAndSearchText(criteria.getSearchText());
             q.addCriteria(TextCriteria.forDefaultLanguage().caseSensitive(false).matching(searchText));
+        }
+
+        if(criteria != null && criteria.getRole() != null && !"".equals(criteria.getRole().trim())) {
+            q.addCriteria(Criteria.where("authorities").elemMatch(Criteria.where("_id").in(criteria.getRole())));
         }
 
         if(pageable != null) {

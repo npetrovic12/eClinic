@@ -6,6 +6,7 @@
         <generic-autocomplete 
             [placeholder]="'Search for a doctor'"
             [apiUrl]="'/api/users/filter'"
+            [critera]="userCriteria"
             [fieldsToDisplay]="['firstName', 'lastName']"
             (itemSelected)="onDoctorSelected($event)"
             (itemCleared)="onDoctorCleared()">
