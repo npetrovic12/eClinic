@@ -44,6 +44,14 @@ export const getSavingAppointment = createSelector(
   getSchedulerState,
   fromScheduler.getSavingAppointment
 );
+export const getStartDate = createSelector(
+  getSchedulerState,
+  fromScheduler.getStartDate
+);
+export const getEndDate = createSelector(
+  getSchedulerState,
+  fromScheduler.getEndDate
+);
 
 // Jobs
 export const getJobsState = createFeatureSelector<fromJobs.State>(fromJobs.jobsFeatureKey);

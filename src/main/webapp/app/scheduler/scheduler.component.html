@@ -8,8 +8,8 @@
             [apiUrl]="'/api/users/filter'"
             [fieldsToDisplay]="['firstName', 'lastName']"
             [disabled]="false"
-            (itemSelected)="onUserSelected($event)"
-            (itemCleared)="onUserCleared()">
+            (itemSelected)="onDoctorSelected($event)"
+            (itemCleared)="onDoctorCleared()">
         </generic-autocomplete>
         <button id="newAppointment" [disabled]="!this.selectedDoctor" class="btn btn-primary" (click)="onNewAppointment()">
           <fa-icon [icon]="'plus'"></fa-icon> <span>New Appointment</span>

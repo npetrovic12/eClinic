@@ -3,11 +3,11 @@ import { Appointment } from '../appointment.model';
 import { User } from 'app/core/user/user.model';
 
 // Change selected doctor
-export const setSelectDoctor = createAction('[Scheduler] Select a doctor', props<{ user: User }>());
+export const setSelectedDoctor = createAction('[Scheduler] Select a doctor', props<{ user: User }>());
 export const clearSelectedDoctor = createAction('[Scheduler] Clear selected doctor');
 
 // Load appointments
-export const tryGetAppointments = createAction('[Scheduler] Try get appointment list', props<{ startDate: Date; endDate: Date }>());
+export const tryGetAppointments = createAction('[Scheduler] Try get appointment list');
 export const getAppointmentListSuccess = createAction(
   '[Scheduler] Get appointment list success',
   props<{ appointments: Appointment[]; count: number }>()
@@ -32,3 +32,7 @@ export const updateAppointmentError = createAction('[Scheduler] Update appointme
 export const tryDeleteAppointment = createAction('[Scheduler] Try delete appointment', props<{ appointmentId: string }>());
 export const deleteAppointmentSuccess = createAction('[Scheduler] Delete appointment success', props<{ appointmentId: string }>());
 export const deleteAppointmentError = createAction('[Scheduler] Delete appointment failure', props<{ error: any }>());
+
+// Set date range
+export const setStartDate = createAction('[Scheduler] Set start date', props<{ startDate: Date }>());
+export const setEndDate = createAction('[Scheduler] Set end date', props<{ endDate: Date }>());

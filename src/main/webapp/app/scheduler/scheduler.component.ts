@@ -61,14 +61,17 @@ export class SchedulerComponent implements OnInit, OnDestroy {
   onViewChange($event) {
     const startDate = new Date($event.currentStart);
     const endDate = new Date($event.currentEnd);
-    this.store.dispatch(SchedulerActions.tryGetAppointments({ startDate, endDate }));
+    this.store.dispatch(SchedulerActions.setStartDate({ startDate }));
+    this.store.dispatch(SchedulerActions.setEndDate({ endDate }));
+    this.store.dispatch(SchedulerActions.tryGetAppointments());
   }
 
-  onUserSelected(data: any) {
-    this.store.dispatch(SchedulerActions.setSelectDoctor({ user: data }));
+  onDoctorSelected(doctor: User) {
+    this.store.dispatch(SchedulerActions.setSelectedDoctor({ user: doctor }));
+    this.store.dispatch(SchedulerActions.tryGetAppointments());
   }
 
-  onUserCleared() {
+  onDoctorCleared() {
     this.store.dispatch(SchedulerActions.clearSelectedDoctor());
   }
 

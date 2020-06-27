@@ -13,9 +13,13 @@ export class SchedulerEffects {
   loadAppointments$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(SchedulerActions.tryGetAppointments),
-      withLatestFrom(this.store$.select(fromRoot.getSelectedDoctor)),
-      switchMap(([action, selectedDoctor]) =>
-        this.appointmentService.filter(action.startDate, action.endDate, selectedDoctor.id, '').pipe(
+      withLatestFrom(
+        this.store$.select(fromRoot.getStartDate),
+        this.store$.select(fromRoot.getEndDate),
+        this.store$.select(fromRoot.getSelectedDoctor)
+      ),
+      switchMap(([action, startDate, endDate, selectedDoctor]) =>
+        this.appointmentService.filter(startDate, endDate, selectedDoctor.id).pipe(
           map(res => {
             return SchedulerActions.getAppointmentListSuccess({ appointments: res.data, count: res.totalItems });
           }),
