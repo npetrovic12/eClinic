@@ -1,18 +1,9 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
-@import '~bootswatch/dist/flatly/variables';
 @import '~bootstrap/scss/variables';
 /* ==============================================================
 Bootstrap tweaks
 ===============================================================*/
-
-body,
-h1,
-h2,
-h3,
-h4 {
-  font-weight: 300;
-}
 
 a:hover {
   /* make sure browsers use the pointer cursor for anchors, even with no href */

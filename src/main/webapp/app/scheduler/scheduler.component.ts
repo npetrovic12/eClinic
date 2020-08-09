@@ -16,8 +16,17 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./scheduler.component.scss']
 })
 export class SchedulerComponent implements OnInit, OnDestroy {
+  selectedDoctor$: Subscription;
+  appointments$: Observable<Appointment[]>;
+  loadingAppointments$: Observable<boolean>;
+
+  selectedDoctor: User;
+  events: Observable<Appointment[]>;
+  calendarEvents: Appointment[];
+
   @ViewChild('calendar', { static: true }) calendarComponent: FullCalendarComponent; // the #calendar in the template
   @Input() calendarSlotDuration = '00:30:00';
+
   calendarVisible = true;
   calendarWeekends = false;
   calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin];
@@ -26,18 +35,34 @@ export class SchedulerComponent implements OnInit, OnDestroy {
     center: 'title',
     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
   };
-  events: Observable<Appointment[]>;
-  calendarEvents: Appointment[];
-  appointments$: Observable<Appointment[]>;
-  selectedDoctor: User;
-  selectedDoctor$: Subscription;
+  userCriteria = {
+    role: 'ROLE_DOCTOR'
+  };
+
   constructor(private store: Store<fromRoot.State>) {}
 
-  ngOnDestroy(): void {}
+  ngOnDestroy() {
+    this.store.dispatch(SchedulerActions.clearSelectedDoctor());
+  }
 
   ngOnInit() {
     this.appointments$ = this.store.select(fromRoot.getAppointmentList);
+    this.loadingAppointments$ = this.store.select(fromRoot.getLoadingAppointments);
     this.store.select(fromRoot.getSelectedDoctor).subscribe(doctor => (this.selectedDoctor = doctor));
+  }
+
+  onViewChange($event) {
+    console.log($event);
+    const startDate = new Date($event.currentStart);
+    const endDate = new Date($event.currentEnd);
+    this.store.dispatch(SchedulerActions.setStartDate({ startDate }));
+    this.store.dispatch(SchedulerActions.setEndDate({ endDate }));
+    this.store.dispatch(SchedulerActions.tryGetAppointments());
+  }
+
+  onDoctorSelected(doctor: User) {
+    this.store.dispatch(SchedulerActions.setSelectedDoctor({ user: doctor }));
+    this.store.dispatch(SchedulerActions.tryGetAppointments());
   }
 
   toggleVisible() {
@@ -58,17 +83,7 @@ export class SchedulerComponent implements OnInit, OnDestroy {
     this.store.dispatch(SchedulerActions.setSelectedAppointment({ appointment: this.initAppointment() }));
   }
 
-  onViewChange($event) {
-    const startDate = new Date($event.currentStart);
-    const endDate = new Date($event.currentEnd);
-    this.store.dispatch(SchedulerActions.tryGetAppointments({ startDate, endDate }));
-  }
-
-  onUserSelected(data: any) {
-    this.store.dispatch(SchedulerActions.setSelectDoctor({ user: data }));
-  }
-
-  onUserCleared() {
+  onDoctorCleared() {
     this.store.dispatch(SchedulerActions.clearSelectedDoctor());
   }
 

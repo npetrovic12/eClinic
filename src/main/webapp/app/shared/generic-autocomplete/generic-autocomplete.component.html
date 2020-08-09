@@ -1,26 +1,26 @@
-  <div class="input-group-custom">
-    <input
-      id="typeahead-focus"
-      type="text"
-      class="form-control"
-      [(ngModel)]="model"
-      [focusFirst]="false"
-      [ngbTypeahead]="search"
-      [resultFormatter]="resolvePath"
-      [inputFormatter]="resolvePath"
-      [disabled]="disabled"
-      (focus)="focus$.next($event.target.value)"
-      (focusout)="onFocusOut()"
-      (click)="click$.next($event.target.value)"
-      (selectItem)="showSelected($event.item)"
-      #instance="ngbTypeahead"
-      placeholder="{{placeholder}}"
-    />
-    <button *ngIf="!searching && model" class="clear-button input-append" 
-        (click)="clearSelected()">
-    <fa-icon [icon]="'times'"></fa-icon>
-    </button>
-    <div *ngIf="searching" class="spinner-border spinner-border-sm input-append" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-  </div>
+  <ng-select 
+    [items]="items$ | async"
+    [loading]="searching"
+    [loadingText]="loadingText"
+    [notFoundText]="notFoundText"
+    [placeholder]="placeholder"
+    [typeahead]="searchInput$"
+    [minTermLength]="0"
+    [disabled]="disabled"
+    (clear)="onClear()"
+    (change)="onChange($event)"
+    (focus)="onFocus($event)"
+    [(ngModel)]="model">
+      <ng-template ng-label-tmp let-item="item">
+        <ng-container [ngTemplateOutlet]="itemLabel" [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+        <ng-container [ngTemplateOutlet]="itemLabel" [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
+      </ng-template>
+  </ng-select>
+
+  <ng-template #itemLabel let-item="$implicit">
+    <ng-container *ngFor="let field of fieldsToDisplay">
+      <span >{{ item[field] + " " }}</span>
+    </ng-container>
+  </ng-template>

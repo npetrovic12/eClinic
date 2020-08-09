@@ -3,57 +3,93 @@
         <span>Select a user</span>
     </div>
     <div fxLayout="column" *ngIf="selectedUser">
-        <form name="userForm" [formGroup]="this.userForm">
-                <div class="form-group">
-                <input type="text"
-                      class="form-control"
-                      placeholder="First Name"
-                      formControlName="firstName">
-                </div>
-                <div class="form-group">
+        <nav id="verySpecialNav" ngbNav #nav="ngbNav" class="nav-tabs">
+            <ng-container [ngbNavItem]="1">
+              <a ngbNavLink>General</a>
+              <ng-template ngbNavContent>
+                <form name="mainForm" [formGroup]="mainForm">
+                    <div class="form-group">
                     <input type="text"
-                      class="form-control"
-                      placeholder="Last Name"
-                      formControlName="lastName">
-                </div>
-                <div class="form-group">
-                    <input type="text"
-                      class="form-control"
-                      placeholder="Login"
-                      formControlName="login">
-                </div>
-                <div class="form-group">
-                    <input type="email"
-                      class="form-control"
-                      placeholder="Email"
-                      formControlName="email">
-                </div>
-                <div class="form-group" *ngIf="languages && languages.length > 0">
-                    <label jhiTranslate="userManagement.langKey">Lang Key</label>
-                    <select class="form-control" id="langKey" name="langKey" formControlName="langKey">
-                        <option *ngFor="let language of languages" [value]="language">{{language | findLanguageFromKey}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label jhiTranslate="userManagement.profiles">Profiles</label>
-                    <select class="form-control" multiple name="authority" formControlName="authorities">
-                        <option *ngFor="let authority of authoritites" [value]="authority">{{authority}}</option>
-                    </select>
-                </div>
-                <div class="form-check">
-                    <input type="checkbox"
-                        class="form-check-input"
-                        id="activated"
-                        formControlName="activated">
-                    <label class="form-check-label" for="activated">Activated</label>
-                </div>
-                <button type="submit" 
-                    class="btn btn-primary"
-                    [disabled]="this.userForm.invalid"
-                    (click)="onSaveUser()">Save</button>
-                <button *ngIf="editMode$ | async" type="button"
-                    class="btn btn-danger"
-                    (click)="onDeleteUser()">Delete</button>
-        </form>
+                          class="form-control"
+                          placeholder="First Name"
+                          formControlName="firstName">
+                    </div>
+                    <div class="form-group">
+                        <input type="text"
+                          class="form-control"
+                          placeholder="Last Name"
+                          formControlName="lastName">
+                    </div>
+                    <div class="form-group">
+                        <input type="email"
+                          class="form-control"
+                          placeholder="Email"
+                          formControlName="email">
+                    </div>
+                    <div class="form-group">
+                        <input type="text"
+                          class="form-control"
+                          placeholder="Login"
+                          formControlName="login">
+                    </div>
+                    <div class="form-group">
+                        <ng-select
+                            [items]="languages"
+                            [closeOnSelect]="true"
+                            placeholder="Select language"
+                            formControlName="langKey">
+                        </ng-select>
+                    </div>
+                    <div class="form-group">
+                        <ng-select
+                            [items]="authorities"
+                            [multiple]="true"
+                            placeholder="Select roles"
+                            clearAllText="Clear"
+                            formControlName="authorities">
+                        </ng-select>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox"
+                            class="form-check-input"
+                            id="activated"
+                            formControlName="activated">
+                        <label class="form-check-label" for="activated">Activated</label>
+                    </div>
+                    <button type="submit" 
+                        class="btn btn-primary"
+                        [disabled]="this.mainForm.invalid || (this.additionalForm && this.additionalForm.invalid)"
+                        (click)="onSaveUser()">Save</button>
+                    <button *ngIf="editMode$ | async" type="button"
+                        class="btn btn-danger"
+                        (click)="onDeleteUser()">Delete</button>
+                </form>
+              </ng-template>
+            </ng-container>
+            <ng-container *ngIf="isDoctor">
+                <ng-container [ngbNavItem]="2">
+                    <a ngbNavLink>Additional</a>
+                    <ng-template ngbNavContent>
+                      <form name="additionalForm" [formGroup]="additionalForm">
+                        <div class="form-group">
+                            <input type="text"
+                              class="form-control"
+                              placeholder="Title"
+                              formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <textarea type="text"
+                              class="form-control"
+                              placeholder="About"
+                              formControlName="about"
+                              rows="3">
+                            </textarea>
+                        </div>
+                      </form>
+                    </ng-template>
+                  </ng-container>
+            </ng-container>
+        </nav>
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </div>
 </div>

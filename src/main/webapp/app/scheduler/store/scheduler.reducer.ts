@@ -8,6 +8,8 @@ export const schedulerFeatureKey = 'scheduler';
 
 export interface State {
   selectedAppointment: Appointment;
+  startDate: Date;
+  endDate: Date;
   selectedDoctor: User;
   editMode: boolean;
   appointmentList: Appointment[];
@@ -19,6 +21,8 @@ export interface State {
 
 export const initialState: State = {
   selectedAppointment: null,
+  startDate: null,
+  endDate: null,
   selectedDoctor: null,
   editMode: false,
   appointmentList: [],
@@ -30,7 +34,7 @@ export const initialState: State = {
 
 const schedulerReducer = createReducer(
   initialState,
-  on(SchedulerActions.setSelectDoctor, (state, action) => ({ ...state, selectedDoctor: action.user })),
+  on(SchedulerActions.setSelectedDoctor, (state, action) => ({ ...state, selectedDoctor: action.user })),
   on(SchedulerActions.clearSelectedDoctor, state => ({
     ...state,
     selectedDoctor: null,
@@ -88,7 +92,9 @@ const schedulerReducer = createReducer(
     appointmentList: state.appointmentList.filter(appointment => action.appointmentId !== appointment.id)
     // appointmentCount: state.appointmentCount - 1,
   })),
-  on(SchedulerActions.deleteAppointmentError, state => ({ ...state, savingAppointment: false }))
+  on(SchedulerActions.deleteAppointmentError, state => ({ ...state, savingAppointment: false })),
+  on(SchedulerActions.setStartDate, (state, action) => ({ ...state, startDate: action.startDate })),
+  on(SchedulerActions.setEndDate, (state, action) => ({ ...state, endDate: action.endDate }))
 );
 
 export function reducer(state: State | undefined, action: Action) {
@@ -102,3 +108,5 @@ export const getAppointmentList = (state: State) => state.appointmentList;
 export const getLoadingAppointments = (state: State) => state.loadingAppointments;
 export const getLoadingAppointment = (state: State) => state.loadingAppointment;
 export const getSavingAppointment = (state: State) => state.savingAppointment;
+export const getStartDate = (state: State) => state.startDate;
+export const getEndDate = (state: State) => state.endDate;
