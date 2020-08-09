@@ -84,6 +84,12 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("authorities")
     private Set<Authority> authorities = new HashSet<>();
 
+    @Field("about")
+    private String about;
+
+    @Field("title")
+    private String title;
+
     public String getId() {
         return id;
     }
@@ -187,6 +193,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getAbout() {
+        return this.about;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getTitle() {
+        return this.title;
     }
 
     @Override

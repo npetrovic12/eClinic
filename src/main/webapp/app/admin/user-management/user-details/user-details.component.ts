@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
@@ -7,6 +7,7 @@ import { User } from 'app/core/user/user.model';
 import * as fromRoot from '../../../store/app.reducer';
 import * as UserActions from '../store/user.actions';
 import { UserService } from 'app/core/user/user.service';
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'user-details',
@@ -16,14 +17,20 @@ import { UserService } from 'app/core/user/user.service';
 export class UserDetailsComponent implements OnInit, OnDestroy {
   selectedUser$: Observable<User>;
   editMode$: Observable<boolean>;
-  userForm: FormGroup;
+  savingChange$: Observable<boolean>;
 
-  onAuthoritites: Subscription;
+  mainForm: FormGroup;
+  additionalForm: FormGroup;
+  isDoctor = false;
 
   authorities: string[];
-  onUserSelected: Subscription;
   selectedUser: User;
   languages: string[];
+
+  onAuthoritites: Subscription;
+  onUserSelected: Subscription;
+
+  @ViewChild('nav', { static: false }) navigation: NgbNav;
 
   constructor(
     private userService: UserService,
@@ -33,14 +40,31 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   ) {
     this.selectedUser$ = this.store.select(fromRoot.getSelectedUser);
     this.editMode$ = this.store.select(fromRoot.getUserEditMode);
+    this.savingChange$ = this.store.select(fromRoot.getSavingUserChanges);
     this.languages = this.languageHelper.getAll();
   }
 
   ngOnInit() {
     this.onUserSelected = this.selectedUser$.subscribe(selectedUser => {
+      if (this.selectedUser) this.navigation.select(1);
       this.selectedUser = selectedUser ? { ...selectedUser } : null;
       if (!selectedUser) return;
-      this.userForm = this.createUserForm();
+
+      this.mainForm = this.createMainForm();
+
+      if (this.selectedUser.id && this.mainForm.controls['authorities'].value.includes('ROLE_DOCTOR')) {
+        this.isDoctor = true;
+        this.additionalForm = this.createAdditionalForm();
+      } else {
+        this.isDoctor = false;
+        this.additionalForm = null;
+      }
+      this.mainForm.controls['authorities'].valueChanges.subscribe(value => {
+        this.isDoctor = value.includes('ROLE_DOCTOR');
+        if (this.isDoctor && !this.additionalForm) {
+          this.additionalForm = this.createAdditionalForm();
+        }
+      });
     });
 
     this.onAuthoritites = this.userService.authorities().subscribe(res => {
@@ -53,7 +77,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     this.store.dispatch(UserActions.clearSelectedUser());
   }
 
-  createUserForm() {
+  createMainForm() {
     return this.formBuilder.group({
       login: [this.selectedUser.login ? this.selectedUser.login : '', Validators.required],
       firstName: [this.selectedUser.firstName ? this.selectedUser.firstName : '', Validators.required],
@@ -65,8 +89,16 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  createAdditionalForm() {
+    return this.formBuilder.group({
+      title: [this.selectedUser.title ? this.selectedUser.title : null, Validators.required],
+      about: [this.selectedUser.title ? this.selectedUser.about : null]
+    });
+  }
+
   onSaveUser() {
-    this.selectedUser = { ...this.selectedUser, ...this.userForm.getRawValue() };
+    this.selectedUser = { ...this.selectedUser, ...this.mainForm.getRawValue() };
+    if (this.additionalForm) this.selectedUser = { ...this.selectedUser, ...this.additionalForm.getRawValue() };
     if (!this.selectedUser.id) {
       this.store.dispatch(UserActions.tryAddUser({ user: this.selectedUser }));
       return;

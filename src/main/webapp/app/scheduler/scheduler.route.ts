@@ -7,7 +7,7 @@ export const schedulerRoute: Route = {
   path: 'scheduler',
   component: SchedulerComponent,
   data: {
-    authorities: ['ROLE_ADMIN', 'ROLE_DOCTOR', 'ROLE_NURSE'],
+    authorities: ['ROLE_ADMIN', 'ROLE_DOCTOR', 'ROLE_NURSE', 'ROLE_PATIENT'],
     pageTitle: 'scheduler.title'
   },
   canActivate: [UserRouteAccessService]

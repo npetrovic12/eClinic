@@ -8,6 +8,16 @@
       overflow-y: scroll;
       overflow-x: hidden;
     }
+
+    .spinner-wrapper {
+      margin-top: 300px;
+      text-align: center;
+
+      .spinner-size {
+        width: 4rem;
+        height: 4rem;
+      }
+    }
   }
 
   .list-footer {

@@ -18,6 +18,7 @@ import { Store } from '@ngrx/store';
 export class SchedulerComponent implements OnInit, OnDestroy {
   selectedDoctor$: Subscription;
   appointments$: Observable<Appointment[]>;
+  loadingAppointments$: Observable<boolean>;
 
   selectedDoctor: User;
   events: Observable<Appointment[]>;
@@ -40,11 +41,28 @@ export class SchedulerComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromRoot.State>) {}
 
-  ngOnDestroy(): void {}
+  ngOnDestroy() {
+    this.store.dispatch(SchedulerActions.clearSelectedDoctor());
+  }
 
   ngOnInit() {
     this.appointments$ = this.store.select(fromRoot.getAppointmentList);
+    this.loadingAppointments$ = this.store.select(fromRoot.getLoadingAppointments);
     this.store.select(fromRoot.getSelectedDoctor).subscribe(doctor => (this.selectedDoctor = doctor));
+  }
+
+  onViewChange($event) {
+    console.log($event);
+    const startDate = new Date($event.currentStart);
+    const endDate = new Date($event.currentEnd);
+    this.store.dispatch(SchedulerActions.setStartDate({ startDate }));
+    this.store.dispatch(SchedulerActions.setEndDate({ endDate }));
+    this.store.dispatch(SchedulerActions.tryGetAppointments());
+  }
+
+  onDoctorSelected(doctor: User) {
+    this.store.dispatch(SchedulerActions.setSelectedDoctor({ user: doctor }));
+    this.store.dispatch(SchedulerActions.tryGetAppointments());
   }
 
   toggleVisible() {
@@ -63,20 +81,6 @@ export class SchedulerComponent implements OnInit, OnDestroy {
 
   onNewAppointment() {
     this.store.dispatch(SchedulerActions.setSelectedAppointment({ appointment: this.initAppointment() }));
-  }
-
-  onViewChange($event) {
-    console.log($event);
-    const startDate = new Date($event.currentStart);
-    const endDate = new Date($event.currentEnd);
-    this.store.dispatch(SchedulerActions.setStartDate({ startDate }));
-    this.store.dispatch(SchedulerActions.setEndDate({ endDate }));
-    this.store.dispatch(SchedulerActions.tryGetAppointments());
-  }
-
-  onDoctorSelected(doctor: User) {
-    this.store.dispatch(SchedulerActions.setSelectedDoctor({ user: doctor }));
-    this.store.dispatch(SchedulerActions.tryGetAppointments());
   }
 
   onDoctorCleared() {

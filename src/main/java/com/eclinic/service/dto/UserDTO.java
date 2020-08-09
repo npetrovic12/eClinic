@@ -53,6 +53,12 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    @Size(max = 254)
+    private String about;
+
+    @Size(max = 50)
+    private String title;
+    
     public UserDTO() {
         // Empty constructor needed for Jackson.
     }
@@ -73,6 +79,8 @@ public class UserDTO {
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
+        this.title = user.getTitle();
+        this.about = user.getAbout();
     }
 
     public String getId() {
@@ -177,6 +185,22 @@ public class UserDTO {
 
     public void setAuthorities(Set<String> authorities) {
         this.authorities = authorities;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override

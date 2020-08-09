@@ -21,6 +21,8 @@ export class User implements IUser {
     public firstName?: string,
     public lastName?: string,
     public email?: string,
+    public about?: string,
+    public title?: string,
     public activated?: boolean,
     public langKey?: string,
     public authorities?: string[],
@@ -43,5 +45,7 @@ export class User implements IUser {
     this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
     this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
     this.password = password ? password : null;
+    this.about = about ? about : null;
+    this.title = title ? title : null;
   }
 }

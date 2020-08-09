@@ -7,7 +7,7 @@
             [placeholder]="'Search for a doctor'"
             [apiUrl]="'/api/users/filter'"
             [critera]="userCriteria"
-            [fieldsToDisplay]="['firstName', 'lastName']"
+            [fieldsToDisplay]="['title', 'firstName', 'lastName']"
             (itemSelected)="onDoctorSelected($event)"
             (itemCleared)="onDoctorCleared()">
         </generic-autocomplete>
@@ -17,7 +17,7 @@
       </div>
     <div class="scheduler-wrapper" fxLayout="row" fxLayoutGap="10px"> 
       <div fxFlex="1 1 65%">
-        <ng-container *ngIf="this.selectedDoctor">
+        <div *ngIf="this.selectedDoctor" class="full-wrapper" [ngClass]="{'hide-calendar': this.loadingAppointments$ | async}">
           <full-calendar
             #calendar
             defaultView="dayGridMonth"
@@ -25,7 +25,7 @@
             [plugins]="calendarPlugins"
             [weekends]="calendarWeekends"
             [events]="appointments$ | async"
-            height="parent"
+            [height]="640"
             [selectMirror]="false"
             [businessHours]="true"
             [slotDuration]="calendarSlotDuration"
@@ -41,7 +41,12 @@
             [eventOverlap]="false"
             unselectCancel=".details-container">
           </full-calendar>
-        </ng-container>
+        </div>
+        <div *ngIf="this.loadingAppointments$ | async" class="spinner-wrapper">
+            <div class="spinner-border spinner-size" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
         <div *ngIf="!this.selectedDoctor" class="hint-text">
           <span >Select a doctor</span>
         </div>
