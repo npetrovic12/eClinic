@@ -1,7 +1,9 @@
 package com.eclinic.config;
 
 import io.github.jhipster.config.JHipsterConstants;
-import com.github.mongobee.Mongobee;
+
+import com.github.cloudyrock.mongock.SpringBootMongock;
+import com.github.cloudyrock.mongock.SpringBootMongockBuilder;
 import com.mongodb.MongoClient;
 import io.github.jhipster.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
 import io.github.jhipster.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
@@ -9,11 +11,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.boot.autoconfigure.mongo.MongoProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.env.Environment;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
@@ -52,13 +56,14 @@ public class DatabaseConfiguration {
     }
 
     @Bean
-    public Mongobee mongobee(MongoClient mongoClient, MongoTemplate mongoTemplate, MongoProperties mongoProperties) {
-        log.debug("Configuring Mongobee");
-        Mongobee mongobee = new Mongobee(mongoClient);
-        mongobee.setDbName(mongoProperties.getMongoClientDatabase());
-        mongobee.setMongoTemplate(mongoTemplate);
-        // package to scan for migrations
-        mongobee.setChangeLogsScanPackage("com.eclinic.config.dbmigrations");
-        mongobee.setEnabled(true);
-        return mongobee;
-    }}
+    public SpringBootMongock mongock(MongoClient mongoClient, MongoTemplate mongoTemplate, 
+    MongoProperties mongoProperties, Environment environment, ApplicationContext context) {
+        log.debug("Configuring Mongock");
+        SpringBootMongock mongock = new SpringBootMongockBuilder(mongoTemplate, "com.eclinic.config.dbmigrations")
+        .setSpringEnvironment(environment)
+        .setApplicationContext(context)
+        .setLockQuickConfig()
+        .build();
+        return mongock;
+    }
+}
