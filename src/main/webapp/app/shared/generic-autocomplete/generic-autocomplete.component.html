@@ -9,7 +9,7 @@
     [disabled]="disabled"
     (clear)="onClear()"
     (change)="onChange($event)"
-    (focus)="onFocus($event)"
+    (focus)="onFocus()"
     [(ngModel)]="model">
       <ng-template ng-label-tmp let-item="item">
         <ng-container [ngTemplateOutlet]="itemLabel" [ngTemplateOutletContext]="{$implicit: item}"></ng-container>
