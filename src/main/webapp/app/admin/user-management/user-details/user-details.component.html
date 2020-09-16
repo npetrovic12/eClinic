@@ -78,6 +78,19 @@
                               formControlName="title">
                         </div>
                         <div class="form-group">
+                            <ng-select [items]="departments"
+                            bindValue="value"
+                            bindLabel="translation"
+                            formControlName="department">
+                                <ng-template ng-label-tmp let-item="item">
+                                    {{item.translation | translate}}
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                                    {{item.translation | translate}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="form-group">
                             <textarea type="text"
                               class="form-control"
                               placeholder="About"

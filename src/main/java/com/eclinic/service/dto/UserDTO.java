@@ -3,6 +3,7 @@ package com.eclinic.service.dto;
 import com.eclinic.config.Constants;
 
 import com.eclinic.domain.Authority;
+import com.eclinic.domain.Department;
 import com.eclinic.domain.User;
 
 import javax.validation.constraints.Email;
@@ -58,6 +59,8 @@ public class UserDTO {
 
     @Size(max = 50)
     private String title;
+
+    private Department department;
     
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -81,6 +84,7 @@ public class UserDTO {
             .collect(Collectors.toSet());
         this.title = user.getTitle();
         this.about = user.getAbout();
+        this.department = user.getDepartment();
     }
 
     public String getId() {
@@ -201,6 +205,14 @@ public class UserDTO {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override

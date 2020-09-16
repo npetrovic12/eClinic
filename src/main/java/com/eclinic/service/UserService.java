@@ -211,6 +211,7 @@ public class UserService {
                 user.setLangKey(userDTO.getLangKey());
                 user.setAbout(userDTO.getAbout());
                 user.setTitle(userDTO.getTitle());
+                user.setDepartment(userDTO.getDepartment());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()

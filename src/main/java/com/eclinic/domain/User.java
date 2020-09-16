@@ -87,6 +87,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("about")
     private String about;
 
+    @Field("department")
+    private Department department;
+
     @Field("title")
     private String title;
 
@@ -209,6 +212,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public String getTitle() {
         return this.title;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     @Override
