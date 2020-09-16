@@ -24,6 +24,14 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           path: 'account',
           loadChildren: () => import('./account/account.module').then(m => m.EClinicAccountModule)
         },
+        {
+          path: 'scheduler',
+          data: {
+            authorities: ['ROLE_ADMIN', 'ROLE_DOCTOR', 'ROLE_NURSE', 'ROLE_PATIENT']
+          },
+          canActivate: [UserRouteAccessService],
+          loadChildren: () => import('./scheduler/scheduler.module').then(m => m.SchedulerModule)
+        },
         ...LAYOUT_ROUTES
       ],
       { enableTracing: DEBUG_INFO_ENABLED }

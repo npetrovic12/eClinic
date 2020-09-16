@@ -4,11 +4,9 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
 import { SchedulerComponent } from './scheduler.component';
 
 export const schedulerRoute: Route = {
-  path: 'scheduler',
+  path: '',
   component: SchedulerComponent,
   data: {
-    authorities: ['ROLE_ADMIN', 'ROLE_DOCTOR', 'ROLE_NURSE', 'ROLE_PATIENT'],
     pageTitle: 'scheduler.title'
-  },
-  canActivate: [UserRouteAccessService]
+  }
 };

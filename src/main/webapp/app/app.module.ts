@@ -10,7 +10,6 @@ import { JhiMainComponent } from './layouts/main/main.component';
 import { NavbarComponent } from './layouts/navbar/navbar.component';
 import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
-import { SchedulerModule } from './scheduler/scheduler.module';
 import { EClinicAppStoreModule } from './store/app.store.module';
 
 @NgModule({
@@ -19,7 +18,6 @@ import { EClinicAppStoreModule } from './store/app.store.module';
     EClinicSharedModule,
     EClinicCoreModule,
     EClinicHomeModule,
-    SchedulerModule,
     EClinicAppStoreModule,
     EClinicEntityModule,
     EClinicAppRoutingModule
