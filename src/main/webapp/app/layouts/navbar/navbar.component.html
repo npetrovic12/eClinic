@@ -9,6 +9,14 @@
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed">
         <ul class="navbar-nav ml-auto">
             <li *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_DOCTOR', 'ROLE_NURSE', 'ROLE_PATIENT']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="/departments" (click)="collapseNavbar()">
+                    <span>
+                        <fa-icon icon="clinic-medical"></fa-icon>
+                        <span jhiTranslate="departmentsPage.title"></span>
+                    </span>
+                </a>
+            </li>
+            <li *jhiHasAnyAuthority="['ROLE_ADMIN', 'ROLE_DOCTOR', 'ROLE_NURSE', 'ROLE_PATIENT']" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="/scheduler" (click)="collapseNavbar()">
                     <span>
                         <fa-icon icon="calendar"></fa-icon>

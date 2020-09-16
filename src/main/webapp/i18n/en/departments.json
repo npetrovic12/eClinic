@@ -1,0 +1,13 @@
+{
+  "departmentsPage": {
+    "title": "Departments",
+    "department": {
+      "cardiology": "Cardiology",
+      "dentistry": "Dentistry",
+      "pulmonology": "Pulmonology",
+      "gynecology": "Gynecology",
+      "gastrology": "Gastrology",
+      "neurology": "Neurology"
+    }
+  }
+}

@@ -14,14 +14,6 @@
     "detail": {
       "title": "Korisnik"
     },
-    "department": {
-      "cardiology": "Kardiologija",
-      "dentistry": "Stomatologija",
-      "pulmonology": "Pulmologija",
-      "gynecology": "Ginekologija",
-      "gastrology": "Gastrologija",
-      "neurology": "Neurologija"
-    },
     "login": "Korisničko ime",
     "firstName": "Ime",
     "lastName": "Prezime",

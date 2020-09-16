@@ -7,7 +7,7 @@ import { HomeComponent } from './home.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  imports: [EClinicSharedModule, RouterModule.forChild([HOME_ROUTE]), FlexLayoutModule],
+  imports: [EClinicSharedModule, RouterModule.forChild([HOME_ROUTE])],
   declarations: [HomeComponent]
 })
 export class EClinicHomeModule {}

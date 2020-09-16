@@ -43,26 +43,26 @@ export class User implements IUser {
 export const departmentOptions: any[] = [
   {
     value: Department.CARDIOLOGY,
-    translation: 'userManagement.department.cardiology'
+    translation: 'departmentsPage.department.cardiology'
   },
   {
     value: Department.DENTISTRY,
-    translation: 'userManagement.department.dentistry'
+    translation: 'departmentsPage.department.dentistry'
   },
   {
     value: Department.GASTROLOGY,
-    translation: 'userManagement.department.gastrology'
+    translation: 'departmentsPage.department.gastrology'
   },
   {
     value: Department.GYNECOLOGY,
-    translation: 'userManagement.department.gynecology'
+    translation: 'departmentsPage.department.gynecology'
   },
   {
     value: Department.NEUROLOGY,
-    translation: 'userManagement.department.neurology'
+    translation: 'departmentsPage.department.neurology'
   },
   {
     value: Department.PULMONOLOGY,
-    translation: 'userManagement.department.pulmonology'
+    translation: 'departmentsPage.department.pulmonology'
   }
 ];
