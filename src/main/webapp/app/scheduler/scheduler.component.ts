@@ -52,7 +52,6 @@ export class SchedulerComponent implements OnInit, OnDestroy {
   }
 
   onViewChange($event) {
-    console.log($event);
     const startDate = new Date($event.currentStart);
     const endDate = new Date($event.currentEnd);
     this.store.dispatch(SchedulerActions.setStartDate({ startDate }));

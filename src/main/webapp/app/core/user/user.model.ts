@@ -40,7 +40,12 @@ export class User implements IUser {
   ) {}
 }
 
-export const departmentOptions: any[] = [
+export interface DepartmentOption {
+  value: Department;
+  translation: string;
+}
+
+export const departmentOptions: DepartmentOption[] = [
   {
     value: Department.CARDIOLOGY,
     translation: 'departmentsPage.department.cardiology'
