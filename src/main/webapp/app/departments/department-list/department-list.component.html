@@ -1,0 +1,11 @@
+<div class="list-wrapper">
+    <ul ngbNav #nav="ngbNav" class="nav-pills" (navChange)="onNavChange($event)">
+        <ng-container *ngFor="let departmentOption of departmentOptions; trackBy: departmentValue">
+            <li [ngbNavItem]="departmentOption.value">
+                <a ngbNavLink>{{ departmentOption.translation | translate }}</a>
+            </li>
+        </ng-container>
+    </ul>
+
+    <div [ngbNavOutlet]="nav"></div>
+</div>
