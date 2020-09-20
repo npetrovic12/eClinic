@@ -5,7 +5,7 @@
       <div fxLayout="row">
         <generic-autocomplete 
             [model]="selectedDoctor"
-            [placeholder]="'Search for a doctor'"
+            placeholder="scheduler.header.searchDoctor"
             [apiUrl]="'/api/users/filter'"
             [critera]="userCriteria"
             [fieldsToDisplay]="['title', 'firstName', 'lastName']"
@@ -13,7 +13,7 @@
             (itemCleared)="onDoctorCleared()">
         </generic-autocomplete>
         <button id="newAppointment" [disabled]="!this.selectedDoctor" class="btn btn-primary" (click)="onNewAppointment()">
-          <fa-icon [icon]="'plus'"></fa-icon> <span>New Appointment</span>
+          <fa-icon [icon]="'plus'"></fa-icon> <span>{{'scheduler.header.newAppointment' | translate}}</span>
         </button>
       </div>
     <div class="scheduler-wrapper" fxLayout="row" fxLayoutGap="10px"> 
@@ -30,6 +30,7 @@
             [selectMirror]="false"
             [businessHours]="true"
             [slotDuration]="calendarSlotDuration"
+            [locale]="locale"
             (eventResize)="handleEventClick($event)"
             (eventDrop)="handleEventClick($event)"
             (select)="handleEventClick($event)"
@@ -49,7 +50,7 @@
             </div>
         </div>
         <div *ngIf="!this.selectedDoctor" class="hint-text">
-          <span >Select a doctor</span>
+          <span >{{ 'scheduler.hint.noDoctor' | translate }}</span>
         </div>
       </div>
       <div fxFlex="1 1 35%">

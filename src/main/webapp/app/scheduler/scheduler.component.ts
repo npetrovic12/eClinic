@@ -3,12 +3,13 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
-import { Appointment } from './appointment.model';
+import { Appointment } from './model/appointment.model';
 import { Observable, Subscription } from 'rxjs';
 import { User } from 'app/core/user/user.model';
 import * as SchedulerActions from './store/scheduler.actions';
 import * as fromRoot from '../store/app.reducer';
 import { Store } from '@ngrx/store';
+import { SessionStorageService } from 'ngx-webstorage';
 
 @Component({
   selector: 'scheduler',
@@ -19,12 +20,14 @@ export class SchedulerComponent implements OnInit, OnDestroy {
   selectedDoctor$: Observable<User>;
   appointments$: Observable<Appointment[]>;
   loadingAppointments$: Observable<boolean>;
+  locale$: Observable<string>;
 
   onDoctorChanged: Subscription;
-
+  onLocaleChange: Subscription;
   selectedDoctor: User;
   events: Observable<Appointment[]>;
   calendarEvents: Appointment[];
+  locale: string;
 
   @ViewChild('calendar', { static: true }) calendarComponent: FullCalendarComponent; // the #calendar in the template
   @Input() calendarSlotDuration = '00:30:00';
@@ -41,11 +44,12 @@ export class SchedulerComponent implements OnInit, OnDestroy {
     role: 'ROLE_DOCTOR'
   };
 
-  constructor(private store: Store<fromRoot.State>) {}
+  constructor(private store: Store<fromRoot.State>, private sessionStorage: SessionStorageService) {}
 
   ngOnDestroy() {
     this.store.dispatch(SchedulerActions.clearSelectedDoctor());
     if (this.onDoctorChanged) this.onDoctorChanged.unsubscribe();
+    if (this.onLocaleChange) this.onLocaleChange.unsubscribe();
   }
 
   ngOnInit() {
@@ -57,6 +61,10 @@ export class SchedulerComponent implements OnInit, OnDestroy {
       if (doctor) {
         this.store.dispatch(SchedulerActions.tryGetAppointments());
       }
+    });
+    this.locale$ = this.sessionStorage.observe('locale');
+    this.onLocaleChange = this.locale$.subscribe(locale => {
+      this.locale = locale;
     });
   }
 

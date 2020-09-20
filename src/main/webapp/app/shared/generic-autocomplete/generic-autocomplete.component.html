@@ -3,7 +3,7 @@
     [loading]="searching"
     [loadingText]="loadingText"
     [notFoundText]="notFoundText"
-    [placeholder]="placeholder"
+    placeholder="{{ placeholder | translate }}"
     [typeahead]="searchInput$"
     [minTermLength]="0"
     [disabled]="disabled"

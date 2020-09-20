@@ -1,5 +1,19 @@
 {
   "scheduler": {
-    "title": "Raspored"
+    "title": "Raspored",
+    "hint": {
+      "noDoctor": "Izaberite lekara",
+      "noAppointment": "Selektujte termin za prikaz"
+    },
+    "header": {
+      "newAppointment": "Novo zakazivanje",
+      "searchDoctor": "Pretraga"
+    },
+    "appointmentDetails": {
+      "title": "Nalsov",
+      "description": "Opis",
+      "save": "Sačuvaj",
+      "delete": "Obriši"
+    }
   }
 }

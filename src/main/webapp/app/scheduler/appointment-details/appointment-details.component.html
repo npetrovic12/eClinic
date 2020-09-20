@@ -2,7 +2,7 @@
 <div class="details-container">
     <div *ngIf="!appointment" class="hint-text">
         <span>
-            Select an appointment
+            {{'scheduler.hint.noAppointment' | translate}}
         </span>
     </div>
     <div fxLayout="column" *ngIf="appointment">
@@ -11,7 +11,7 @@
                 <div class="form-group">
                   <input type="text"
                         class="form-control"
-                        placeholder="Title"
+                        placeholder="{{ 'scheduler.appointmentDetails.title' | translate}}"
                         formControlName="title">
                 </div>
                 <date-time-input formControlName="start"></date-time-input>
@@ -20,16 +20,16 @@
                     <textarea class="form-control"
                         rows="3"
                         formControlName="description"
-                        placeholder="Description">
+                        placeholder="{{ 'scheduler.appointmentDetails.description' | translate}}">
                     </textarea>
                 </div>
                 <button type="submit" 
                     class="btn btn-primary"
                     [disabled]="appointmentForm.invalid"
-                    (click)="saveAppointment()">Save</button>
+                    (click)="saveAppointment()">{{ 'scheduler.appointmentDetails.save' | translate}}</button>
                 <button *ngIf="editMode$ | async" type="button"
                     class="btn btn-danger"
-                    (click)="deleteAppointment()">Delete</button>
+                    (click)="deleteAppointment()">{{ 'scheduler.appointmentDetails.delete' | translate}}</button>
             </form>
         </div>
         
