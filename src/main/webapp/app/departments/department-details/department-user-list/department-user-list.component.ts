@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from 'app/core/user/user.model';
 import * as fromRoot from '../../../store/app.reducer';
