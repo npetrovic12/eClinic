@@ -1,0 +1,15 @@
+{
+  "departmentsPage": {
+    "title": "Departments",
+    "department": {
+      "cardiology": "Cardiology",
+      "dentistry": "Dentistry",
+      "pulmonology": "Pulmonology",
+      "gynecology": "Gynecology",
+      "gastrology": "Gastrology",
+      "neurology": "Neurology"
+    },
+    "newAppointment": "Make an appointment",
+    "noStaff": "No staff to display"
+  }
+}

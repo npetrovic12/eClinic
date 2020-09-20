@@ -8,7 +8,6 @@ import { FormControl } from '@angular/forms';
 })
 export class SearchComponent implements OnInit {
   @Input() initialValue = '';
-  @Input() placeholder = 'Search';
   @Output() searchText = new EventEmitter<string>();
 
   searchInput: FormControl;

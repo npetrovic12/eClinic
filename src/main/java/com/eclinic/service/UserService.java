@@ -141,6 +141,8 @@ public class UserService {
         user.setImageUrl(userDTO.getImageUrl());
         user.setTitle(userDTO.getTitle());
         user.setAbout(userDTO.getAbout());
+        user.setImage(userDTO.getImage());
+        user.setImageContentType(userDTO.getImageContentType());
         if (userDTO.getLangKey() == null) {
             user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
         } else {
@@ -174,7 +176,7 @@ public class UserService {
      * @param langKey   language key.
      * @param imageUrl  image URL of user.
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(String firstName, String lastName, String email, String langKey, byte[] image, String imageContentType) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
@@ -182,7 +184,8 @@ public class UserService {
                 user.setLastName(lastName);
                 user.setEmail(email.toLowerCase());
                 user.setLangKey(langKey);
-                user.setImageUrl(imageUrl);
+                user.setImage(image);
+                user.setImageContentType(imageContentType);
                 userRepository.save(user);
                 this.clearUserCaches(user);
                 log.debug("Changed Information for User: {}", user);
@@ -211,6 +214,9 @@ public class UserService {
                 user.setLangKey(userDTO.getLangKey());
                 user.setAbout(userDTO.getAbout());
                 user.setTitle(userDTO.getTitle());
+                user.setDepartment(userDTO.getDepartment());
+                user.setImage(userDTO.getImage());
+                user.setImageContentType(userDTO.getImageContentType());
                 Set<Authority> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()

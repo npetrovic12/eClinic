@@ -1,42 +1,42 @@
 <div class="details-container">
     <div *ngIf="!selectedUser" class="hint-text">
-        <span>Select a user</span>
+        <span>{{'userManagement.hint.emptyDetails' | translate}}</span>
     </div>
     <div fxLayout="column" *ngIf="selectedUser">
         <nav id="verySpecialNav" ngbNav #nav="ngbNav" class="nav-tabs">
             <ng-container [ngbNavItem]="1">
-              <a ngbNavLink>General</a>
+              <a ngbNavLink>{{'userManagement.detail.general' | translate}}</a>
               <ng-template ngbNavContent>
                 <form name="mainForm" [formGroup]="mainForm">
                     <div class="form-group">
                     <input type="text"
                           class="form-control"
-                          placeholder="First Name"
+                          placeholder="{{'userManagement.detail.firstName' | translate}}"
                           formControlName="firstName">
                     </div>
                     <div class="form-group">
                         <input type="text"
                           class="form-control"
-                          placeholder="Last Name"
+                          placeholder="{{'userManagement.detail.lastName' | translate}}"
                           formControlName="lastName">
                     </div>
                     <div class="form-group">
                         <input type="email"
                           class="form-control"
-                          placeholder="Email"
+                          placeholder="{{'userManagement.detail.email' | translate}}"
                           formControlName="email">
                     </div>
                     <div class="form-group">
                         <input type="text"
                           class="form-control"
-                          placeholder="Login"
+                          placeholder="{{'userManagement.detail.login' | translate}}"
                           formControlName="login">
                     </div>
                     <div class="form-group">
                         <ng-select
                             [items]="languages"
                             [closeOnSelect]="true"
-                            placeholder="Select language"
+                            placeholder="{{'userManagement.detail.language' | translate}}"
                             formControlName="langKey">
                         </ng-select>
                     </div>
@@ -44,7 +44,7 @@
                         <ng-select
                             [items]="authorities"
                             [multiple]="true"
-                            placeholder="Select roles"
+                            placeholder="{{'userManagement.detail.roles' | translate}}"
                             clearAllText="Clear"
                             formControlName="authorities">
                         </ng-select>
@@ -54,33 +54,47 @@
                             class="form-check-input"
                             id="activated"
                             formControlName="activated">
-                        <label class="form-check-label" for="activated">Activated</label>
+                        <label class="form-check-label" for="activated">{{'userManagement.detail.activated' | translate}}</label>
                     </div>
                     <button type="submit" 
                         class="btn btn-primary"
                         [disabled]="this.mainForm.invalid || (this.additionalForm && this.additionalForm.invalid)"
-                        (click)="onSaveUser()">Save</button>
+                        (click)="onSaveUser()">{{'userManagement.detail.save' | translate}}</button>
                     <button *ngIf="editMode$ | async" type="button"
                         class="btn btn-danger"
-                        (click)="onDeleteUser()">Delete</button>
+                        (click)="onDeleteUser()">{{'userManagement.detail.delete' | translate}}</button>
                 </form>
               </ng-template>
             </ng-container>
             <ng-container *ngIf="isDoctor">
                 <ng-container [ngbNavItem]="2">
-                    <a ngbNavLink>Additional</a>
+                    <a ngbNavLink>{{'userManagement.detail.additional' | translate}}</a>
                     <ng-template ngbNavContent>
                       <form name="additionalForm" [formGroup]="additionalForm">
                         <div class="form-group">
                             <input type="text"
                               class="form-control"
-                              placeholder="Title"
+                              placeholder="{{'userManagement.detail.title' | translate}}"
                               formControlName="title">
+                        </div>
+                        <div class="form-group">
+                            <ng-select [items]="departments"
+                            bindValue="value"
+                            bindLabel="translation"
+                            placeholder="{{'userManagement.detail.department' | translate}}"
+                            formControlName="department">
+                                <ng-template ng-label-tmp let-item="item">
+                                    {{item.translation | translate}}
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                                    {{item.translation | translate}}
+                                </ng-template>
+                            </ng-select>
                         </div>
                         <div class="form-group">
                             <textarea type="text"
                               class="form-control"
-                              placeholder="About"
+                              placeholder="{{'userManagement.detail.about' | translate}}"
                               formControlName="about"
                               rows="3">
                             </textarea>

@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { JhiLanguageHelper } from 'app/core/language/language.helper';
-import { User } from 'app/core/user/user.model';
+import { departmentOptions, User } from 'app/core/user/user.model';
 import * as fromRoot from '../../../store/app.reducer';
 import * as UserActions from '../store/user.actions';
 import { UserService } from 'app/core/user/user.service';
@@ -24,10 +24,12 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   isDoctor = false;
 
   authorities: string[];
+  departments = departmentOptions;
   selectedUser: User;
   languages: string[];
 
   onAuthoritites: Subscription;
+  onAuthoritiesChange: Subscription;
   onUserSelected: Subscription;
 
   @ViewChild('nav', { static: false }) navigation: NgbNav;
@@ -52,15 +54,17 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
       this.mainForm = this.createMainForm();
 
-      if (this.selectedUser.id && this.mainForm.controls['authorities'].value.includes('ROLE_DOCTOR')) {
+      const currentAuthorities = this.mainForm.controls['authorities'].value;
+      if (this.selectedUser.id && (currentAuthorities.includes('ROLE_DOCTOR') || currentAuthorities.includes('ROLE_NURSE'))) {
         this.isDoctor = true;
         this.additionalForm = this.createAdditionalForm();
       } else {
         this.isDoctor = false;
         this.additionalForm = null;
       }
-      this.mainForm.controls['authorities'].valueChanges.subscribe(value => {
-        this.isDoctor = value.includes('ROLE_DOCTOR');
+
+      this.onAuthoritiesChange = this.mainForm.controls['authorities'].valueChanges.subscribe(value => {
+        this.isDoctor = value.includes('ROLE_DOCTOR') || value.includes('ROLE_NURSE');
         if (this.isDoctor && !this.additionalForm) {
           this.additionalForm = this.createAdditionalForm();
         }
@@ -73,7 +77,9 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.onUserSelected.unsubscribe();
+    if (this.onUserSelected) this.onUserSelected.unsubscribe();
+    if (this.onAuthoritites) this.onAuthoritites.unsubscribe();
+    if (this.onAuthoritiesChange) this.onAuthoritiesChange.unsubscribe();
     this.store.dispatch(UserActions.clearSelectedUser());
   }
 
@@ -92,6 +98,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   createAdditionalForm() {
     return this.formBuilder.group({
       title: [this.selectedUser.title ? this.selectedUser.title : null, Validators.required],
+      department: [this.selectedUser.department ? this.selectedUser.department : null, Validators.required],
       about: [this.selectedUser.title ? this.selectedUser.about : null]
     });
   }

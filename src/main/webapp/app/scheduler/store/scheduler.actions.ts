@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Appointment } from '../appointment.model';
+import { Appointment } from '../model/appointment.model';
 import { User } from 'app/core/user/user.model';
 
 // Change selected doctor

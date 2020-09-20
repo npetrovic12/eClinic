@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import * as fromRoot from '../../store/app.reducer';
 import * as SchedulerActions from '../store/scheduler.actions';
-import { Appointment } from '../appointment.model';
+import { Appointment } from '../model/appointment.model';
 /* eslint prefer-const: 0 */
 @Component({
   selector: 'appointment-details',

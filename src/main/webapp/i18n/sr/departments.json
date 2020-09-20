@@ -1,0 +1,15 @@
+{
+  "departmentsPage": {
+    "title": "Odeljenja",
+    "department": {
+      "cardiology": "Kardiologija",
+      "dentistry": "Stomatologija",
+      "pulmonology": "Pulmologija",
+      "gynecology": "Ginekologija",
+      "gastrology": "Gastrologija",
+      "neurology": "Neurologija"
+    },
+    "newAppointment": "Zakažite pregled",
+    "noStaff": "Nema osoblja za prikaz"
+  }
+}

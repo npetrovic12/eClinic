@@ -12,6 +12,10 @@ export class LoginService {
   }
 
   logout() {
-    this.authServerProvider.logout().subscribe(null, null, () => this.accountService.authenticate(null));
+    this.authServerProvider.logout().subscribe({
+      next: null,
+      error: null,
+      complete: () => this.accountService.authenticate(null)
+    });
   }
 }

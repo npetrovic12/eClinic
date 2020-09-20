@@ -35,6 +35,8 @@
     "core-js": "3.2.1",
     "moment": "2.24.0",
     "ng-jhipster": "0.11.3",
+    "ng2-imageupload": "^1.4.2",
+    "ngx-avatar": "^4.0.0",
     "ngx-cookie": "4.0.2",
     "ngx-infinite-scroll": "8.0.0",
     "ngx-webstorage": "4.0.1",

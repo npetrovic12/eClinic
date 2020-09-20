@@ -12,6 +12,7 @@ export class ItemListComponent {
   @Input() page = 1;
   @Input() listSize = 0;
   @Input() maxPaginationSize = 3;
+  @Input() emptyListHint = '';
 
   @Output() selectedPage = new EventEmitter<number>();
 

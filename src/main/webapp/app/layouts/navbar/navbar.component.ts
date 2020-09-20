@@ -36,7 +36,6 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.languages = this.languageHelper.getAll();
-
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction = profileInfo.inProduction;
       this.swaggerEnabled = profileInfo.swaggerEnabled;
@@ -59,7 +58,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.collapseNavbar();
     this.loginService.logout();
-    this.router.navigate(['']);
+    this.router.navigate(['login']);
   }
 
   toggleNavbar() {

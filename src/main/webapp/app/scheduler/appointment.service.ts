@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { SERVER_API_URL } from 'app/app.constants';
 import { HttpClient } from '@angular/common/http';
-import { AppointmentCriteria } from './appointment.criteria';
+import { AppointmentCriteria } from './model/appointment.criteria';
 import { IRestResponse, RestResponse, IRestError } from 'app/core/models/rest.model';
-import { Appointment } from './appointment.model';
+import { Appointment } from './model/appointment.model';
 import { catchError, map } from 'rxjs/operators';
 import { RestUtils } from 'app/core/utils/rest-utils';
 import { throwError } from 'rxjs';

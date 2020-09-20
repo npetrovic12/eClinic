@@ -40,20 +40,9 @@ export class UserService {
     );
   }
 
-  filter(params?: any, searchText?: string): Observable<HttpResponse<IUser[]>> {
+  filter(params?: any, criteria?: UserCriteria): Observable<HttpResponse<IUser[]>> {
     const reqParams = createRequestOption(params);
-    const criteria = new UserCriteria(searchText);
-    return this.http.post<IUser[]>(this.resourceUrl + '/filter', criteria, { observe: 'response', params: reqParams }).pipe(
-      map(res => {
-        res.body.forEach(user => (user.authorities = user.authorities.map(role => role.name))); // og fix
-        return res;
-      }),
-      catchError(err => {
-        console.log('HTTP Error', err);
-        const error: IRestError = RestUtils.formRestErrorObject(err);
-        return throwError(error);
-      })
-    );
+    return this.http.post<IUser[]>(this.resourceUrl + '/filter', criteria, { observe: 'response', params: reqParams });
   }
 
   delete(id: string): Observable<any> {

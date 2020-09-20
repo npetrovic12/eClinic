@@ -39,7 +39,11 @@ const usersReducer = createReducer(
   on(UsersActions.getUsersSuccess, (state, action) => ({
     ...state,
     loadingUsers: false,
-    list: [...action.users],
+    list: action.users.map(user => {
+      const newUser = { ...user };
+      newUser.authorities = newUser.authorities.map(role => role.name);
+      return newUser;
+    }),
     count: action.count
   })),
   on(UsersActions.getUsersError, (state, action) => ({

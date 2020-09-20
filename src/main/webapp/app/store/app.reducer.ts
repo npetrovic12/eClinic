@@ -1,14 +1,17 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 import * as fromScheduler from 'app/scheduler/store/scheduler.reducer';
 import * as fromUsers from 'app/admin/user-management/store/user.reducer';
+import * as fromDepartments from 'app/departments/store/departments.reducer';
 export interface State {
   scheduler: fromScheduler.State;
   users: fromUsers.State;
+  departments: fromDepartments.State;
 }
 
 export const appReducer: ActionReducerMap<State> = {
   scheduler: fromScheduler.reducer,
-  users: fromUsers.reducer
+  users: fromUsers.reducer,
+  departments: fromDepartments.reducer
 };
 
 // Scheduler
@@ -91,4 +94,33 @@ export const getSavingUserChanges = createSelector(
 export const getUsersRestError = createSelector(
   getUsersState,
   fromUsers.getLoadingUsers
+);
+
+export const getDepartmentsState = createFeatureSelector<fromDepartments.State>(fromDepartments.departmentsFeatureKey);
+export const getSelectedDepartment = createSelector(
+  getDepartmentsState,
+  fromDepartments.getSelectedDepartment
+);
+export const getDepartmentsUserList = createSelector(
+  getDepartmentsState,
+  fromDepartments.getUserList
+);
+
+export const getDepartmentUsersByRole = createSelector(
+  getDepartmentsUserList,
+  (userList, props) => {
+    if (userList) {
+      return userList.filter(user => user.authorities.filter(authority => authority.name === props.role).length).length;
+    }
+    return 0;
+  }
+);
+
+export const getDepartmentsLoading = createSelector(
+  getDepartmentsState,
+  fromDepartments.getLoading
+);
+export const getDepartmentsError = createSelector(
+  getDepartmentsState,
+  fromDepartments.getError
 );

@@ -6,7 +6,7 @@
             </ng-container>
         </ng-container>
         <div *ngIf="!this.loading && this.listItems?.length === 0" class="hint-text">
-            <span>There are no items to display</span>
+            <span>{{emptyListHint | translate}}</span>
         </div>
         <div *ngIf="this.loading" class="spinner-wrapper">
             <div class="spinner-border spinner-size" role="status">

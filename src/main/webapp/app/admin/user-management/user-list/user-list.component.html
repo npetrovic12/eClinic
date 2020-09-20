@@ -6,6 +6,7 @@
         [loading]="loadingUserList$ | async"
         [page]="page$ | async"
         [listSize]="count$ | async"
+        [emptyListHint]="'userManagement.hint.emptyList'"
         (selectedPage)="fetchUsers($event)">
             <ng-template #listItem let-item="$implicit">
                 <user-list-item (click)="onUserSelected(item)" [user]="item" [ngClass]="{'text-white bg-dark': item.id === (selectedUser$ | async)?.id}"></user-list-item>

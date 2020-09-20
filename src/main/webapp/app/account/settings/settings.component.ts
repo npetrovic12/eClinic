@@ -5,10 +5,12 @@ import { JhiLanguageService } from 'ng-jhipster';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/user/account.model';
 import { JhiLanguageHelper } from 'app/core/language/language.helper';
+import { ImageResult, ResizeOptions } from 'ng2-imageupload';
 
 @Component({
   selector: 'jhi-settings',
-  templateUrl: './settings.component.html'
+  templateUrl: './settings.component.html',
+  styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
   error: string;
@@ -22,8 +24,14 @@ export class SettingsComponent implements OnInit {
     authorities: [[]],
     langKey: ['en'],
     login: [],
-    imageUrl: []
+    image: [null],
+    imageContentType: [null]
   });
+  resizeOptions: ResizeOptions = {
+    resizeMaxHeight: 128,
+    resizeMaxWidth: 128,
+    resizeQuality: 0.8
+  };
 
   constructor(
     private accountService: AccountService,
@@ -72,7 +80,8 @@ export class SettingsComponent implements OnInit {
       authorities: this.settingsForm.get('authorities').value,
       langKey: this.settingsForm.get('langKey').value,
       login: this.settingsForm.get('login').value,
-      imageUrl: this.settingsForm.get('imageUrl').value
+      image: this.settingsForm.get('image').value,
+      imageContentType: this.settingsForm.get('imageContentType').value
     };
   }
 
@@ -85,7 +94,33 @@ export class SettingsComponent implements OnInit {
       authorities: account.authorities,
       langKey: account.langKey,
       login: account.login,
-      imageUrl: account.imageUrl
+      image: account.image,
+      imageContentType: account.imageContentType
     });
+  }
+
+  selected(imageResult: ImageResult) {
+    const src = (imageResult.resized && imageResult.resized.dataURL) || imageResult.dataURL;
+    console.log('type WORKING: s' + imageResult.file.type);
+    console.log('type NOT WORKING: ' + imageResult.resized.type);
+    this.settingsForm.patchValue({
+      imageContentType: imageResult.file.type,
+      image: src.substr(src.indexOf('base64,') + 'base64,'.length)
+    });
+  }
+
+  convertUserImageURL() {
+    const formValue = this.settingsForm.getRawValue();
+    return `data:${formValue.imageContentType};base64,${formValue.image}`;
+  }
+
+  hasProfileImage() {
+    const formValue = this.settingsForm.getRawValue();
+    return !!formValue.image && !!formValue.imageContentType;
+  }
+
+  getUserFullName() {
+    const formValue = this.settingsForm.getRawValue();
+    return formValue.firstName + ' ' + formValue.lastName;
   }
 }

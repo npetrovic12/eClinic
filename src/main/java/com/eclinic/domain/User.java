@@ -68,6 +68,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Field("image_url")
     private String imageUrl;
 
+    @Size(max = 1000000)
+    @Field("image")
+    private byte[] image;
+
+    @Field("image_content_type")
+    private String imageContentType;
+
     @Size(max = 20)
     @Field("activation_key")
     @JsonIgnore
@@ -86,6 +93,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Field("about")
     private String about;
+
+    @Field("department")
+    private Department department;
 
     @Field("title")
     private String title;
@@ -211,6 +221,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return this.title;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -239,5 +257,21 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
             "}";
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
     }
 }

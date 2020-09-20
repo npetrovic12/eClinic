@@ -1,7 +1,7 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
 import * as SchedulerActions from './scheduler.actions';
-import { Appointment } from '../appointment.model';
+import { Appointment } from '../model/appointment.model';
 import { User } from 'app/core/user/user.model';
 
 export const schedulerFeatureKey = 'scheduler';

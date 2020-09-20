@@ -4,9 +4,9 @@
         [formControl]="searchInput"
         type="text"
         class="form-control"
-        [placeholder]="placeholder"
+        placeholder="{{'userManagement.header.search' | translate}}"
         (keydown.enter)="onSearch()">  
     <button fxFlex="1 1" id="searchButton" class="btn btn-primary" (click)="onSearch()">
-        <fa-icon [icon]="'search'"></fa-icon> <span>Search</span>
+        <fa-icon [icon]="'search'"></fa-icon> <span>{{'userManagement.header.search' | translate}}</span>
     </button>
 </div>

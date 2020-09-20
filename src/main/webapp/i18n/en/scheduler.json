@@ -1,5 +1,19 @@
 {
   "scheduler": {
-    "title": "Scheduler"
+    "title": "Scheduler",
+    "hint": {
+      "noDoctor": "Select a doctor",
+      "noAppointment": "Select appointment"
+    },
+    "header": {
+      "newAppointment": "New Appointment",
+      "searchDoctor": "Search"
+    },
+    "appointmentDetails": {
+      "title": "Title",
+      "description": "Description",
+      "save": "Save",
+      "delete": "Delete"
+    }
   }
 }

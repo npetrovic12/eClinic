@@ -3,6 +3,7 @@ package com.eclinic.service.dto;
 import com.eclinic.config.Constants;
 
 import com.eclinic.domain.Authority;
+import com.eclinic.domain.Department;
 import com.eclinic.domain.User;
 
 import javax.validation.constraints.Email;
@@ -37,6 +38,11 @@ public class UserDTO {
 
     @Size(max = 256)
     private String imageUrl;
+    
+    @Size(max = 1000000)
+    private byte[] image;
+
+    private String imageContentType;
 
     private boolean activated = false;
 
@@ -53,11 +59,12 @@ public class UserDTO {
 
     private Set<String> authorities;
 
-    @Size(max = 254)
     private String about;
 
     @Size(max = 50)
     private String title;
+
+    private Department department;
     
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -81,6 +88,9 @@ public class UserDTO {
             .collect(Collectors.toSet());
         this.title = user.getTitle();
         this.about = user.getAbout();
+        this.department = user.getDepartment();
+        this.image = user.getImage();
+        this.imageContentType = user.getImageContentType();
     }
 
     public String getId() {
@@ -203,6 +213,30 @@ public class UserDTO {
         this.title = title;
     }
 
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getImageContentType() {
+        return imageContentType;
+    }
+
+    public void setImageContentType(String imageContentType) {
+        this.imageContentType = imageContentType;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -211,6 +245,8 @@ public class UserDTO {
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", imageUrl='" + imageUrl + '\'' +
+            ", image='" + image + '\'' +
+            ", imageContentType='" + imageContentType + '\'' +
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
             ", createdBy=" + createdBy +

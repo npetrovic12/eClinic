@@ -136,6 +136,10 @@ public class UserResource {
             q.addCriteria(Criteria.where("authorities").elemMatch(Criteria.where("_id").in(criteria.getRole())));
         }
 
+        if(criteria != null && criteria.getDepartment() != null) {
+            q.addCriteria(Criteria.where("department").is(criteria.getDepartment()));
+        }
+
         if(pageable != null) {
             q.with(pageable);
         }

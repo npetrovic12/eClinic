@@ -1,0 +1,7 @@
+<div fxLayout="column" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayoutGap="10px">
+        <department-stat-card [value]="doctorCount$ | async" icon="user-md"></department-stat-card>
+        <department-stat-card [value]="nurseCount$ | async" icon="user-nurse"></department-stat-card>
+    </div>
+    <department-user-list [users]="userList$ | async" [loading]="loadingUsers$ | async"></department-user-list>
+</div>

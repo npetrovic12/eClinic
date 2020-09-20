@@ -125,8 +125,11 @@ public class AccountResource {
         if (!user.isPresent()) {
             throw new AccountResourceException("User could not be found");
         }
+        System.out.println("-------------------------------------------------------------------");
+        System.out.println(userDTO.toString());
+        System.out.println("-------------------------------------------------------------------");
         userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
-            userDTO.getLangKey(), userDTO.getImageUrl());
+            userDTO.getLangKey(), userDTO.getImage(), userDTO.getImageContentType());
     }
 
     /**

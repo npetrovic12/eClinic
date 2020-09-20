@@ -12,7 +12,28 @@
       "question": "Are you sure you want to delete user {{ login }}?"
     },
     "detail": {
-      "title": "User"
+      "general": "General",
+      "additional": "Additional",
+      "save": "Save",
+      "delete": "Delete",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "login": "Login",
+      "language": "Language",
+      "roles": "Roles",
+      "activated": "Activated",
+      "title": "Title",
+      "department": "Department",
+      "about": "About"
+    },
+    "header": {
+      "search": "Search",
+      "newUser": "New User"
+    },
+    "hint": {
+      "emptyList": "No users to show",
+      "emptyDetails": "Select a user"
     },
     "login": "Login",
     "firstName": "First name",

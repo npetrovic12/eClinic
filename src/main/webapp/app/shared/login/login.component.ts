@@ -47,8 +47,8 @@ export class LoginFormComponent implements AfterViewInit {
         password: this.loginForm.get('password').value,
         rememberMe: this.loginForm.get('rememberMe').value
       })
-      .subscribe(
-        () => {
+      .subscribe({
+        next: () => {
           this.authenticationError = false;
           if (
             this.router.url === '/account/register' ||
@@ -69,10 +69,12 @@ export class LoginFormComponent implements AfterViewInit {
           if (redirect) {
             this.stateStorageService.storeUrl(null);
             this.router.navigateByUrl(redirect);
+          } else {
+            this.router.navigateByUrl('');
           }
         },
-        () => (this.authenticationError = true)
-      );
+        error: () => (this.authenticationError = true)
+      });
   }
 
   register() {

@@ -1,0 +1,17 @@
+:host {
+  .user-avatar {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
+  .add-avatar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 24px;
+    margin: -18px 0 0 -10.5px;
+  }
+}

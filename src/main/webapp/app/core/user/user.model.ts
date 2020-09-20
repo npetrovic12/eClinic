@@ -1,9 +1,14 @@
+import { Department } from './department.enum';
+
 export interface IUser {
   id?: any;
   login?: string;
   firstName?: string;
   lastName?: string;
   email?: string;
+  about?: string;
+  title?: string;
+  department?: Department;
   activated?: boolean;
   langKey?: string;
   authorities?: any[];
@@ -12,6 +17,8 @@ export interface IUser {
   lastModifiedBy?: string;
   lastModifiedDate?: Date;
   password?: string;
+  image?: string;
+  imageContentType?: string;
 }
 
 export class User implements IUser {
@@ -23,29 +30,48 @@ export class User implements IUser {
     public email?: string,
     public about?: string,
     public title?: string,
+    public department?: Department,
     public activated?: boolean,
     public langKey?: string,
-    public authorities?: string[],
+    public authorities?: any[],
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,
     public lastModifiedDate?: Date,
-    public password?: string
-  ) {
-    this.id = id ? id : null;
-    this.login = login ? login : null;
-    this.firstName = firstName ? firstName : null;
-    this.lastName = lastName ? lastName : null;
-    this.email = email ? email : null;
-    this.activated = activated ? activated : false;
-    this.langKey = langKey ? langKey : null;
-    this.authorities = authorities ? authorities : null;
-    this.createdBy = createdBy ? createdBy : null;
-    this.createdDate = createdDate ? createdDate : null;
-    this.lastModifiedBy = lastModifiedBy ? lastModifiedBy : null;
-    this.lastModifiedDate = lastModifiedDate ? lastModifiedDate : null;
-    this.password = password ? password : null;
-    this.about = about ? about : null;
-    this.title = title ? title : null;
-  }
+    public password?: string,
+    public image?: string,
+    public imageContentType?: string
+  ) {}
 }
+
+export interface DepartmentOption {
+  value: Department;
+  translation: string;
+}
+
+export const departmentOptions: DepartmentOption[] = [
+  {
+    value: Department.CARDIOLOGY,
+    translation: 'departmentsPage.department.cardiology'
+  },
+  {
+    value: Department.DENTISTRY,
+    translation: 'departmentsPage.department.dentistry'
+  },
+  {
+    value: Department.GASTROLOGY,
+    translation: 'departmentsPage.department.gastrology'
+  },
+  {
+    value: Department.GYNECOLOGY,
+    translation: 'departmentsPage.department.gynecology'
+  },
+  {
+    value: Department.NEUROLOGY,
+    translation: 'departmentsPage.department.neurology'
+  },
+  {
+    value: Department.PULMONOLOGY,
+    translation: 'departmentsPage.department.pulmonology'
+  }
+];
