@@ -1,10 +1,9 @@
 <div fxLayout="column">
     <div class="header" fxLayout="row" fxLayoutAlign="space-between">
     <search [initialValue]="''"
-            [placeholder]="'Search'"
             (searchText)="searchUsers($event)"></search>
         <button id="newUser" class="btn btn-primary" (click)="onNewUser()">
-            <fa-icon [icon]="'plus'"></fa-icon> <span>New User</span>
+            <fa-icon [icon]="'plus'"></fa-icon> <span>{{'userManagement.header.newUser' | translate}}</span>
         </button>
     </div>
     <div fxLayout="row" fxLayoutGap="10px">

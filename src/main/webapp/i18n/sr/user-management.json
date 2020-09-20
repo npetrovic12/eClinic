@@ -12,7 +12,28 @@
       "question": "Da li ste sigurni da želite da obrišite korisnika {{ login }}?"
     },
     "detail": {
-      "title": "Korisnik"
+      "general": "Opšte",
+      "additional": "Dodatno",
+      "save": "Sačuvaj",
+      "delete": "Obriši",
+      "firstName": "Ime",
+      "lastName": "Prezime",
+      "email": "Imejl",
+      "login": "Korisničko ime",
+      "language": "Jezik",
+      "roles": "Role",
+      "activated": "Aktiviran",
+      "title": "Zvanje",
+      "department": "Odeljenje",
+      "about": "Opis"
+    },
+    "header": {
+      "search": "Pretraga",
+      "newUser": "Novi korisnik"
+    },
+    "hint": {
+      "emptyList": "Nema korisnika za prikaz",
+      "emptyDetails": "Selektujte korisnika za prikaz"
     },
     "login": "Korisničko ime",
     "firstName": "Ime",
