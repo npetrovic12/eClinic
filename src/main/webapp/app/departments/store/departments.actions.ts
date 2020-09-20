@@ -7,8 +7,5 @@ export const selectDepartment = createAction('[DEPARTMENTS] Set selected departm
 
 // Fetch department data
 export const tryGetDepartmentData = createAction('[DEPARTMENTS] Try get selected department users');
-export const getDepartmentDataSuccess = createAction(
-  '[DEPARTMENTS] Get selected department users success',
-  props<{ userList: User[]; appointmentCount: number }>()
-);
+export const getDepartmentDataSuccess = createAction('[DEPARTMENTS] Get selected department users success', props<{ userList: User[] }>());
 export const getDepartmentDataFailure = createAction('[DEPARTMENTS] Get selected department users failure', props<{ error: any }>());

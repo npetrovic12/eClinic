@@ -4,6 +4,7 @@
     fxFlex>
       <div fxLayout="row">
         <generic-autocomplete 
+            [model]="selectedDoctor"
             [placeholder]="'Search for a doctor'"
             [apiUrl]="'/api/users/filter'"
             [critera]="userCriteria"
@@ -50,7 +51,6 @@
         <div *ngIf="!this.selectedDoctor" class="hint-text">
           <span >Select a doctor</span>
         </div>
-        
       </div>
       <div fxFlex="1 1 35%">
         <appointment-details></appointment-details>

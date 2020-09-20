@@ -10,7 +10,7 @@ import { UserRouteAccessService } from 'app/core/auth/user-route-access-service'
       navbarRoute,
       {
         path: '',
-        redirectTo: 'scheduler',
+        redirectTo: 'departments',
         pathMatch: 'full'
       },
       {

@@ -29,11 +29,6 @@
     "@angular-devkit/core" "8.3.1"
     rxjs "6.4.0"
 
-"@angular/animations@^9.1.11":
-  version "9.1.11"
-  resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-9.1.11.tgz#2c7b6e584df0ba0884d05f01fa7ab86c1fdd1c5e"
-  integrity sha512-VKAExUnEJfo1PDQKagpx2pn+QMZCsPLRiADzTdl4U0VPylK3ALbn4ZNY9UbdwyE2plitz++LkH7sEGGfh+PNrQ==
-
 "@angular/cdk@^8.2.3":
   version "8.2.3"
   resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-8.2.3.tgz#16b96ffa935cbf5a646757ecaf2b19c434678f72"
@@ -6518,6 +6513,11 @@ is-resolvable@^1.0.0:
   resolved "https://registry.yarnpkg.com/is-resolvable/-/is-resolvable-1.1.0.tgz#fb18f87ce1feb925169c9a407c19318a3206ed88"
   integrity sha512-qgDYXFSR5WvEfuS5dMj6oTMEbrrSaM0CrFk2Yiq/gXnBvD9pMa2jGXxyhGLfvhZpuMZe18CJpFxAt3CRs42NMg==
 
+is-retina@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/is-retina/-/is-retina-1.0.3.tgz#d7401b286bea2ae37f62477588de504d0b8647e3"
+  integrity sha1-10AbKGvqKuN/Ykd1iN5QTQuGR+M=
+
 is-retry-allowed@^1.0.0, is-retry-allowed@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/is-retry-allowed/-/is-retry-allowed-1.2.0.tgz#d778488bd0a4666a3be8a1482b9f2baafedea8b4"
@@ -8369,6 +8369,19 @@ ng-jhipster@0.11.3:
   integrity sha512-nELQNjbXiGf5HAj+X4WOTvDcMZ955G5c1DGRyPT5w7Ge2MJVlPE1Fiu9Iqj25rVZz4ci9ume0fOPu1BVVc6+Kg==
   dependencies:
     tslib "^1.9.0"
+
+ng2-imageupload@^1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/ng2-imageupload/-/ng2-imageupload-1.4.2.tgz#eece669cb94317181d6676f65eeee6c01a33b50d"
+  integrity sha1-7s5mnLlDFxgdZnb2Xu7mwBoztQ0=
+
+ngx-avatar@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-avatar/-/ngx-avatar-4.0.0.tgz#07cda9c062911c82420478930469e9b01d9a103e"
+  integrity sha512-Uk40UXl26RvDy1ori9NDsGFB+f84AaxMnsIwZA6JPJK0pLcbo3F4vZTmzLZeOusOw1Qtgk5IzF630jo06keXwQ==
+  dependencies:
+    is-retina "^1.0.3"
+    ts-md5 "^1.2.4"
 
 ngx-cookie@4.0.2:
   version "4.0.2"
@@ -12323,6 +12336,11 @@ ts-loader@6.0.4:
     loader-utils "^1.0.2"
     micromatch "^4.0.0"
     semver "^6.0.0"
+
+ts-md5@^1.2.4:
+  version "1.2.7"
+  resolved "https://registry.yarnpkg.com/ts-md5/-/ts-md5-1.2.7.tgz#b76471fc2fd38f0502441f6c3b9494ed04537401"
+  integrity sha512-emODogvKGWi1KO1l9c6YxLMBn6CEH3VrH5mVPIyOtxBG52BvV4jP3GWz6bOZCz61nLgBc3ffQYE4+EHfCD+V7w==
 
 ts-node@8.3.0:
   version "8.3.0"

@@ -54,7 +54,8 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
       this.mainForm = this.createMainForm();
 
-      if (this.selectedUser.id && this.mainForm.controls['authorities'].value.includes('ROLE_DOCTOR')) {
+      const currentAuthorities = this.mainForm.controls['authorities'].value;
+      if (this.selectedUser.id && (currentAuthorities.includes('ROLE_DOCTOR') || currentAuthorities.includes('ROLE_NURSE'))) {
         this.isDoctor = true;
         this.additionalForm = this.createAdditionalForm();
       } else {
@@ -63,7 +64,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
       }
 
       this.onAuthoritiesChange = this.mainForm.controls['authorities'].valueChanges.subscribe(value => {
-        this.isDoctor = value.includes('ROLE_DOCTOR');
+        this.isDoctor = value.includes('ROLE_DOCTOR') || value.includes('ROLE_NURSE');
         if (this.isDoctor && !this.additionalForm) {
           this.additionalForm = this.createAdditionalForm();
         }

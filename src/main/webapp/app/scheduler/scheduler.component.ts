@@ -16,9 +16,11 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./scheduler.component.scss']
 })
 export class SchedulerComponent implements OnInit, OnDestroy {
-  selectedDoctor$: Subscription;
+  selectedDoctor$: Observable<User>;
   appointments$: Observable<Appointment[]>;
   loadingAppointments$: Observable<boolean>;
+
+  onDoctorChanged: Subscription;
 
   selectedDoctor: User;
   events: Observable<Appointment[]>;
@@ -43,12 +45,19 @@ export class SchedulerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch(SchedulerActions.clearSelectedDoctor());
+    if (this.onDoctorChanged) this.onDoctorChanged.unsubscribe();
   }
 
   ngOnInit() {
     this.appointments$ = this.store.select(fromRoot.getAppointmentList);
     this.loadingAppointments$ = this.store.select(fromRoot.getLoadingAppointments);
-    this.store.select(fromRoot.getSelectedDoctor).subscribe(doctor => (this.selectedDoctor = doctor));
+    this.selectedDoctor$ = this.store.select(fromRoot.getSelectedDoctor);
+    this.onDoctorChanged = this.selectedDoctor$.subscribe(doctor => {
+      this.selectedDoctor = doctor;
+      if (doctor) {
+        this.store.dispatch(SchedulerActions.tryGetAppointments());
+      }
+    });
   }
 
   onViewChange($event) {
@@ -61,7 +70,6 @@ export class SchedulerComponent implements OnInit, OnDestroy {
 
   onDoctorSelected(doctor: User) {
     this.store.dispatch(SchedulerActions.setSelectedDoctor({ user: doctor }));
-    this.store.dispatch(SchedulerActions.tryGetAppointments());
   }
 
   toggleVisible() {

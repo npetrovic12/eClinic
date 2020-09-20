@@ -1,3 +1,3 @@
 export class UserCriteria {
-  constructor(public searchText: string) {}
+  constructor(public searchText?: string, public department?: string) {}
 }

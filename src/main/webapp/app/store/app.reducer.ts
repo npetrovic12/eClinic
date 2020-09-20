@@ -105,14 +105,17 @@ export const getDepartmentsUserList = createSelector(
   getDepartmentsState,
   fromDepartments.getUserList
 );
-export const getDepartmentsUserCount = createSelector(
-  getDepartmentsState,
-  fromDepartments.getUserCount
+
+export const getDepartmentUsersByRole = createSelector(
+  getDepartmentsUserList,
+  (userList, props) => {
+    if (userList) {
+      return userList.filter(user => user.authorities.filter(authority => authority.name === props.role).length).length;
+    }
+    return 0;
+  }
 );
-export const getDepartmentsAppointmentCount = createSelector(
-  getDepartmentsState,
-  fromDepartments.getAppointmentCount
-);
+
 export const getDepartmentsLoading = createSelector(
   getDepartmentsState,
   fromDepartments.getLoading

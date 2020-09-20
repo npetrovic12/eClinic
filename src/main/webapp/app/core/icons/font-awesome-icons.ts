@@ -33,7 +33,9 @@ import {
   faAsterisk,
   faTasks,
   faHome,
-  faClinicMedical
+  faClinicMedical,
+  faUserMd,
+  faUserNurse
 } from '@fortawesome/free-solid-svg-icons';
 
 export const fontAwesomeIcons = [
@@ -71,5 +73,7 @@ export const fontAwesomeIcons = [
   faSearch,
   faTrashAlt,
   faAsterisk,
-  faClinicMedical
+  faClinicMedical,
+  faUserMd,
+  faUserNurse
 ];

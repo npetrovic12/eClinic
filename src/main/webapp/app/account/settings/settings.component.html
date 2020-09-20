@@ -10,7 +10,14 @@
             <jhi-alert-error></jhi-alert-error>
 
             <form name="form" role="form" (ngSubmit)="save()" [formGroup]="settingsForm" *ngIf="settingsForm.get('login').value" novalidate>
-
+                <div class="form-group">
+                    <img  *ngIf="hasProfileImage()" (click)="fileInput.click()" [src]="convertUserImageURL()" class="user-avatar">
+                    <div *ngIf="!hasProfileImage()" (click)="fileInput.click()" class="user-avatar">
+                        <fa-icon class="add-avatar" icon="plus"></fa-icon>
+                    </div>
+                    <input hidden="hidden" type="file" id="file_document" #fileInput imageUpload
+				(imageSelected)="selected($event)" accept="image/*" [resizeOptions]="resizeOptions" />
+                </div>
                 <div class="form-group">
                     <label class="form-control-label" for="firstName" jhiTranslate="settings.form.firstname">First Name</label>
                     <input type="text" class="form-control" id="firstName" name="firstName" placeholder="{{'settings.form.firstname.placeholder' | translate}}"

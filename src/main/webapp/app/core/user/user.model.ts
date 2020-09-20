@@ -17,6 +17,8 @@ export interface IUser {
   lastModifiedBy?: string;
   lastModifiedDate?: Date;
   password?: string;
+  image?: string;
+  imageContentType?: string;
 }
 
 export class User implements IUser {
@@ -31,12 +33,14 @@ export class User implements IUser {
     public department?: Department,
     public activated?: boolean,
     public langKey?: string,
-    public authorities?: string[],
+    public authorities?: any[],
     public createdBy?: string,
     public createdDate?: Date,
     public lastModifiedBy?: string,
     public lastModifiedDate?: Date,
-    public password?: string
+    public password?: string,
+    public image?: string,
+    public imageContentType?: string
   ) {}
 }
 

@@ -9,10 +9,10 @@ import { GenericAutocompleteService } from './generic-autocomplete.service';
   styleUrls: ['./generic-autocomplete.component.scss']
 })
 export class GenericAutocompleteComponent implements OnInit {
-  model: any;
   searching = false;
   items$ = new Observable();
   searchInput$ = new Subject<string>();
+  @Input() model: any;
   @Input() apiUrl: string;
   @Input() critera: any;
   @Input() placeholder = 'Search for item';

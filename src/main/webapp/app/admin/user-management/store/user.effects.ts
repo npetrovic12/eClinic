@@ -15,7 +15,7 @@ export class UserEffects {
       ofType(UserActions.tryGetUsers),
       withLatestFrom(this.store$.select(fromRoot.getUsersListPage), this.store$.select(fromRoot.getUsersSearchText)),
       switchMap(([action, page, searchText]) => {
-        return this.userService.filter({ page, size: ITEMS_PER_PAGE, sort: ['id', 'desc'] }, searchText).pipe(
+        return this.userService.filter({ page, size: ITEMS_PER_PAGE, sort: ['id', 'desc'] }, { searchText }).pipe(
           map(res => UserActions.getUsersSuccess({ users: res.body, count: +res.headers.get('X-Total-Count') })),
           catchError(res => of(UserActions.getUsersError({ error: res })))
         );

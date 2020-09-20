@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, EventEmitter, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, EventEmitter, Output, Input } from '@angular/core';
 import { NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { Department } from 'app/core/user/department.enum';
 import { DepartmentOption, departmentOptions } from 'app/core/user/user.model';
@@ -11,13 +11,14 @@ import { DepartmentOption, departmentOptions } from 'app/core/user/user.model';
 })
 export class DepartmentListComponent {
   departmentOptions = departmentOptions;
+  @Input() defaultDepartment = Department.CARDIOLOGY;
   @Output() departmentChanged = new EventEmitter<Department>();
 
   departmentValue(index, department: DepartmentOption) {
     return department.value;
   }
 
-  onNavChange(eventData: NgbNavChangeEvent) {
+  onDepartmentChange(eventData: NgbNavChangeEvent) {
     this.departmentChanged.emit(eventData.nextId);
   }
 }

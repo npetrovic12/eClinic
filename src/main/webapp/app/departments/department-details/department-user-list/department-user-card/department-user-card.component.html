@@ -1,0 +1,13 @@
+<div class="user-card" fxLayout="row" fxLayoutGap="10px"> 
+    <img class="user-image" *ngIf="userHasImage()"  [src]="convertUserImageURL()">    
+    <div fxLayout="column" fxLayoutGap="8px" fxLayoutAlign="space-between" class="user-data">
+        <div class="user-about">
+            <div>{{ user.title }} {{ user.firstName }} {{ user.lastName }}</div>
+            <div>{{user.email}}</div>
+        </div>
+        <a *ngIf="userIsDoctor()"  routerLink="/scheduler" href="javascript:void(0);" (click)="onSchedulerLinkClick()">
+            {{ 'departmentsPage.newAppointment' | translate }}
+            <fa-icon icon="calendar-plus"></fa-icon>
+        </a>
+    </div>
+</div>

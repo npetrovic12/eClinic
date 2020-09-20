@@ -8,6 +8,8 @@
       "gynecology": "Ginekologija",
       "gastrology": "Gastrologija",
       "neurology": "Neurologija"
-    }
+    },
+    "newAppointment": "Zakažite pregled",
+    "noStaff": "Nema osoblja za prikaz"
   }
 }

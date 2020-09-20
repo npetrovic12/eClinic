@@ -34,7 +34,8 @@ describe('Component Tests', () => {
       const accountValues: Account = {
         firstName: 'John',
         lastName: 'Doe',
-
+        image: null,
+        imageContentType: null,
         activated: true,
         email: 'john.doe@mail.com',
         langKey: 'en',

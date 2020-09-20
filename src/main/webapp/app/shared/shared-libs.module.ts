@@ -8,6 +8,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ImageUploadModule } from 'ng2-imageupload';
+import { AvatarModule } from 'ngx-avatar';
 @NgModule({
   exports: [
     FormsModule,
@@ -19,7 +21,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
     ReactiveFormsModule,
     TranslateModule,
     FlexLayoutModule,
-    NgSelectModule
+    NgSelectModule,
+    ImageUploadModule,
+    AvatarModule
   ]
 })
 export class EClinicSharedLibsModule {}

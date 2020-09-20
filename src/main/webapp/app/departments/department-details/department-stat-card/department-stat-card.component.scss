@@ -1,0 +1,19 @@
+:host {
+  .stat-card {
+    width: 200px;
+    height: 64px;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    padding: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .stat-value {
+    font-size: 36px;
+  }
+
+  fa-icon {
+    font-size: 36px;
+  }
+}
